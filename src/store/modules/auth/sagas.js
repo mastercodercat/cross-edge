@@ -1,6 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
 import axios from 'axios';
 
+import { API_BASE_URL } from 'config/base'
 import {
   signInSuccess,
   signInFail } from './reducer'
@@ -12,6 +13,7 @@ const signIn = function* (action) {
   try {
     const response = yield call(
       axios.post,
+      `${API_BASE_URL}/token/`,
       action.payload
     )
     yield put(signInSuccess(response.data))

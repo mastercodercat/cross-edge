@@ -1,16 +1,22 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-import Input from "components/uielements/input"
-import Checkbox from "components/uielements/checkbox";
-import Button from "components/uielements/button";
+import SignInForm from 'components/SignInForm'
+import { signIn } from 'store/modules/auth'
 import SignInStyleWrapper from "./style"
 
 
 class SignIn extends Component {
 
+  static propTypes = {
+    signIn: PropTypes.func.isRequired,
+  }
+
   handleLogin = (data) => {
-    console.log(data)
+    this.props.signIn(data)
   }
 
   render() {
@@ -20,28 +26,11 @@ class SignIn extends Component {
           <div className="adpLoginContent">
             <div className="adpLogoWrapper">
               <Link to="/dashboard">
-                Sign In
+                Adept Packaging
               </Link>
             </div>
 
-            <div className="adpSignInForm">
-              <div className="adpInputWrapper">
-                <Input size="large" placeholder="Username" />
-              </div>
-
-              <div className="adpInputWrapper">
-                <Input size="large" type="password" placeholder="Password" />
-              </div>
-
-              <div className="adpInputWrapper adpLeftRightComponent">
-                <Checkbox>
-                  Remember me
-                </Checkbox>
-                <Button type="primary" onClick={this.handleLogin}>
-                  Sign In
-                </Button>
-              </div>
-            </div>
+            <SignInForm onSubmit={this.handleLogin} />
           </div>
         </div>
       </SignInStyleWrapper>
@@ -49,4 +38,10 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn
+const actions = {
+  signIn,
+}
+
+export default compose(
+  connect(null, actions)
+)(SignIn)

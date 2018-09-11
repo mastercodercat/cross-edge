@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga'
 import Immutable from 'immutable'
 import { combineReducers } from 'redux-immutable'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { reducer as formReducer } from 'redux-form/immutable'
 import { routerMiddleware } from 'react-router-redux'
 import { all } from 'redux-saga/effects'
 
@@ -46,7 +45,6 @@ const composeEnhancers =
 export const store = createStore(
   combineReducers({
     router: routerReducer,
-    form: formReducer,
     auth: authReducer,
   }),
   Immutable.Map(),

@@ -73,3 +73,17 @@ html ul {
   left: 0;
   margin-left: -4px;
 }
+
+.adpLeftRightComponent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.adpCenterComponent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

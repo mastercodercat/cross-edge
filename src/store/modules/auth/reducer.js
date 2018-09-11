@@ -3,6 +3,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { getAuthToken, setAuthToken, clearAuthToken } from 'utils/storage'
 
 import {
+  AUTH_SIGNIN,
   AUTH_SIGNIN_SUCCESS,
   AUTH_SIGNIN_FAIL,
   AUTH_SIGNOUT } from './constants'
@@ -18,6 +19,7 @@ const initialState = new AuthState({
 
 /* Action creators */
 
+export const signIn = createAction(AUTH_SIGNIN)
 export const signInSuccess = createAction(AUTH_SIGNIN_SUCCESS)
 export const signInFail = createAction(AUTH_SIGNIN_FAIL)
 export const signOut = createAction(AUTH_SIGNOUT)

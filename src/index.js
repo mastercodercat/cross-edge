@@ -2,11 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import axios from 'axios'
+import 'antd/dist/antd.css'
+import { ThemeProvider } from 'styled-components'
 
 import 'polyfills/localStorage'
 import { store, history } from 'store'
 import Routes from 'routes'
 import { getAuthToken } from 'utils/storage'
+import themes from 'config/themes'
 // import registerServiceWorker from './registerServiceWorker'
 
 import './index.css'
@@ -25,7 +28,9 @@ axios.interceptors.request.use((config) => {
 /* Render app components */
 ReactDOM.render(
   <Provider store={store}>
-    <Routes history={history} />
+    <ThemeProvider theme={themes.themedefault}>
+      <Routes history={history} />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 )

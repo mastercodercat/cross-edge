@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import ScrollToTop from 'components/ScrollToTop'
 
 import App from 'containers/App'
+import SignIn from 'containers/SignIn'
 
 
 const Routes = ({ history }) => (
@@ -12,6 +13,7 @@ const Routes = ({ history }) => (
     <ScrollToTop>
       <Switch>
         <Route exact path="/" component={App} />
+        <Route exact path="/signin" component={SignIn} />
       </Switch>
     </ScrollToTop>
   </ConnectedRouter>

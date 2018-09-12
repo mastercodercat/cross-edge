@@ -6,14 +6,17 @@ import ScrollToTop from 'components/ScrollToTop'
 
 import App from 'containers/App'
 import SignIn from 'containers/SignIn'
+import {
+  userIsAuthenticated,
+  userIsNotAuthenticated } from 'utils/auth-wrappers'
 
 
 const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <ScrollToTop>
       <Switch>
-        <Route exact path="/" component={App} />
-        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signin" component={userIsNotAuthenticated(SignIn)} />
+        <Route exact path="/" component={userIsAuthenticated(App)} />
       </Switch>
     </ScrollToTop>
   </ConnectedRouter>

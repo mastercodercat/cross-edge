@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
 
-import Topbar from 'components/Topbar'
 import Sidebar from 'components/Sidebar'
 import StyleWrapper from './style'
 
+
+const { Header, Content } = Layout
 
 class DashboardLayout extends Component {
 
@@ -17,8 +18,10 @@ class DashboardLayout extends Component {
         <Layout style={{ height: appHeight, flexDirection: 'row', overflowX: 'hidden' }}>
           <Sidebar />
           <Layout>
-            <Topbar />
-            {children}
+            <Header className="topbar" />
+            <Content>
+              {children}
+            </Content>
           </Layout>
         </Layout>
       </StyleWrapper>

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { palette } from 'styled-theme'
 
 
 const StyleWrapper = styled.div`
   display: block;
   max-width: 200px;
+  width: calc(100% - 20px);
   margin: auto;
 
   img {

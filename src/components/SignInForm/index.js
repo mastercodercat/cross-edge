@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { Form } from 'antd'
+import { Form, Input, Button } from 'antd'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import Input from "components/uielements/input"
-import Button from "components/uielements/button";
 import SignInStyleWrapper from "./style"
 
 
@@ -13,7 +10,7 @@ class SignInForm extends Component {
   static propTypes = {
     form: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
-    initialValues: ImmutablePropTypes.map,
+    submitting: PropTypes.bool,
   }
 
   handleSubmit = (e) => {
@@ -26,6 +23,7 @@ class SignInForm extends Component {
   }
 
   render() {
+    const { submitting } = this.props
     const { getFieldDecorator } = this.props.form
 
     return (
@@ -35,7 +33,7 @@ class SignInForm extends Component {
             {getFieldDecorator('email', {
               rules: [{ required: true, message: 'Please input your email!' }],
             })(
-              <Input size="large" type="email" placeholder="Email" />
+              <Input type="email" placeholder="Email" />
             )}
           </Form.Item>
 
@@ -43,12 +41,12 @@ class SignInForm extends Component {
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Please input your Password!' }],
             })(
-              <Input size="large" type="password" placeholder="Password" />
+              <Input type="password" placeholder="Password" />
             )}
           </Form.Item>
 
           <div className="adpInputWrapper adpCenterComponent">
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" size="large" disabled={submitting}>
               Sign In
             </Button>
           </div>

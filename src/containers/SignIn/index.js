@@ -3,15 +3,22 @@ import { Link } from 'react-router-dom'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import Logo from 'components/Logo'
 import SignInForm from 'components/SignInForm'
-import { signIn } from 'store/modules/auth'
+import { REQUEST_PENDING } from 'constants.js'
+import {
+  signIn,
+  selectAuth } from 'store/modules/auth'
 import SignInStyleWrapper from "./style"
 
 
 class SignIn extends Component {
 
   static propTypes = {
+    auth: ImmutablePropTypes.record.isRequired,
     signIn: PropTypes.func.isRequired,
   }
 
@@ -20,17 +27,23 @@ class SignIn extends Component {
   }
 
   render() {
+    const { auth } = this.props
+    const isSubmitting = auth.authState === REQUEST_PENDING
+
     return (
       <SignInStyleWrapper className="adpSignInPage">
         <div className="adpLoginContentWrapper">
           <div className="adpLoginContent">
             <div className="adpLogoWrapper">
               <Link to="/dashboard">
-                Adept Packaging
+                <Logo />
               </Link>
             </div>
 
-            <SignInForm onSubmit={this.handleLogin} />
+            <SignInForm
+              onSubmit={this.handleLogin}
+              submitting={isSubmitting}
+            />
           </div>
         </div>
       </SignInStyleWrapper>
@@ -38,10 +51,14 @@ class SignIn extends Component {
   }
 }
 
+const selector = createStructuredSelector({
+  auth: selectAuth,
+})
+
 const actions = {
   signIn,
 }
 
 export default compose(
-  connect(null, actions)
+  connect(selector, actions)
 )(SignIn)

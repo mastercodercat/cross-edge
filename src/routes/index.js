@@ -1,23 +1,38 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
 import ScrollToTop from 'components/ScrollToTop'
-
-import App from 'containers/App'
-import SignIn from 'containers/SignIn'
 import {
   userIsAuthenticated,
   userIsNotAuthenticated } from 'utils/auth-wrappers'
 
+import SignIn from 'containers/SignIn'
+import DashboardLayout from 'containers/DashboardLayout'
+import Channels from 'containers/Channels'
+
+
+const UnauthenticatedRoutes = () => (
+  <Switch>
+    <Redirect exact from="/" to="/signin" />
+    <Route exact path="/signin" component={SignIn} />
+  </Switch>
+)
+
+const AuthenticatedRoutes = props => (
+  <DashboardLayout>
+    <Switch>
+      <Redirect exact from="/" to="/channels" />
+      <Route exact path="/channels" component={Channels} />
+    </Switch>
+  </DashboardLayout>
+)
 
 const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <ScrollToTop>
-      <Switch>
-        <Route exact path="/signin" component={userIsNotAuthenticated(SignIn)} />
-        <Route exact path="/" component={userIsAuthenticated(App)} />
-      </Switch>
+      <Route path="/" component={userIsNotAuthenticated(UnauthenticatedRoutes)} />
+      <Route path="/" component={userIsAuthenticated(AuthenticatedRoutes)} />
     </ScrollToTop>
   </ConnectedRouter>
 )

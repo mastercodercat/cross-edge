@@ -9,7 +9,7 @@ const styleWrapper = styled.div`
   flex-direction: column;
 
   .adpInputWrapper {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     &:last-of-type {
       margin-bottom: 0;

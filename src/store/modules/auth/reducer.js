@@ -3,6 +3,11 @@ import { createAction, handleActions } from 'redux-actions'
 import { getAuthToken, setAuthToken, clearAuthToken } from 'utils/storage'
 
 import {
+  REQUEST_INITIAL,
+  REQUEST_PENDING,
+  REQUEST_SUCCESS,
+  REQUEST_FAIL, } from 'constants.js'
+import {
   AUTH_SIGNIN,
   AUTH_SIGNIN_SUCCESS,
   AUTH_SIGNIN_FAIL,
@@ -15,6 +20,7 @@ import {
 
 const initialState = new AuthState({
   authToken: getAuthToken() || '',
+  authState: REQUEST_INITIAL,
 })
 
 /* Action creators */
@@ -28,20 +34,25 @@ export const signOut = createAction(AUTH_SIGNOUT)
 
 export const reducer = handleActions({
 
+  [AUTH_SIGNIN]: (state) => state.withMutations(record => {
+    record.set('authState', REQUEST_PENDING)
+  }),
+
   [AUTH_SIGNIN_SUCCESS]: (state, { payload }) => state.withMutations(record => {
     record.set('authToken', payload.token)
     setAuthToken(payload.token)
+    record.set('authState', REQUEST_SUCCESS)
   }),
 
   [AUTH_SIGNIN_FAIL]: (state) => state.withMutations(record => {
     record.set('authToken', '')
-    record.set('signInFailed', true)
+    record.set('authState', REQUEST_FAIL)
     clearAuthToken()
   }),
 
   [AUTH_SIGNOUT]: (state) => state.withMutations(record => {
     record.set('authToken', '')
-    record.set('signInFailed', false)
+    record.set('authState', REQUEST_INITIAL)
     clearAuthToken()
   }),
 

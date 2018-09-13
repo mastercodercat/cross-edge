@@ -1,6 +1,6 @@
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
-import { selectAuth, selectIsAuthenticated } from 'store/modules/auth'
+import { selectIsAuthenticated } from 'store/modules/auth'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -11,8 +11,7 @@ export const userIsAuthenticated = connectedRouterRedirect({
 })
 
 export const userIsNotAuthenticated = connectedRouterRedirect({
-  redirectPath: (state, ownProps) =>
-    locationHelper.getRedirectQueryParam(ownProps) || '/',
+  redirectPath: '/',
   allowRedirectBack: false,
   authenticatedSelector: state => !selectIsAuthenticated(state),
   wrapperDisplayName: 'UserIsNotAuthenticated'

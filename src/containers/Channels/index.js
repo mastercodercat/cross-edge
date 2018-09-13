@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 
-import './style.css'
 
-
-class App extends Component {
+class Channels extends Component {
 
   render() {
     return (
@@ -14,4 +12,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default Channels

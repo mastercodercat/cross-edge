@@ -24,7 +24,7 @@ axios.interceptors.request.use((config) => {
   }
   return config
 })
-console.log(store.getState().toJS())///
+
 /* Render app components */
 ReactDOM.render(
   <Provider store={store}>

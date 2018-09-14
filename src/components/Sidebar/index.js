@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import PropTypes from 'prop-types'
 
-import Logo from 'components/Logo'
 import StyleWrapper from './style'
 
 
@@ -28,9 +27,6 @@ class Sidebar extends Component {
         onCollapse={onToggleCollapse}
       >
         <StyleWrapper>
-          <div className="logoWrapper">
-            <Logo color="white" />
-          </div>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1">
               <Icon type="cluster" />

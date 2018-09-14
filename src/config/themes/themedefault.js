@@ -1,4 +1,13 @@
-const theme = {};
+const theme = {}
+
+const adeptColors = {
+  adeptLochmara5: ['#0878BD'],
+  adeptBlue: ['#003B83'],
+  adeptDepSea1: ['#008B6E'],
+  adeptTropicalRainForest1: ['#005F43'],
+  adeptSilverChalice: ['#999999'],
+  adeptSalomie: ['#FFDC80'],
+}
 
 theme.palette = {
   primary: [
@@ -94,11 +103,13 @@ theme.palette = {
     '#dd4a68', // 4:
     '#e90', // 5:
   ],
-};
+
+  ...adeptColors,
+}
 
 theme.fonts = {
   primary: 'Roboto, sans-serif',
   pre: 'Consolas, Liberation Mono, Menlo, Courier, monospace',
-};
+}
 
-export default theme;
+export default theme

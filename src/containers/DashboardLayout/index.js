@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
 
+import Logo from 'components/Logo'
 import Sidebar from 'components/Sidebar'
 import StyleWrapper from './style'
 
@@ -26,12 +27,16 @@ class DashboardLayout extends Component {
 
     return (
       <StyleWrapper>
-        <Layout style={{ height: appHeight, flexDirection: 'row', overflowX: 'hidden' }}>
-          <Sidebar collapsed={collapsed} onToggleCollapse={this.onToggleCollapse} />
+        <Layout style={{ height: appHeight, overflowX: 'hidden' }}>
+          <Header className="topbar">
+            <div className="logoWrapper">
+              <Logo color="white" />
+            </div>
+          </Header>
           <Layout>
-            <Header className="topbar" />
+            <Sidebar collapsed={collapsed} onToggleCollapse={this.onToggleCollapse} />
             <Content>
-              <div className="content-wrapper">
+              <div className="contentWrapper">
                 {children}
               </div>
             </Content>

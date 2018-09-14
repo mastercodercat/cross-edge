@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
 import bgImage from 'images/signin.jpg';
 
@@ -55,14 +54,6 @@ const SignInStyleWrapper = styled.div`
       margin-bottom: 50px;
       justify-content: center;
       flex-shrink: 0;
-
-      a {
-        font-size: 24px;
-        font-weight: 300;
-        line-height: 1;
-        text-transform: uppercase;
-        color: ${palette('secondary', 2)};
-      }
     }
   }
 `

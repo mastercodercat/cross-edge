@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import { Table } from 'antd'
 
 import {
   loadChannels,
@@ -13,6 +14,8 @@ import {
 import { isLoading } from 'utils/state-helpers'
 
 
+const { Column } = Table;
+
 class Channels extends Component {
 
   static propTypes = {
@@ -21,21 +24,51 @@ class Channels extends Component {
     loadChannels: PropTypes.func.isRequired,
   }
 
+  state = {
+    selectedRowKeys: [],
+  };
+
+  onSelectChange = (selectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  }
+
   componentDidMount() {
-    console.log('did mount')
     this.props.loadChannels()
   }
 
   render() {
     const { channels, channelsState } = this.props
+    const { selectedRowKeys } = this.state
 
     return (
       <div>
+        <h1>Channels</h1>
+
         {isLoading(channelsState) && <div>Loading...</div>}
 
-        {channels.map(channel => (
-          <div key={channel.id}>{channel.id} {channel.name}</div>
-        ))}
+        <Table rowSelection={{ selectedRowKeys, onChange: this.onSelectChange }} dataSource={channels.toArray()}>
+          <Column
+            title="Id"
+            dataIndex="id"
+            key="id"
+          />
+          <Column
+            title="Name"
+            dataIndex="name"
+            key="name"
+          />
+          <Column
+            title="GLN"
+            dataIndex="gln"
+            key="gln"
+          />
+          <Column
+            title="Country"
+            dataIndex="country"
+            key="country"
+          />
+        </Table>
       </div>
     )
   }

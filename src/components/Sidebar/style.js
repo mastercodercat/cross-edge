@@ -8,12 +8,6 @@ const StyleWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  .logoWrapper {
-    height: 60px;
-    display: flex;
-    align-items: center;
-  }
-
   .menu {
     flex: 1 1 0;
     background: rgba(255, 255, 255, 0.05);

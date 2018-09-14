@@ -1,18 +1,29 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
+
+import { palette } from 'styled-theme'
 
 
 const StyleWrapper = styled.div`
   .topbar {
-    background: #fff;
+    background-color: ${palette('adeptBlue', 0)};
     border-bottom: 1px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
-    padding: 0 15px;
+    padding: 0;
   }
 
-  .content-wrapper {
-    padding: 20px;
+  .logoWrapper {
+    height: 100%;
+    width: 240px;
+    display: flex;
+    align-items: center;
   }
-`;
 
-export default StyleWrapper;
+  .contentWrapper {
+    margin: 20px;
+    padding: 20px 20px 10px;
+    background-color: #fff;
+  }
+`
+
+export default StyleWrapper

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd'
+import PropTypes from 'prop-types'
 
 import Logo from 'components/Logo'
 import StyleWrapper from './style'
@@ -10,23 +11,21 @@ const { Sider } = Layout
 
 class Sidebar extends Component {
 
-  state = {
-    collapsed: false
-  }
-
-  onCollapse = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    })
+  static propTypes = {
+    collapsed: PropTypes.bool,
+    onToggleCollapse: PropTypes.func,
   }
 
   render() {
+    const { collapsed, onToggleCollapse } = this.props
+
     return (
       <Sider
-        collapsible
-        collapsed={this.state.collapsed}
-        onCollapse={this.onCollapse}
         width={240}
+        collapsible
+        trigger={null}
+        collapsed={collapsed}
+        onCollapse={onToggleCollapse}
       >
         <StyleWrapper>
           <div className="logoWrapper">

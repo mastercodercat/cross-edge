@@ -9,6 +9,7 @@ import { all } from 'redux-saga/effects'
 import authMiddleware from 'store/middlewares/auth'
 
 import { reducer as authReducer, saga as authSaga } from 'store/modules/auth'
+import { reducer as channelsReducer, saga as channelsSaga } from 'store/modules/channels'
 import { reducer as routerReducer } from 'store/modules/router'
 
 
@@ -40,12 +41,11 @@ const composeEnhancers =
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
   /* eslint-enable */
 
-// Add the reducer to your store on the `router` key
-// Also apply our middleware for navigating
 export const store = createStore(
   combineReducers({
     router: routerReducer,
     auth: authReducer,
+    channels: channelsReducer,
   }),
   Immutable.Map(),
   composeEnhancers(...enhancers)
@@ -55,5 +55,6 @@ export const store = createStore(
 sagaMiddleware.run(function* rootSaga() {
   yield all([
     authSaga(),
+    channelsSaga(),
   ])
 })

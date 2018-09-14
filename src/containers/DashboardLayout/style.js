@@ -7,6 +7,11 @@ const StyleWrapper = styled.div`
     border-bottom: 1px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
+    padding: 0 15px;
+  }
+
+  .content-wrapper {
+    padding: 20px;
   }
 `;
 

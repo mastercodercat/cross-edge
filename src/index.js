@@ -20,16 +20,16 @@ import './index.css'
 axios.interceptors.request.use((config) => {
   const token = getAuthToken()
   if (token) {
-    config.headers['Authorization'] = `JWT ${token}`
+    config.headers['Authorization'] = `Bearer ${token}`
   }
   return config
 })
-
+console.log(store.getState().toJS())///
 /* Render app components */
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={themes.themedefault}>
-      <Routes history={history} />
+      <Routes store={store} history={history} />
     </ThemeProvider>
   </Provider>,
   document.getElementById('root')

@@ -5,7 +5,9 @@ import { ConnectedRouter } from 'react-router-redux'
 import ScrollToTop from 'components/ScrollToTop'
 import {
   userIsAuthenticated,
-  userIsNotAuthenticated } from 'utils/auth-wrappers'
+  userIsNotAuthenticated,
+} from 'utils/auth-wrappers'
+import { selectIsAuthenticated } from 'store/modules/auth'
 
 import SignIn from 'containers/SignIn'
 import DashboardLayout from 'containers/DashboardLayout'
@@ -19,7 +21,7 @@ const UnauthenticatedRoutes = () => (
   </Switch>
 )
 
-const AuthenticatedRoutes = props => (
+const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
       <Redirect exact from="/" to="/channels" />
@@ -28,11 +30,17 @@ const AuthenticatedRoutes = props => (
   </DashboardLayout>
 )
 
-const Routes = ({ history }) => (
+const Routes = ({ store, history }) => (
   <ConnectedRouter history={history}>
     <ScrollToTop>
-      <Route path="/" component={userIsNotAuthenticated(UnauthenticatedRoutes)} />
-      <Route path="/" component={userIsAuthenticated(AuthenticatedRoutes)} />
+      <Route
+        path="/"
+        component={(
+          selectIsAuthenticated(store.getState()) ?
+          userIsAuthenticated(AuthenticatedRoutes) :
+          userIsNotAuthenticated(UnauthenticatedRoutes)
+        )}
+      />
     </ScrollToTop>
   </ConnectedRouter>
 )

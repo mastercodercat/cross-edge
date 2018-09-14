@@ -4,12 +4,14 @@ import axios from 'axios';
 import { API_BASE_URL } from 'config/base'
 import {
   signInSuccess,
-  signInFail } from './reducer'
+  signInFail,
+} from './reducer'
 import {
-  AUTH_SIGNIN } from './constants'
+  AUTH_SIGNIN,
+} from './constants'
 
 
-const signIn = function* (action) {
+const doSignIn = function* (action) {
   try {
     const response = yield call(
       axios.post,
@@ -23,5 +25,5 @@ const signIn = function* (action) {
 }
 
 export const saga = function* () {
-  yield takeLatest(AUTH_SIGNIN, signIn)
+  yield takeLatest(AUTH_SIGNIN, doSignIn)
 }

@@ -11,7 +11,8 @@ import SignInForm from 'components/SignInForm'
 import { REQUEST_PENDING } from 'constants.js'
 import {
   signIn,
-  selectAuth } from 'store/modules/auth'
+  selectAuth,
+} from 'store/modules/auth'
 import SignInStyleWrapper from "./style"
 
 

@@ -9,18 +9,31 @@ const { Header, Content } = Layout
 
 class DashboardLayout extends Component {
 
+  state = {
+    collapsed: false
+  }
+
+  onToggleCollapse = () => {
+    this.setState({
+      collapsed: !this.state.collapsed
+    })
+  }
+
   render() {
     const { children } = this.props
+    const { collapsed } = this.state
     const appHeight = window.innerHeight;
 
     return (
       <StyleWrapper>
         <Layout style={{ height: appHeight, flexDirection: 'row', overflowX: 'hidden' }}>
-          <Sidebar />
+          <Sidebar collapsed={collapsed} onToggleCollapse={this.onToggleCollapse} />
           <Layout>
             <Header className="topbar" />
             <Content>
-              {children}
+              <div className="content-wrapper">
+                {children}
+              </div>
             </Content>
           </Layout>
         </Layout>

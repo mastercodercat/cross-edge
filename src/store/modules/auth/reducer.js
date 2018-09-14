@@ -11,9 +11,11 @@ import {
   AUTH_SIGNIN,
   AUTH_SIGNIN_SUCCESS,
   AUTH_SIGNIN_FAIL,
-  AUTH_SIGNOUT } from './constants'
+  AUTH_SIGNOUT,
+} from './constants'
 import {
-  AuthState } from './models'
+  AuthState,
+} from './models'
 
 
 /* Initial state */

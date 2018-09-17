@@ -23,4 +23,7 @@ export const ChannelList = Immutable.List
 export const InitialState = Immutable.Record({
   channels: ChannelList(),
   channelsState: REQUEST_INITIAL,
+
+  currentChannel: Channel(),
+  currentChannelState: REQUEST_INITIAL,
 })

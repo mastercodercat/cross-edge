@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Table } from 'antd'
+import { Table, Spin } from 'antd'
 
 import {
   loadChannels,
@@ -22,15 +23,14 @@ class Channels extends Component {
     channels: ImmutablePropTypes.list.isRequired,
     channelsState: PropTypes.string.isRequired,
     loadChannels: PropTypes.func.isRequired,
+    history: PropTypes.object,
   }
 
-  state = {
-    selectedRowKeys: [],
-  };
+  handleClickColumn = (record, ev) => {
+    ev.preventDefault()
 
-  onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys);
-    this.setState({ selectedRowKeys });
+    const { history } = this.props
+    history.push(`/channels/${record.id}`)
   }
 
   componentDidMount() {
@@ -39,40 +39,46 @@ class Channels extends Component {
 
   render() {
     const { channels, channelsState } = this.props
-    const { selectedRowKeys } = this.state
 
     return (
       <div>
         <h1>Channels</h1>
 
-        {isLoading(channelsState) && <div>Loading...</div>}
-
-        <Table
-          dataSource={channels.toArray()}
-          rowKey="id"
-          rowSelection={{ selectedRowKeys, onChange: this.onSelectChange }}
-        >
-          <Column
-            title="Id"
-            dataIndex="id"
-            key="id"
-          />
-          <Column
-            title="Name"
-            dataIndex="name"
-            key="name"
-          />
-          <Column
-            title="GLN"
-            dataIndex="gln"
-            key="gln"
-          />
-          <Column
-            title="Country"
-            dataIndex="country"
-            key="country"
-          />
-        </Table>
+        <Spin spinning={isLoading(channelsState)}>
+          <Table
+            dataSource={channels.toArray()}
+            pagination={false}
+            rowKey="id"
+          >
+            <Column
+              title="Id"
+              dataIndex="id"
+              key="id"
+            />
+            <Column
+              title="Name"
+              dataIndex="name"
+              key="name"
+            />
+            <Column
+              title="GLN"
+              dataIndex="gln"
+              key="gln"
+            />
+            <Column
+              title="Country"
+              dataIndex="country"
+              key="country"
+            />
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <a href=":;" onClick={this.handleClickColumn.bind(this, record)}>Details</a>
+              )}
+            />
+          </Table>
+        </Spin>
       </div>
     )
   }
@@ -88,5 +94,6 @@ const actions = {
 }
 
 export default compose(
+  withRouter,
   connect(selector, actions)
 )(Channels)

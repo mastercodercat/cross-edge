@@ -1,0 +1,30 @@
+html,
+body,
+html h1,
+html h2,
+html h3,
+html h4,
+html h5,
+html h6,
+html a,
+html p,
+html li,
+input,
+textarea,
+span,
+div,
+html a {
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+}
+
+.info-table {
+  min-width: 50%;
+}
+
+.info-table td {
+  padding: 10px 20px 10px 0;
+  border-bottom: 1px solid #f0f0f1;
+}

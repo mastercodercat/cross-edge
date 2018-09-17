@@ -29,7 +29,7 @@ axios.interceptors.request.use((config) => {
 ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={themes.themedefault}>
-      <Routes store={store} history={history} />
+      <Routes history={history} />
     </ThemeProvider>
   </Provider>,
   document.getElementById('root')

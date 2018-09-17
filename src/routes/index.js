@@ -7,7 +7,6 @@ import {
   userIsAuthenticated,
   userIsNotAuthenticated,
 } from 'utils/auth-wrappers'
-import { selectIsAuthenticated } from 'store/modules/auth'
 
 import SignIn from 'containers/SignIn'
 import DashboardLayout from 'containers/DashboardLayout'
@@ -30,17 +29,11 @@ const AuthenticatedRoutes = () => (
   </DashboardLayout>
 )
 
-const Routes = ({ store, history }) => (
+const Routes = ({ history }) => (
   <ConnectedRouter history={history}>
     <ScrollToTop>
-      <Route
-        path="/"
-        component={(
-          selectIsAuthenticated(store.getState()) ?
-          userIsAuthenticated(AuthenticatedRoutes) :
-          userIsNotAuthenticated(UnauthenticatedRoutes)
-        )}
-      />
+      <Route path="/" component={userIsNotAuthenticated(UnauthenticatedRoutes)} />
+      <Route path="/" component={userIsAuthenticated(AuthenticatedRoutes)} />
     </ScrollToTop>
   </ConnectedRouter>
 )

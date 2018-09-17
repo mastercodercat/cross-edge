@@ -47,7 +47,11 @@ class Channels extends Component {
 
         {isLoading(channelsState) && <div>Loading...</div>}
 
-        <Table rowSelection={{ selectedRowKeys, onChange: this.onSelectChange }} dataSource={channels.toArray()}>
+        <Table
+          dataSource={channels.toArray()}
+          rowKey="id"
+          rowSelection={{ selectedRowKeys, onChange: this.onSelectChange }}
+        >
           <Column
             title="Id"
             dataIndex="id"

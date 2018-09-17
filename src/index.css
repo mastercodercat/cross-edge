@@ -28,3 +28,14 @@ html a {
   padding: 10px 20px 10px 0;
   border-bottom: 1px solid #f0f0f1;
 }
+
+/* ant table responsiveness */
+
+.ant-table {
+  overflow-x: auto;
+}
+
+.ant-table th,
+.ant-table td {
+  white-space: nowrap;
+}

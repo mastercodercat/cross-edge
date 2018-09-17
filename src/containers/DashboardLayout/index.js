@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout } from 'antd'
+import WindowResizeListener from 'react-window-size-listener'
 
 import Logo from 'components/Logo'
 import Sidebar from 'components/Sidebar'
@@ -11,7 +12,9 @@ const { Header, Content } = Layout
 class DashboardLayout extends Component {
 
   state = {
-    collapsed: false
+    collapsed: false,
+    appWidth: window.innerWidth,
+    appHeight: window.innerHeight,
   }
 
   handleToggleCollapse = () => {
@@ -20,10 +23,17 @@ class DashboardLayout extends Component {
     })
   }
 
+  handleWindowResize = ({ windowWidth, windowHeight }) => {
+    this.setState({
+      appWidth: windowWidth,
+      appHeight: windowHeight,
+    })
+  }
+
   render() {
     const { children } = this.props
-    const { collapsed } = this.state
-    const appHeight = window.innerHeight;
+    const { collapsed, appWidth, appHeight } = this.state
+    const isMobile = appWidth <= 768
 
     return (
       <StyleWrapper>
@@ -32,21 +42,25 @@ class DashboardLayout extends Component {
             <div className="logoWrapper">
               <Logo color="white" />
             </div>
-            <div>
+            {!isMobile && <div>
               <button
                 className="ion-navicon siderTriggerBtn"
                 onClick={this.handleToggleCollapse}
               />
-            </div>
+            </div>}
           </Header>
           <Layout>
-            <Sidebar collapsed={collapsed} onToggleCollapse={this.handleToggleCollapse} />
+            <Sidebar
+              collapsed={collapsed || isMobile}
+              onToggleCollapse={this.handleToggleCollapse}
+            />
             <Content>
               <div className="contentWrapper">
                 {children}
               </div>
             </Content>
           </Layout>
+          <WindowResizeListener onResize={this.handleWindowResize} />
         </Layout>
       </StyleWrapper>
     )

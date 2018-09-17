@@ -4446,6 +4446,12 @@ lodash.curry@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
 
+lodash.debounce@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-3.1.1.tgz#812211c378a94cc29d5aa4e3346cf0bfce3a7df5"
+  dependencies:
+    lodash._getnative "^3.0.0"
+
 lodash.debounce@^4.0.0, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -6307,6 +6313,13 @@ react-slick@~0.23.1:
     json2mq "^0.2.0"
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
+
+react-window-size-listener@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-window-size-listener/-/react-window-size-listener-1.2.1.tgz#8dddce05574ff9057116e55254cd97c4b33bf9cd"
+  dependencies:
+    lodash.debounce "^3.1.1"
+    prop-types "^15.6.0"
 
 react@^16.5.0:
   version "16.5.0"

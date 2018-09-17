@@ -14,7 +14,7 @@ class DashboardLayout extends Component {
     collapsed: false
   }
 
-  onToggleCollapse = () => {
+  handleToggleCollapse = () => {
     this.setState({
       collapsed: !this.state.collapsed
     })
@@ -32,9 +32,15 @@ class DashboardLayout extends Component {
             <div className="logoWrapper">
               <Logo color="white" />
             </div>
+            <div>
+              <button
+                className="ion-navicon siderTriggerBtn"
+                onClick={this.handleToggleCollapse}
+              />
+            </div>
           </Header>
           <Layout>
-            <Sidebar collapsed={collapsed} onToggleCollapse={this.onToggleCollapse} />
+            <Sidebar collapsed={collapsed} onToggleCollapse={this.handleToggleCollapse} />
             <Content>
               <div className="contentWrapper">
                 {children}

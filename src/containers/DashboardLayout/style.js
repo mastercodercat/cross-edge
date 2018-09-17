@@ -19,6 +19,17 @@ const StyleWrapper = styled.div`
     align-items: center;
   }
 
+  .siderTriggerBtn {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    font-size: 28px;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    display: block;
+  }
+
   .contentWrapper {
     margin: 20px;
     padding: 30px;

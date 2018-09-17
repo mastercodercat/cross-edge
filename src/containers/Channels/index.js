@@ -8,14 +8,14 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Table, Spin } from 'antd'
 
 import {
-  loadChannels,
   selectChannelList,
-  selectChannelListStateLoaded,
+  selectChannelListState,
+  loadChannels,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
 
 
-const { Column } = Table;
+const { Column } = Table
 
 class Channels extends Component {
 
@@ -86,7 +86,7 @@ class Channels extends Component {
 
 const selector = createStructuredSelector({
   channels: selectChannelList,
-  channelsState: selectChannelListStateLoaded,
+  channelsState: selectChannelListState,
 })
 
 const actions = {

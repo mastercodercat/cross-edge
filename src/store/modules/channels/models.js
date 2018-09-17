@@ -18,12 +18,23 @@ export const Channel = Immutable.Record({
   time_zone_offset: 0
 })
 
-export const ChannelList = Immutable.List
+export const ChannelEntry = Immutable.Record({
+  name: '',
+  description: '',
+  upc: '',
+  gtin: '',
+  sku: '',
+  internal_identifier: '',
+  primary_identifier: 0,
+  image: '',
+})
 
 export const InitialState = Immutable.Record({
-  channels: ChannelList(),
+  channels: Immutable.List(),
   channelsState: REQUEST_INITIAL,
 
   currentChannel: Channel(),
   currentChannelState: REQUEST_INITIAL,
+  currentChannelEntries: Immutable.List(),
+  currentChannelEntriesState: REQUEST_INITIAL,
 })

@@ -7,10 +7,15 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Table, Spin } from 'antd'
 
+import ChannelEntryList from 'components/ChannelEntryList'
+import { REQUEST_INITIAL } from 'constants.js'
 import {
   selectChannelList,
   selectChannelListState,
+  selectCurrentChannelEntries,
+  selectCurrentChannelEntriesState,
   loadChannels,
+  loadChannelEntries,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
 
@@ -22,15 +27,35 @@ class Channels extends Component {
   static propTypes = {
     channels: ImmutablePropTypes.list.isRequired,
     channelsState: PropTypes.string.isRequired,
+    currentChannelEntries: ImmutablePropTypes.list.isRequired,
+    currentChannelEntriesState: PropTypes.string.isRequired,
     loadChannels: PropTypes.func.isRequired,
+    loadChannelEntries: PropTypes.func.isRequired,
     history: PropTypes.object,
+  }
+
+  state = {
+    currentChannelForEntries: {}
   }
 
   handleClickColumn = (record, ev) => {
     ev.preventDefault()
-
     const { history } = this.props
     history.push(`/channels/${record.id}`)
+  }
+
+  handleClickEntries = (channel, ev) => {
+    ev.preventDefault()
+    this.setState({
+      currentChannelForEntries: channel,
+    })
+    this.props.loadChannelEntries({ id: channel.id })
+  }
+
+  rowClassName = (record) => {
+    const { currentChannelForEntries } = this.state
+    return currentChannelForEntries.id === record.id ?
+      'table-row-active' : 'table-row-inactive'
   }
 
   componentDidMount() {
@@ -38,7 +63,13 @@ class Channels extends Component {
   }
 
   render() {
-    const { channels, channelsState } = this.props
+    const {
+      channels,
+      channelsState,
+      currentChannelEntries,
+      currentChannelEntriesState,
+    } = this.props
+    const { currentChannelForEntries } = this.state
 
     return (
       <div>
@@ -48,6 +79,7 @@ class Channels extends Component {
           <Table
             dataSource={channels.toArray()}
             pagination={false}
+            rowClassName={this.rowClassName}
             rowKey="id"
           >
             <Column
@@ -74,11 +106,30 @@ class Channels extends Component {
               title="Action"
               key="action"
               render={(text, record) => (
-                <a href=":;" onClick={this.handleClickColumn.bind(this, record)}>Details</a>
+                <span>
+                  <a href={`/channels/${record.id}`} onClick={this.handleClickColumn.bind(this, record)}>Details</a>
+                  {'  '}
+                  <a href="/channels" onClick={this.handleClickEntries.bind(this, record)}>Entries</a>
+                </span>
               )}
             />
           </Table>
         </Spin>
+
+        {
+          currentChannelEntriesState !== REQUEST_INITIAL &&
+          <div>
+            <h2 className="mt">Channel entries of {currentChannelForEntries.name}</h2>
+
+            <ChannelEntryList
+              loading={isLoading(currentChannelEntriesState)}
+              channelEntries={currentChannelEntries.toArray()}
+              action={[
+                { text: 'Details', handler: e => e },
+              ]}
+            />
+          </div>
+        }
       </div>
     )
   }
@@ -87,10 +138,13 @@ class Channels extends Component {
 const selector = createStructuredSelector({
   channels: selectChannelList,
   channelsState: selectChannelListState,
+  currentChannelEntries: selectCurrentChannelEntries,
+  currentChannelEntriesState: selectCurrentChannelEntriesState,
 })
 
 const actions = {
   loadChannels,
+  loadChannelEntries,
 }
 
 export default compose(

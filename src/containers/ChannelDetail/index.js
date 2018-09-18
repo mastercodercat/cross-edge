@@ -7,15 +7,11 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Spin } from 'antd'
 
-import ChannelEntryList from 'components/ChannelEntryList'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
   selectCurrentChannel,
   selectCurrentChannelState,
-  selectCurrentChannelEntries,
-  selectCurrentChannelEntriesState,
   loadChannel,
-  loadChannelEntries,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
 
@@ -26,22 +22,18 @@ class ChannelDetail extends Component {
     currentChannel: ImmutablePropTypes.record,
     currentChannelState: PropTypes.string.isRequired,
     loadChannel: PropTypes.func.isRequired,
-    loadChannelEntries: PropTypes.func.isRequired,
     history: PropTypes.object,
   }
 
   componentDidMount() {
     const { match } = this.props
     this.props.loadChannel({ id: match.params.id })
-    this.props.loadChannelEntries({ id: match.params.id })
   }
 
   render() {
     const {
       currentChannel,
       currentChannelState,
-      currentChannelEntries,
-      currentChannelEntriesState,
     } = this.props
     const loading = isLoading(currentChannelState)
 
@@ -98,16 +90,6 @@ class ChannelDetail extends Component {
             </div>
           }
         </Spin>
-
-        <h2>Channel entries</h2>
-
-        <ChannelEntryList
-          loading={isLoading(currentChannelEntriesState)}
-          channelEntries={currentChannelEntries.toArray()}
-          action={[
-            { text: 'Details', handler: e => e },
-          ]}
-        />
       </div>
     )
   }
@@ -116,13 +98,10 @@ class ChannelDetail extends Component {
 const selector = createStructuredSelector({
   currentChannel: selectCurrentChannel,
   currentChannelState: selectCurrentChannelState,
-  currentChannelEntries: selectCurrentChannelEntries,
-  currentChannelEntriesState: selectCurrentChannelEntriesState,
 })
 
 const actions = {
   loadChannel,
-  loadChannelEntries,
 }
 
 export default compose(

@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { compose } from 'redux'
 
 import StyleWrapper from './style'
 
 
 const { Sider } = Layout
-// const SubMenu = Menu.SubMenu;
 
 class Sidebar extends Component {
 
@@ -15,8 +16,13 @@ class Sidebar extends Component {
     onToggleCollapse: PropTypes.func,
   }
 
+  handleClickMenu = ({ item, key }) => {
+    const { history } = this.props
+    history.push(key)
+  }
+
   render() {
-    const { collapsed, onToggleCollapse } = this.props
+    const { collapsed, onToggleCollapse, location } = this.props
 
     return (
       <Sider
@@ -27,14 +33,10 @@ class Sidebar extends Component {
         onCollapse={onToggleCollapse}
       >
         <StyleWrapper>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1">
+          <Menu theme="dark" selectedKeys={[location.pathname]} mode="inline" onClick={this.handleClickMenu}>
+            <Menu.Item key="/channels">
               <Icon type="cluster" />
               <span>Channels</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="edit" />
-              <span>Test</span>
             </Menu.Item>
           </Menu>
         </StyleWrapper>
@@ -43,4 +45,6 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar
+export default compose(
+  withRouter,
+)(Sidebar)

@@ -24,12 +24,12 @@ h1, h2, h3, h4, h5, h6 {
   margin: 1.5em 0 1em;
 }
 
-h1:first-child,
-h2:first-child,
-h3:first-child,
-h4:first-child,
-h5:first-child,
-h6:first-child {
+h1:first-child:not(.mt),
+h2:first-child:not(.mt),
+h3:first-child:not(.mt),
+h4:first-child:not(.mt),
+h5:first-child:not(.mt),
+h6:first-child:not(.mt) {
   margin-top: 0;
 }
 
@@ -53,4 +53,8 @@ h6:first-child {
 .ant-table th,
 .ant-table td {
   white-space: nowrap;
+}
+
+.table-row-active {
+  background-color: rgba(8, 120, 189, 0.1);   /* 10% opacity of lochmara-5 color */
 }

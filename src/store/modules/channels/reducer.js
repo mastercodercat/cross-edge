@@ -4,6 +4,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { convertToListRecord } from 'utils/state-helpers'
 
 import { REQUEST_INITIAL } from 'constants.js'
+import { DEFAULT_PAGE_SIZE } from 'config/base'
 import { generateRequestLoopHandlers } from 'utils/state-helpers'
 
 import {
@@ -16,6 +17,9 @@ import {
   LOAD_CHANNEL_ENTRIES,
   LOAD_CHANNEL_ENTRIES_SUCCESS,
   LOAD_CHANNEL_ENTRIES_FAIL,
+  SET_CHANNEL_ENTRIES_CHANNEL_ID,
+  SET_CHANNEL_ENTRIES_PAGE,
+  SET_CHANNEL_ENTRIES_PAGE_SIZE,
 } from './constants'
 
 import {
@@ -30,11 +34,19 @@ import {
 const initialState = new InitialState({
   channels: Immutable.List(),
   channelsState: REQUEST_INITIAL,
+  channelsPage: 1,
+  channelsPageSize: DEFAULT_PAGE_SIZE,
+  channelsCount: 0,
 
   currentChannel: Channel(),
   currentChannelState: REQUEST_INITIAL,
+
+  currentChannelEntriesChannelId: 0,
   currentChannelEntries: Immutable.List(),
   currentChannelEntriesState: REQUEST_INITIAL,
+  currentChannelEntriesPage: 1,
+  currentChannelEntriesPageSize: DEFAULT_PAGE_SIZE,
+  currentChannelEntriesCount: 0,
 })
 
 /* Action creators */
@@ -50,6 +62,9 @@ export const loadChannelFail = createAction(LOAD_CHANNEL_FAIL)
 export const loadChannelEntries = createAction(LOAD_CHANNEL_ENTRIES)
 export const loadChannelEntriesSuccess = createAction(LOAD_CHANNEL_ENTRIES_SUCCESS)
 export const loadChannelEntriesFail = createAction(LOAD_CHANNEL_ENTRIES_FAIL)
+export const setChannelEntriesChannelId = createAction(SET_CHANNEL_ENTRIES_CHANNEL_ID)
+export const setChannelEntriesPage = createAction(SET_CHANNEL_ENTRIES_PAGE)
+export const setChannelEntriesPageSize = createAction(SET_CHANNEL_ENTRIES_PAGE_SIZE)
 
 /* Reducer */
 
@@ -62,6 +77,7 @@ export const reducer = handleActions({
     dataField: 'channels',
     initialValue: Immutable.List(),
     successPayloadProcessor: payload => convertToListRecord(payload.results, Channel),
+    usePagination: true,
   }),
 
   /* Load single channel detail*/
@@ -76,9 +92,14 @@ export const reducer = handleActions({
 
   ...generateRequestLoopHandlers({
     action: LOAD_CHANNEL_ENTRIES,
-    dataField: 'currentChannel',
+    dataField: 'currentChannelEntries',
     initialValue: Immutable.List(),
     successPayloadProcessor: payload => convertToListRecord(payload.results, ChannelEntry),
+    usePagination: true,
+  }),
+
+  [SET_CHANNEL_ENTRIES_CHANNEL_ID]: (state, { payload }) => state.withMutations(record => {
+    record.set('currentChannelEntriesChannelId', payload)
   }),
 
 }, initialState)

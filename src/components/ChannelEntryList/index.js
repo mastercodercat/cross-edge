@@ -4,37 +4,27 @@ import { Table, Spin } from 'antd'
 
 const { Column } = Table
 
-const ChannelEntryList = ({ loading, channelEntries, actions }) => (
+const ChannelEntryList = ({ loading, channelEntries, actions, pagination }) => (
   <Spin spinning={loading}>
     <Table
       dataSource={channelEntries}
-      pagination={false}
-      rowKey="id"
+      pagination={pagination}
+      rowKey="serial_number"
     >
       <Column
-        title="Id"
-        dataIndex="id"
-        key="id"
+        title="Product ID"
+        dataIndex="product"
+        key="product"
       />
       <Column
-        title="Name"
-        dataIndex="name"
-        key="name"
+        title="Serial number"
+        dataIndex="serial_number"
+        key="serial_number"
       />
       <Column
-        title="UPC"
-        dataIndex="upc"
-        key="upc"
-      />
-      <Column
-        title="GTIN"
-        dataIndex="gtin"
-        key="gtin"
-      />
-      <Column
-        title="SKU"
-        dataIndex="sku"
-        key="sku"
+        title="Ship date"
+        dataIndex="ship_date"
+        key="ship_date"
       />
       <Column
         title="Action"

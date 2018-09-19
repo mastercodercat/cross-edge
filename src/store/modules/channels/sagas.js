@@ -1,7 +1,13 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
 import axios from 'axios';
 
 import { API_BASE_URL } from 'config/base'
+
+import {
+  LOAD_CHANNELS,
+  LOAD_CHANNEL,
+  LOAD_CHANNEL_ENTRIES,
+} from './constants'
 import {
   loadChannelsSuccess,
   loadChannelsFail,
@@ -11,10 +17,10 @@ import {
   loadChannelEntriesFail,
 } from './reducer'
 import {
-  LOAD_CHANNELS,
-  LOAD_CHANNEL,
-  LOAD_CHANNEL_ENTRIES,
-} from './constants'
+  selectCurrentChannelEntriesChannelId,
+  selectCurrentChannelEntriesPage,
+  selectCurrentChannelEntriesPageSize,
+} from './selectors'
 
 
 const doLoadChannels = function* (action) {
@@ -43,11 +49,14 @@ const doLoadChannel = function* (action) {
 }
 
 const doLoadChannelEntries = function* (action) {
-  const { id } = action.payload
   try {
+    const channelId = yield select(selectCurrentChannelEntriesChannelId)
+    const page = yield select(selectCurrentChannelEntriesPage)
+    const pageSize = yield select(selectCurrentChannelEntriesPageSize)
+
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/channels/channelentry-channel/${id}/`,
+      `${API_BASE_URL}/channels/channelentry/${channelId}/?page=${page}&page-size=${pageSize}`,
     )
     yield put(loadChannelEntriesSuccess(response.data))
   } catch (error) {

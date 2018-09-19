@@ -21,8 +21,20 @@ export const selectCurrentChannelState = state =>
 
 // current channel entries selector
 
+export const selectCurrentChannelEntriesChannelId = state =>
+  state.getIn(['channels', 'currentChannelEntriesChannelId'])
+
 export const selectCurrentChannelEntries = state =>
   state.getIn(['channels', 'currentChannelEntries'])
 
 export const selectCurrentChannelEntriesState = state =>
   state.getIn(['channels', 'currentChannelEntriesState'])
+
+export const selectCurrentChannelEntriesPage = state =>
+  state.getIn(['channels', 'currentChannelEntriesPage'])
+
+export const selectCurrentChannelEntriesPageSize = state =>
+  state.getIn(['channels', 'currentChannelEntriesPageSize'])
+
+export const selectCurrentChannelEntriesCount = state =>
+  state.getIn(['channels', 'currentChannelEntriesCount'])

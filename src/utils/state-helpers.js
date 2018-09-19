@@ -28,17 +28,32 @@ export function generateRequestLoopHandlers(config) {
     action, dataField, stateField,
     initialValue, successPayloadProcessor,
     onInitial, onSuccess, onFail,
+    usePagination, pageField, page_sizeField, countField, setPageAction, setPageSizeAction,
   } = config
 
   if (!action || !dataField || !successPayloadProcessor) {
     throw new Error('action, dataField and successPayloadProcessor should be set for generating request loop handlers')
   }
 
-  if (!stateField) {
-    stateField = dataField + 'State'
-  }
-
+  stateField = stateField || (`${dataField}State`)
   initialValue = initialValue || null
+
+  let paginationHandlers = {}
+  if (usePagination) {
+    pageField = pageField || (`${dataField}Page`)
+    page_sizeField = page_sizeField || (`${dataField}PageSize`)
+    countField = countField || (`${dataField}Count`)
+    setPageAction = setPageAction || (`${action}/set_page`)
+    setPageSizeAction = setPageSizeAction || (`${action}/set_page_size`)
+
+    paginationHandlers = {
+      [setPageAction]: (state, { payload }) => state.withMutations(record =>
+        record.set(pageField, payload)),
+
+      [setPageSizeAction]: (state, { payload }) => state.withMutations(record =>
+        record.set(page_sizeField, payload)),
+    }
+  }
 
   return {
     [action]: (state, { payload }) => state.withMutations(record => {
@@ -52,6 +67,9 @@ export function generateRequestLoopHandlers(config) {
     [`${action}/success`]: (state, { payload }) => state.withMutations(record => {
       record.set(dataField, successPayloadProcessor(payload))
       record.set(stateField, REQUEST_SUCCESS)
+      if (usePagination) {
+        record.set(countField, payload.count)
+      }
       if (onSuccess) {
         onSuccess(record, payload)
       }
@@ -64,5 +82,8 @@ export function generateRequestLoopHandlers(config) {
         onFail(record, payload)
       }
     }),
+
+    ...paginationHandlers,
+
   }
 }

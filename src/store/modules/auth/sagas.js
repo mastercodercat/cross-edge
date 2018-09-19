@@ -2,13 +2,14 @@ import { takeLatest, call, put } from 'redux-saga/effects'
 import axios from 'axios';
 
 import { API_BASE_URL } from 'config/base'
+
+import {
+  AUTH_SIGNIN,
+} from './constants'
 import {
   signInSuccess,
   signInFail,
 } from './reducer'
-import {
-  AUTH_SIGNIN,
-} from './constants'
 
 
 const doSignIn = function* (action) {

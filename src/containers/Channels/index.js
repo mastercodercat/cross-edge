@@ -14,10 +14,17 @@ import {
   selectChannelListState,
   selectCurrentChannelEntries,
   selectCurrentChannelEntriesState,
+  selectCurrentChannelEntriesPage,
+  selectCurrentChannelEntriesPageSize,
+  selectCurrentChannelEntriesCount,
   loadChannels,
   loadChannelEntries,
+  setChannelEntriesChannelId,
+  setChannelEntriesPage,
+  setChannelEntriesPageSize,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
+import StyleWrapper from './style'
 
 
 const { Column } = Table
@@ -29,8 +36,14 @@ class Channels extends Component {
     channelsState: PropTypes.string.isRequired,
     currentChannelEntries: ImmutablePropTypes.list.isRequired,
     currentChannelEntriesState: PropTypes.string.isRequired,
+    currentChannelEntriesPage: PropTypes.number.isRequired,
+    currentChannelEntriesPageSize: PropTypes.number.isRequired,
+    currentChannelEntriesCount: PropTypes.number.isRequired,
     loadChannels: PropTypes.func.isRequired,
     loadChannelEntries: PropTypes.func.isRequired,
+    setChannelEntriesChannelId: PropTypes.func.isRequired,
+    setChannelEntriesPage: PropTypes.func.isRequired,
+    setChannelEntriesPageSize: PropTypes.func.isRequired,
     history: PropTypes.object,
   }
 
@@ -49,13 +62,20 @@ class Channels extends Component {
     this.setState({
       currentChannelForEntries: channel,
     })
-    this.props.loadChannelEntries({ id: channel.id })
+    this.props.setChannelEntriesChannelId(channel.id)
+    this.props.loadChannelEntries()
   }
 
   rowClassName = (record) => {
     const { currentChannelForEntries } = this.state
     return currentChannelForEntries.id === record.id ?
       'table-row-active' : 'table-row-inactive'
+  }
+
+  handleChangeChannelEntriesPage = (page, pageSize) => {
+    this.props.setChannelEntriesPage(page)
+    this.props.setChannelEntriesPageSize(pageSize)
+    this.props.loadChannelEntries()
   }
 
   componentDidMount() {
@@ -68,11 +88,14 @@ class Channels extends Component {
       channelsState,
       currentChannelEntries,
       currentChannelEntriesState,
+      currentChannelEntriesPage,
+      currentChannelEntriesPageSize,
+      currentChannelEntriesCount,
     } = this.props
     const { currentChannelForEntries } = this.state
 
     return (
-      <div>
+      <StyleWrapper>
         <h1>Channels</h1>
 
         <Spin spinning={isLoading(channelsState)}>
@@ -83,7 +106,7 @@ class Channels extends Component {
             rowKey="id"
           >
             <Column
-              title="Id"
+              title="ID"
               dataIndex="id"
               key="id"
             />
@@ -107,8 +130,7 @@ class Channels extends Component {
               key="action"
               render={(text, record) => (
                 <span>
-                  <a href={`/channels/${record.id}`} onClick={this.handleClickColumn.bind(this, record)}>Details</a>
-                  {'  '}
+                  <a className="mr" href={`/channels/${record.id}`} onClick={this.handleClickColumn.bind(this, record)}>Details</a>
                   <a href="/channels" onClick={this.handleClickEntries.bind(this, record)}>Entries</a>
                 </span>
               )}
@@ -124,13 +146,19 @@ class Channels extends Component {
             <ChannelEntryList
               loading={isLoading(currentChannelEntriesState)}
               channelEntries={currentChannelEntries.toArray()}
-              action={[
-                { text: 'Details', handler: e => e },
+              actions={[
+                { text: 'Details', handler: (record, e) => e.preventDefault() },
               ]}
+              pagination={{
+                total: currentChannelEntriesCount,
+                current: currentChannelEntriesPage,
+                pageSize: currentChannelEntriesPageSize,
+                onChange: this.handleChangeChannelEntriesPage,
+              }}
             />
           </div>
         }
-      </div>
+      </StyleWrapper>
     )
   }
 }
@@ -140,11 +168,17 @@ const selector = createStructuredSelector({
   channelsState: selectChannelListState,
   currentChannelEntries: selectCurrentChannelEntries,
   currentChannelEntriesState: selectCurrentChannelEntriesState,
+  currentChannelEntriesPage: selectCurrentChannelEntriesPage,
+  currentChannelEntriesPageSize: selectCurrentChannelEntriesPageSize,
+  currentChannelEntriesCount: selectCurrentChannelEntriesCount,
 })
 
 const actions = {
   loadChannels,
   loadChannelEntries,
+  setChannelEntriesChannelId,
+  setChannelEntriesPage,
+  setChannelEntriesPageSize,
 }
 
 export default compose(

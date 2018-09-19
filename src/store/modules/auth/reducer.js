@@ -2,11 +2,9 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { getAuthToken, setAuthToken, clearAuthToken } from 'utils/storage'
 
-import {
-  REQUEST_INITIAL,
-  REQUEST_PENDING,
-  REQUEST_SUCCESS,
-  REQUEST_FAIL, } from 'constants.js'
+import { REQUEST_INITIAL } from 'constants.js'
+import { generateRequestLoopHandlers } from 'utils/state-helpers'
+
 import {
   AUTH_SIGNIN,
   AUTH_SIGNIN_SUCCESS,
@@ -36,20 +34,14 @@ export const signOut = createAction(AUTH_SIGNOUT)
 
 export const reducer = handleActions({
 
-  [AUTH_SIGNIN]: (state) => state.withMutations(record => {
-    record.set('authState', REQUEST_PENDING)
-  }),
-
-  [AUTH_SIGNIN_SUCCESS]: (state, { payload }) => state.withMutations(record => {
-    record.set('authToken', payload.token)
-    setAuthToken(payload.token)
-    record.set('authState', REQUEST_SUCCESS)
-  }),
-
-  [AUTH_SIGNIN_FAIL]: (state) => state.withMutations(record => {
-    record.set('authToken', '')
-    record.set('authState', REQUEST_FAIL)
-    clearAuthToken()
+  ...generateRequestLoopHandlers({
+    action: AUTH_SIGNIN,
+    dataField: 'authToken',
+    stateField: 'authState',
+    initialValue: '',
+    successPayloadProcessor: payload => payload.token,
+    onSuccess: (record, payload) => setAuthToken(payload.token),
+    onFail: () => clearAuthToken(),
   }),
 
   [AUTH_SIGNOUT]: (state) => state.withMutations(record => {

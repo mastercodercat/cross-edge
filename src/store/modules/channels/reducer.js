@@ -3,12 +3,8 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
 
-import {
-  REQUEST_INITIAL,
-  REQUEST_PENDING,
-  REQUEST_SUCCESS,
-  REQUEST_FAIL,
-} from 'constants.js'
+import { REQUEST_INITIAL } from 'constants.js'
+import { generateRequestLoopHandlers } from 'utils/state-helpers'
 
 import {
   LOAD_CHANNELS,
@@ -61,53 +57,28 @@ export const reducer = handleActions({
 
   /* Load channels */
 
-  [LOAD_CHANNELS]: (state) => state.withMutations(record => {
-    record.set('channels', Immutable.List())
-    record.set('channelsState', REQUEST_PENDING)
-  }),
-
-  [LOAD_CHANNELS_SUCCESS]: (state, { payload }) => state.withMutations(record => {
-    record.set('channels', convertToListRecord(payload.results, Channel))
-    record.set('channelsState', REQUEST_SUCCESS)
-  }),
-
-  [LOAD_CHANNELS_FAIL]: (state) => state.withMutations(record => {
-    record.set('channels', Immutable.List())
-    record.set('channelsState', REQUEST_FAIL)
+  ...generateRequestLoopHandlers({
+    action: LOAD_CHANNELS,
+    dataField: 'channels',
+    initialValue: Immutable.List(),
+    successPayloadProcessor: payload => convertToListRecord(payload.results, Channel),
   }),
 
   /* Load single channel detail*/
 
-  [LOAD_CHANNEL]: (state) => state.withMutations(record => {
-    record.set('currentChannel', null)
-    record.set('currentChannelState', REQUEST_PENDING)
-  }),
-
-  [LOAD_CHANNEL_SUCCESS]: (state, { payload }) => state.withMutations(record => {
-    record.set('currentChannel', Channel(payload))
-    record.set('currentChannelState', REQUEST_SUCCESS)
-  }),
-
-  [LOAD_CHANNEL_FAIL]: (state) => state.withMutations(record => {
-    record.set('currentChannel', null)
-    record.set('currentChannelState', REQUEST_FAIL)
+  ...generateRequestLoopHandlers({
+    action: LOAD_CHANNEL,
+    dataField: 'currentChannel',
+    successPayloadProcessor: payload => Channel(payload),
   }),
 
   /* Load channel entries of a channel */
 
-  [LOAD_CHANNEL_ENTRIES]: (state) => state.withMutations(record => {
-    record.set('currentChannelEntries', Immutable.List())
-    record.set('currentChannelEntriesState', REQUEST_PENDING)
-  }),
-
-  [LOAD_CHANNEL_ENTRIES_SUCCESS]: (state, { payload }) => state.withMutations(record => {
-    record.set('currentChannelEntries', convertToListRecord(payload.results, ChannelEntry))
-    record.set('currentChannelEntriesState', REQUEST_SUCCESS)
-  }),
-
-  [LOAD_CHANNEL_ENTRIES_FAIL]: (state) => state.withMutations(record => {
-    record.set('currentChannelEntries', Immutable.List())
-    record.set('currentChannelEntriesState', REQUEST_FAIL)
+  ...generateRequestLoopHandlers({
+    action: LOAD_CHANNEL_ENTRIES,
+    dataField: 'currentChannel',
+    initialValue: Immutable.List(),
+    successPayloadProcessor: payload => convertToListRecord(payload.results, ChannelEntry),
   }),
 
 }, initialState)

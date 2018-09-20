@@ -81,7 +81,7 @@ class Channels extends Component {
 
     return (
       <StyleWrapper>
-        <h1>Channels</h1>
+        <h1>Channel Manager</h1>
 
         <Spin spinning={isLoading(channels.state)}>
           <Table
@@ -90,11 +90,6 @@ class Channels extends Component {
             rowClassName={this.rowClassName}
             rowKey="id"
           >
-            <Column
-              title="ID"
-              dataIndex="id"
-              key="id"
-            />
             <Column
               title="Name"
               dataIndex="name"
@@ -126,7 +121,7 @@ class Channels extends Component {
         {
           currentChannelEntries.state !== REQUEST_INITIAL &&
           <div>
-            <h2 className="mt">Channel entries of {currentChannelForEntries.name}</h2>
+            <h2 className="mt">{currentChannelForEntries.name} Entries</h2>
 
             <ChannelEntryList
               loading={isLoading(currentChannelEntries.state)}

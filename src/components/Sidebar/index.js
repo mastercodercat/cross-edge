@@ -36,7 +36,7 @@ class Sidebar extends Component {
           <Menu theme="dark" selectedKeys={[location.pathname]} mode="inline" onClick={this.handleClickMenu}>
             <Menu.Item key="/channels">
               <Icon type="cluster" />
-              <span>Channels</span>
+              <span>Channel Manager</span>
             </Menu.Item>
           </Menu>
         </StyleWrapper>

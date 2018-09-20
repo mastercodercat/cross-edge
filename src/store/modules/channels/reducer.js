@@ -16,7 +16,7 @@ import {
   LOAD_CHANNEL_ENTRIES,
   LOAD_CHANNEL_ENTRIES_SUCCESS,
   LOAD_CHANNEL_ENTRIES_FAIL,
-  SET_CHANNEL_ENTRIES_CHANNEL_ID,
+  SET_CHANNEL_ENTRIES_CHANNEL,
   SET_CHANNEL_ENTRIES_PAGE,
   SET_CHANNEL_ENTRIES_PAGE_SIZE,
 } from './constants'
@@ -36,7 +36,7 @@ const initialState = new InitialState({
 
   currentChannel: ChannelData(),
 
-  currentChannelEntriesChannelId: 0,
+  currentChannelEntriesChannel: null,
   currentChannelEntries: PaginatedListData(),
 })
 
@@ -53,7 +53,7 @@ export const loadChannelFail = createAction(LOAD_CHANNEL_FAIL)
 export const loadChannelEntries = createAction(LOAD_CHANNEL_ENTRIES)
 export const loadChannelEntriesSuccess = createAction(LOAD_CHANNEL_ENTRIES_SUCCESS)
 export const loadChannelEntriesFail = createAction(LOAD_CHANNEL_ENTRIES_FAIL)
-export const setChannelEntriesChannelId = createAction(SET_CHANNEL_ENTRIES_CHANNEL_ID)
+export const setChannelEntriesChannel = createAction(SET_CHANNEL_ENTRIES_CHANNEL)
 export const setChannelEntriesPage = createAction(SET_CHANNEL_ENTRIES_PAGE)
 export const setChannelEntriesPageSize = createAction(SET_CHANNEL_ENTRIES_PAGE_SIZE)
 
@@ -89,8 +89,8 @@ export const reducer = handleActions({
     usePagination: true,
   }),
 
-  [SET_CHANNEL_ENTRIES_CHANNEL_ID]: (state, { payload }) => state.withMutations(record => {
-    record.set('currentChannelEntriesChannelId', payload)
+  [SET_CHANNEL_ENTRIES_CHANNEL]: (state, { payload }) => state.withMutations(record => {
+    record.set('currentChannelEntriesChannel', Channel(payload))
   }),
 
 }, initialState)

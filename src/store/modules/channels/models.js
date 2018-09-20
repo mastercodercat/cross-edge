@@ -32,6 +32,6 @@ export const InitialState = Immutable.Record({
 
   currentChannel: ChannelData(),
 
-  currentChannelEntriesChannelId: 0,
+  currentChannelEntriesChannel: Channel(),
   currentChannelEntries: PaginatedListData(),
 })

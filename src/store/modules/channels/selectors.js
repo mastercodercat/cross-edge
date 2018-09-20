@@ -7,8 +7,8 @@ export const selectChannels = state =>
 export const selectCurrentChannel = state =>
   state.getIn(['channels', 'currentChannel'])
 
-export const selectCurrentChannelEntriesChannelId = state =>
-  state.getIn(['channels', 'currentChannelEntriesChannelId'])
+export const selectCurrentChannelEntriesChannel = state =>
+  state.getIn(['channels', 'currentChannelEntriesChannel'])
 
 export const selectCurrentChannelEntries = state =>
   state.getIn(['channels', 'currentChannelEntries'])

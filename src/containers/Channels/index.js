@@ -12,9 +12,10 @@ import { REQUEST_INITIAL } from 'constants.js'
 import {
   selectChannels,
   selectCurrentChannelEntries,
+  selectCurrentChannelEntriesChannel,
   loadChannels,
   loadChannelEntries,
-  setChannelEntriesChannelId,
+  setChannelEntriesChannel,
   setChannelEntriesPage,
   setChannelEntriesPageSize,
 } from 'store/modules/channels'
@@ -29,16 +30,13 @@ class Channels extends Component {
   static propTypes = {
     channels: ImmutablePropTypes.record.isRequired,
     currentChannelEntries: ImmutablePropTypes.record.isRequired,
+    currentChannelEntriesChannel: ImmutablePropTypes.record,
     loadChannels: PropTypes.func.isRequired,
     loadChannelEntries: PropTypes.func.isRequired,
-    setChannelEntriesChannelId: PropTypes.func.isRequired,
+    setChannelEntriesChannel: PropTypes.func.isRequired,
     setChannelEntriesPage: PropTypes.func.isRequired,
     setChannelEntriesPageSize: PropTypes.func.isRequired,
     history: PropTypes.object,
-  }
-
-  state = {
-    currentChannelForEntries: {}
   }
 
   handleClickColumn = (record, ev) => {
@@ -49,16 +47,14 @@ class Channels extends Component {
 
   handleClickEntries = (channel, ev) => {
     ev.preventDefault()
-    this.setState({
-      currentChannelForEntries: channel,
-    })
-    this.props.setChannelEntriesChannelId(channel.id)
+
+    this.props.setChannelEntriesChannel(channel)
     this.props.loadChannelEntries()
   }
 
   rowClassName = (record) => {
-    const { currentChannelForEntries } = this.state
-    return currentChannelForEntries.id === record.id ?
+    const { currentChannelEntriesChannel } = this.props
+    return currentChannelEntriesChannel && currentChannelEntriesChannel.id === record.id ?
       'table-row-active' : 'table-row-inactive'
   }
 
@@ -76,8 +72,8 @@ class Channels extends Component {
     const {
       channels,
       currentChannelEntries,
+      currentChannelEntriesChannel,
     } = this.props
-    const { currentChannelForEntries } = this.state
 
     return (
       <StyleWrapper>
@@ -121,7 +117,7 @@ class Channels extends Component {
         {
           currentChannelEntries.state !== REQUEST_INITIAL &&
           <div>
-            <h2 className="mt">{currentChannelForEntries.name} Entries</h2>
+            <h2 className="mt">{currentChannelEntriesChannel.name} Entries</h2>
 
             <ChannelEntryList
               loading={isLoading(currentChannelEntries.state)}
@@ -146,12 +142,13 @@ class Channels extends Component {
 const selector = createStructuredSelector({
   channels: selectChannels,
   currentChannelEntries: selectCurrentChannelEntries,
+  currentChannelEntriesChannel: selectCurrentChannelEntriesChannel,
 })
 
 const actions = {
   loadChannels,
   loadChannelEntries,
-  setChannelEntriesChannelId,
+  setChannelEntriesChannel,
   setChannelEntriesPage,
   setChannelEntriesPageSize,
 }

@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 
-import { REQUEST_INITIAL } from 'constants.js'
-import { DEFAULT_PAGE_SIZE } from 'config/base'
+import { PaginatedListData, createDetailDataType } from 'store/common/models'
 
 
 export const Channel = Immutable.Record({
@@ -26,20 +25,13 @@ export const ChannelEntry = Immutable.Record({
   ship_date: '',
 })
 
-export const InitialState = Immutable.Record({
-  channels: Immutable.List(),
-  channelsState: REQUEST_INITIAL,
-  channelsPage: 1,
-  channelsPageSize: DEFAULT_PAGE_SIZE,
-  channelsCount: 0,
+export const ChannelData = createDetailDataType(Channel())
 
-  currentChannel: Channel(),
-  currentChannelState: REQUEST_INITIAL,
+export const InitialState = Immutable.Record({
+  channels: PaginatedListData(),
+
+  currentChannel: ChannelData(),
 
   currentChannelEntriesChannelId: 0,
-  currentChannelEntries: Immutable.List(),
-  currentChannelEntriesState: REQUEST_INITIAL,
-  currentChannelEntriesPage: 1,
-  currentChannelEntriesPageSize: DEFAULT_PAGE_SIZE,
-  currentChannelEntriesCount: 0,
+  currentChannelEntries: PaginatedListData(),
 })

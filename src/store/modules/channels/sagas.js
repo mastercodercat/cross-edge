@@ -18,8 +18,7 @@ import {
 } from './reducer'
 import {
   selectCurrentChannelEntriesChannelId,
-  selectCurrentChannelEntriesPage,
-  selectCurrentChannelEntriesPageSize,
+  selectCurrentChannelEntries,
 } from './selectors'
 
 
@@ -51,12 +50,12 @@ const doLoadChannel = function* (action) {
 const doLoadChannelEntries = function* (action) {
   try {
     const channelId = yield select(selectCurrentChannelEntriesChannelId)
-    const page = yield select(selectCurrentChannelEntriesPage)
-    const pageSize = yield select(selectCurrentChannelEntriesPageSize)
+    const currentChannelEntriesObj = yield select(selectCurrentChannelEntries)
 
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/channels/channelentry/${channelId}/?page=${page}&page-size=${pageSize}`,
+      `${API_BASE_URL}/channels/channelentry/${channelId}/` + 
+      `?page=${currentChannelEntriesObj.page}&page-size=${currentChannelEntriesObj.pageSize}`,
     )
     yield put(loadChannelEntriesSuccess(response.data))
   } catch (error) {

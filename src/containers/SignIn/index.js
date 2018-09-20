@@ -11,7 +11,7 @@ import SignInForm from 'components/SignInForm'
 import { REQUEST_PENDING } from 'constants.js'
 import {
   signIn,
-  selectAuth,
+  selectAuthData,
 } from 'store/modules/auth'
 import SignInStyleWrapper from "./style"
 
@@ -29,7 +29,7 @@ class SignIn extends Component {
 
   render() {
     const { auth } = this.props
-    const isSubmitting = auth.authState === REQUEST_PENDING
+    const isSubmitting = auth.state === REQUEST_PENDING
 
     return (
       <SignInStyleWrapper className="adpSignInPage">
@@ -53,7 +53,7 @@ class SignIn extends Component {
 }
 
 const selector = createStructuredSelector({
-  auth: selectAuth,
+  auth: selectAuthData,
 })
 
 const actions = {

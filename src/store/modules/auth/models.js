@@ -1,9 +1,10 @@
 import Immutable from 'immutable'
 
-import { REQUEST_INITIAL } from 'constants.js'
+import { createDetailDataType } from 'store/common/models'
 
 
-export const AuthState = Immutable.Record({
-  authToken: '',
-  authState: REQUEST_INITIAL,
+export const AuthData = createDetailDataType('')
+
+export const InitialState = Immutable.Record({
+  auth: AuthData(),
 })

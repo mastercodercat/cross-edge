@@ -10,7 +10,6 @@ import { Spin } from 'antd'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
   selectCurrentChannel,
-  selectCurrentChannelState,
   loadChannel,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
@@ -20,7 +19,6 @@ class ChannelDetail extends Component {
 
   static propTypes = {
     currentChannel: ImmutablePropTypes.record,
-    currentChannelState: PropTypes.string.isRequired,
     loadChannel: PropTypes.func.isRequired,
     history: PropTypes.object,
   }
@@ -31,11 +29,8 @@ class ChannelDetail extends Component {
   }
 
   render() {
-    const {
-      currentChannel,
-      currentChannelState,
-    } = this.props
-    const loading = isLoading(currentChannelState)
+    const { currentChannel } = this.props
+    const loading = isLoading(currentChannel.state)
 
     return (
       <div>
@@ -45,45 +40,45 @@ class ChannelDetail extends Component {
             <SpinnerDummyContent />
             :
             <div>
-              <h1>{currentChannel.name}</h1>
+              <h1>{currentChannel.data.name}</h1>
 
               <table className="info-table">
                 <tbody>
                   <tr>
-                    <td>ID</td><td>{currentChannel.id}</td>
+                    <td>ID</td><td>{currentChannel.data.id}</td>
                   </tr>
                   <tr>
-                    <td>Name</td><td>{currentChannel.name}</td>
+                    <td>Name</td><td>{currentChannel.data.name}</td>
                   </tr>
                   <tr>
-                    <td>Description</td><td>{currentChannel.description}</td>
+                    <td>Description</td><td>{currentChannel.data.description}</td>
                   </tr>
                   <tr>
-                    <td>GLN</td><td>{currentChannel.gln}</td>
+                    <td>GLN</td><td>{currentChannel.data.gln}</td>
                   </tr>
                   <tr>
-                    <td>URL</td><td>{currentChannel.url}</td>
+                    <td>URL</td><td>{currentChannel.data.url}</td>
                   </tr>
                   <tr>
-                    <td>Address 1</td><td>{currentChannel.address_1}</td>
+                    <td>Address 1</td><td>{currentChannel.data.address_1}</td>
                   </tr>
                   <tr>
-                    <td>Address 2</td><td>{currentChannel.address_2}</td>
+                    <td>Address 2</td><td>{currentChannel.data.address_2}</td>
                   </tr>
                   <tr>
-                    <td>City</td><td>{currentChannel.city}</td>
+                    <td>City</td><td>{currentChannel.data.city}</td>
                   </tr>
                   <tr>
-                    <td>State</td><td>{currentChannel.state}</td>
+                    <td>State</td><td>{currentChannel.data.state}</td>
                   </tr>
                   <tr>
-                    <td>Country</td><td>{currentChannel.country}</td>
+                    <td>Country</td><td>{currentChannel.data.country}</td>
                   </tr>
                   <tr>
-                    <td>Postal Code</td><td>{currentChannel.postal_code}</td>
+                    <td>Postal Code</td><td>{currentChannel.data.postal_code}</td>
                   </tr>
                   <tr>
-                    <td>Time Zone Offset</td><td>{currentChannel.time_zone_offset}</td>
+                    <td>Time Zone Offset</td><td>{currentChannel.data.time_zone_offset}</td>
                   </tr>
                 </tbody>
               </table>
@@ -97,7 +92,6 @@ class ChannelDetail extends Component {
 
 const selector = createStructuredSelector({
   currentChannel: selectCurrentChannel,
-  currentChannelState: selectCurrentChannelState,
 })
 
 const actions = {

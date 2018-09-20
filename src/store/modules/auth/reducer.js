@@ -12,15 +12,15 @@ import {
   AUTH_SIGNOUT,
 } from './constants'
 import {
-  AuthState,
+  AuthData,
+  InitialState,
 } from './models'
 
 
 /* Initial state */
 
-const initialState = new AuthState({
-  authToken: getAuthToken() || '',
-  authState: REQUEST_INITIAL,
+const initialState = new InitialState({
+  auth: AuthData({ data: getAuthToken() || '' }),
 })
 
 /* Action creators */
@@ -36,17 +36,16 @@ export const reducer = handleActions({
 
   ...generateRequestLoopHandlers({
     action: AUTH_SIGNIN,
-    dataField: 'authToken',
-    stateField: 'authState',
+    dataField: 'auth',
     initialValue: '',
-    successPayloadProcessor: payload => payload.token,
+    getDataFromPayload: payload => payload.token,
     onSuccess: (record, payload) => setAuthToken(payload.token),
     onFail: () => clearAuthToken(),
   }),
 
   [AUTH_SIGNOUT]: (state) => state.withMutations(record => {
-    record.set('authToken', '')
-    record.set('authState', REQUEST_INITIAL)
+    record.setIn(['auth', 'data'], '')
+    record.set(['auth', 'state'], REQUEST_INITIAL)
     clearAuthToken()
   }),
 

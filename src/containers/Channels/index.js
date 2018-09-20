@@ -10,13 +10,8 @@ import { Table, Spin } from 'antd'
 import ChannelEntryList from 'components/ChannelEntryList'
 import { REQUEST_INITIAL } from 'constants.js'
 import {
-  selectChannelList,
-  selectChannelListState,
+  selectChannels,
   selectCurrentChannelEntries,
-  selectCurrentChannelEntriesState,
-  selectCurrentChannelEntriesPage,
-  selectCurrentChannelEntriesPageSize,
-  selectCurrentChannelEntriesCount,
   loadChannels,
   loadChannelEntries,
   setChannelEntriesChannelId,
@@ -32,13 +27,8 @@ const { Column } = Table
 class Channels extends Component {
 
   static propTypes = {
-    channels: ImmutablePropTypes.list.isRequired,
-    channelsState: PropTypes.string.isRequired,
-    currentChannelEntries: ImmutablePropTypes.list.isRequired,
-    currentChannelEntriesState: PropTypes.string.isRequired,
-    currentChannelEntriesPage: PropTypes.number.isRequired,
-    currentChannelEntriesPageSize: PropTypes.number.isRequired,
-    currentChannelEntriesCount: PropTypes.number.isRequired,
+    channels: ImmutablePropTypes.record.isRequired,
+    currentChannelEntries: ImmutablePropTypes.record.isRequired,
     loadChannels: PropTypes.func.isRequired,
     loadChannelEntries: PropTypes.func.isRequired,
     setChannelEntriesChannelId: PropTypes.func.isRequired,
@@ -85,12 +75,7 @@ class Channels extends Component {
   render() {
     const {
       channels,
-      channelsState,
       currentChannelEntries,
-      currentChannelEntriesState,
-      currentChannelEntriesPage,
-      currentChannelEntriesPageSize,
-      currentChannelEntriesCount,
     } = this.props
     const { currentChannelForEntries } = this.state
 
@@ -98,9 +83,9 @@ class Channels extends Component {
       <StyleWrapper>
         <h1>Channels</h1>
 
-        <Spin spinning={isLoading(channelsState)}>
+        <Spin spinning={isLoading(channels.state)}>
           <Table
-            dataSource={channels.toArray()}
+            dataSource={channels.data.toArray()}
             pagination={false}
             rowClassName={this.rowClassName}
             rowKey="id"
@@ -139,20 +124,20 @@ class Channels extends Component {
         </Spin>
 
         {
-          currentChannelEntriesState !== REQUEST_INITIAL &&
+          currentChannelEntries.state !== REQUEST_INITIAL &&
           <div>
             <h2 className="mt">Channel entries of {currentChannelForEntries.name}</h2>
 
             <ChannelEntryList
-              loading={isLoading(currentChannelEntriesState)}
-              channelEntries={currentChannelEntries.toArray()}
+              loading={isLoading(currentChannelEntries.state)}
+              channelEntries={currentChannelEntries.data.toArray()}
               actions={[
                 { text: 'Details', handler: (record, e) => e.preventDefault() },
               ]}
               pagination={{
-                total: currentChannelEntriesCount,
-                current: currentChannelEntriesPage,
-                pageSize: currentChannelEntriesPageSize,
+                total: currentChannelEntries.count,
+                current: currentChannelEntries.page,
+                pageSize: currentChannelEntries.pageSize,
                 onChange: this.handleChangeChannelEntriesPage,
               }}
             />
@@ -164,13 +149,8 @@ class Channels extends Component {
 }
 
 const selector = createStructuredSelector({
-  channels: selectChannelList,
-  channelsState: selectChannelListState,
+  channels: selectChannels,
   currentChannelEntries: selectCurrentChannelEntries,
-  currentChannelEntriesState: selectCurrentChannelEntriesState,
-  currentChannelEntriesPage: selectCurrentChannelEntriesPage,
-  currentChannelEntriesPageSize: selectCurrentChannelEntriesPageSize,
-  currentChannelEntriesCount: selectCurrentChannelEntriesCount,
 })
 
 const actions = {

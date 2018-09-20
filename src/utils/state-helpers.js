@@ -19,56 +19,51 @@ export function convertToListRecord(data, SingleModel) {
 
 export function generateRequestLoopHandlers(config) {
   /*
-   * This function will be used for registering async request loop handlers such as API. It'll handle
-   * initial, success and fail cases.
-   * In config, action, dataField and successPayloadProcessor are required, and successPayloadProcessor should be function in the
-   * form of function(payload) { ... return [new_dataField_value]}
+   * This function will be used for registering async request loop handlers such as API.
+   * It'll handle initial, success and fail cases.
+   * In config, action, dataField and getDataFromPayload are required, and
+   * getDataFromPayload should be function in the form of (payload) => (do something and return new_dataField_value)
    */
   let {
-    action, dataField, stateField,
-    initialValue, successPayloadProcessor,
+    action, dataField, initialValue, getDataFromPayload,
     onInitial, onSuccess, onFail,
-    usePagination, pageField, page_sizeField, countField, setPageAction, setPageSizeAction,
+    usePagination, setPageAction, setPageSizeAction,
   } = config
 
-  if (!action || !dataField || !successPayloadProcessor) {
-    throw new Error('action, dataField and successPayloadProcessor should be set for generating request loop handlers')
+  if (!action || !dataField || !getDataFromPayload) {
+    throw new Error('action, dataField and getDataFromPayload should be set for generating request loop handlers')
   }
 
-  stateField = stateField || (`${dataField}State`)
   initialValue = initialValue || null
 
   let paginationHandlers = {}
   if (usePagination) {
-    pageField = pageField || (`${dataField}Page`)
-    page_sizeField = page_sizeField || (`${dataField}PageSize`)
-    countField = countField || (`${dataField}Count`)
     setPageAction = setPageAction || (`${action}/set_page`)
     setPageSizeAction = setPageSizeAction || (`${action}/set_page_size`)
 
     paginationHandlers = {
       [setPageAction]: (state, { payload }) => state.withMutations(record =>
-        record.set(pageField, payload)),
+        record.setIn([dataField, 'page'], payload)),
 
       [setPageSizeAction]: (state, { payload }) => state.withMutations(record =>
-        record.set(page_sizeField, payload)),
+        record.setIn([dataField, 'pageSize'], payload)),
     }
   }
 
   return {
     [action]: (state, { payload }) => state.withMutations(record => {
-      record.set(dataField, initialValue)
-      record.set(stateField, REQUEST_PENDING)
+      record.setIn([dataField, 'data'], initialValue)
+      record.setIn([dataField, 'state'], REQUEST_PENDING)
       if (onInitial) {
         onInitial(record, payload)
       }
     }),
 
     [`${action}/success`]: (state, { payload }) => state.withMutations(record => {
-      record.set(dataField, successPayloadProcessor(payload))
-      record.set(stateField, REQUEST_SUCCESS)
+      record.setIn([dataField, 'data'], getDataFromPayload(payload))
+      record.setIn([dataField, 'state'], REQUEST_SUCCESS)
       if (usePagination) {
-        record.set(countField, payload.count)
+        record.setIn([dataField, 'count'], payload.count)
       }
       if (onSuccess) {
         onSuccess(record, payload)
@@ -76,8 +71,8 @@ export function generateRequestLoopHandlers(config) {
     }),
 
     [`${action}/fail`]: (state, { payload }) => state.withMutations(record => {
-      record.set(dataField, initialValue)
-      record.set(stateField, REQUEST_FAIL)
+      record.setIn([dataField, 'state'], initialValue)
+      record.setIn([dataField, 'state'], REQUEST_FAIL)
       if (onFail) {
         onFail(record, payload)
       }

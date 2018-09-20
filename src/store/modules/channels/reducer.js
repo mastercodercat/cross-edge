@@ -3,9 +3,8 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
 
-import { REQUEST_INITIAL } from 'constants.js'
-import { DEFAULT_PAGE_SIZE } from 'config/base'
 import { generateRequestLoopHandlers } from 'utils/state-helpers'
+import { PaginatedListData } from 'store/common/models'
 
 import {
   LOAD_CHANNELS,
@@ -25,6 +24,7 @@ import {
 import {
   InitialState,
   Channel,
+  ChannelData,
   ChannelEntry,
 } from './models'
 
@@ -32,21 +32,12 @@ import {
 /* Initial state */
 
 const initialState = new InitialState({
-  channels: Immutable.List(),
-  channelsState: REQUEST_INITIAL,
-  channelsPage: 1,
-  channelsPageSize: DEFAULT_PAGE_SIZE,
-  channelsCount: 0,
+  channels: PaginatedListData(),
 
-  currentChannel: Channel(),
-  currentChannelState: REQUEST_INITIAL,
+  currentChannel: ChannelData(),
 
   currentChannelEntriesChannelId: 0,
-  currentChannelEntries: Immutable.List(),
-  currentChannelEntriesState: REQUEST_INITIAL,
-  currentChannelEntriesPage: 1,
-  currentChannelEntriesPageSize: DEFAULT_PAGE_SIZE,
-  currentChannelEntriesCount: 0,
+  currentChannelEntries: PaginatedListData(),
 })
 
 /* Action creators */
@@ -76,7 +67,7 @@ export const reducer = handleActions({
     action: LOAD_CHANNELS,
     dataField: 'channels',
     initialValue: Immutable.List(),
-    successPayloadProcessor: payload => convertToListRecord(payload.results, Channel),
+    getDataFromPayload: payload => convertToListRecord(payload.results, Channel),
     usePagination: true,
   }),
 
@@ -85,7 +76,7 @@ export const reducer = handleActions({
   ...generateRequestLoopHandlers({
     action: LOAD_CHANNEL,
     dataField: 'currentChannel',
-    successPayloadProcessor: payload => Channel(payload),
+    getDataFromPayload: payload => Channel(payload),
   }),
 
   /* Load channel entries of a channel */
@@ -94,7 +85,7 @@ export const reducer = handleActions({
     action: LOAD_CHANNEL_ENTRIES,
     dataField: 'currentChannelEntries',
     initialValue: Immutable.List(),
-    successPayloadProcessor: payload => convertToListRecord(payload.results, ChannelEntry),
+    getDataFromPayload: payload => convertToListRecord(payload.results, ChannelEntry),
     usePagination: true,
   }),
 

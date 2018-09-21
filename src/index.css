@@ -55,6 +55,10 @@ h6:first-child:not(.mt) {
   white-space: nowrap;
 }
 
+.ant-table th {
+  padding: 4px 16px !important;
+}
+
 .table-row-active {
   background-color: rgba(8, 120, 189, 0.1);   /* 10% opacity of lochmara-5 color */
 }

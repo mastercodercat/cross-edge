@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 
 const StyleWrapper = styled.div`
-  border-bottom: 1px solid rgba(0,0,0,0.1);
   height: 100%;
   color: #fff;
   display: flex;

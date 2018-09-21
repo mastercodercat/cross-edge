@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Icon } from 'antd'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { Layout, Menu, Icon } from 'antd'
 
 import StyleWrapper from './style'
 
@@ -26,7 +26,7 @@ class Sidebar extends Component {
 
     return (
       <Sider
-        width={240}
+        width={220}
         collapsible
         trigger={null}
         collapsed={collapsed}
@@ -34,6 +34,10 @@ class Sidebar extends Component {
       >
         <StyleWrapper>
           <Menu theme="dark" selectedKeys={[location.pathname]} mode="inline" onClick={this.handleClickMenu}>
+            <Menu.Item key="/">
+              <Icon type="dashboard" />
+              <span>Dashboard</span>
+            </Menu.Item>
             <Menu.Item key="/channels">
               <Icon type="cluster" />
               <span>Channel Manager</span>

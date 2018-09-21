@@ -10,6 +10,7 @@ const StyleWrapper = styled.div`
     display: flex;
     align-items: center;
     padding: 0;
+    height: 70px;
   }
 
   .logoWrapper {

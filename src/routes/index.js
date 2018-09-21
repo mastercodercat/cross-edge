@@ -10,6 +10,7 @@ import {
 
 import SignIn from 'containers/SignIn'
 import DashboardLayout from 'containers/DashboardLayout'
+import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
 
@@ -24,7 +25,7 @@ const UnauthenticatedRoutes = () => (
 const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
-      <Redirect exact from="/" to="/channels" />
+      <Route exact path="/" component={Dashboard} />
       <Route exact path="/channels" component={Channels} />
       <Route exact path="/channels/:id" component={ChannelDetail} />
     </Switch>

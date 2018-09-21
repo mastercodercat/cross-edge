@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Table, Spin } from 'antd'
+import { Table, Spin, Icon } from 'antd'
 
 import ChannelEntryList from 'components/ChannelEntryList'
 import { REQUEST_INITIAL } from 'constants.js'
@@ -77,7 +77,9 @@ class Channels extends Component {
 
     return (
       <StyleWrapper>
-        <h1>Channel Manager</h1>
+        <h1>
+          <Icon type="cluster" /> Channel Manager
+        </h1>
 
         <Spin spinning={isLoading(channels.state)}>
           <Table

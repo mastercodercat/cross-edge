@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Layout } from 'antd'
 import WindowResizeListener from 'react-window-size-listener'
 
-import Logo from 'components/Logo'
+import Topbar from 'components/Topbar'
 import Sidebar from 'components/Sidebar'
 import StyleWrapper from './style'
 
 
-const { Header, Content } = Layout
+const { Content } = Layout
 
 class DashboardLayout extends Component {
 
@@ -38,17 +38,10 @@ class DashboardLayout extends Component {
     return (
       <StyleWrapper>
         <Layout style={{ height: appHeight, overflowX: 'hidden' }}>
-          <Header className="topbar">
-            <div className="logoWrapper">
-              <Logo color="white" />
-            </div>
-            {!isMobile && <div>
-              <button
-                className="ion-navicon siderTriggerBtn"
-                onClick={this.handleToggleCollapse}
-              />
-            </div>}
-          </Header>
+          <Topbar
+            onToggleCollapse={this.handleToggleCollapse}
+            isMobile={isMobile}
+          />
           <Layout>
             <Sidebar
               collapsed={collapsed || isMobile}

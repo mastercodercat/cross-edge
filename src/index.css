@@ -62,3 +62,13 @@ h6:first-child:not(.mt) {
 .table-row-active {
   background-color: rgba(8, 120, 189, 0.1);   /* 10% opacity of lochmara-5 color */
 }
+
+/* common helpers */
+.adp-flex {
+  display: flex;
+  align-items: center;
+}
+
+.adp-flex-right {
+  margin-left: auto;
+}

@@ -45,7 +45,7 @@ export const reducer = handleActions({
 
   [AUTH_SIGNOUT]: (state) => state.withMutations(record => {
     record.setIn(['auth', 'data'], '')
-    record.set(['auth', 'state'], REQUEST_INITIAL)
+    record.setIn(['auth', 'state'], REQUEST_INITIAL)
     clearAuthToken()
   }),
 

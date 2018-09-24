@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Layout } from 'antd'
+import { Layout, Icon, Dropdown, Menu } from 'antd'
 
 import Logo from 'components/Logo'
 import StyleWrapper from './style'
@@ -11,17 +11,33 @@ const { Header } = Layout
 class Topbar extends Component {
 
   static propTypes = {
-    onToggleCollapse: PropTypes.func,
+    onCommand: PropTypes.func.isRequired,
+    onToggleCollapse: PropTypes.func.isRequired,
     isMobile: PropTypes.bool,
   }
 
-  handleClickMenu = ({ item, key }) => {
-    const { history } = this.props
-    history.push(key)
+  handleTriggerCommand = (command, e) => {
+    if (e) {
+      e.preventDefault()
+    }
+
+    this.props.onCommand(command)
+  }
+
+  handleClickUserMenu = ({ item, key }) => {
+    this.handleTriggerCommand(key)
   }
 
   render() {
     const { onToggleCollapse, isMobile } = this.props
+
+    const userMenu = (
+      <Menu onClick={this.handleClickUserMenu}>
+        <Menu.Item key="signout">
+          Sign out
+        </Menu.Item>
+      </Menu>
+    )
 
     return (
       <StyleWrapper>
@@ -34,15 +50,24 @@ class Topbar extends Component {
             <div className="adp-flex-left">
               {!isMobile && <div>
                 <button
-                  className="ion-navicon siderTriggerBtn"
+                  className="ion-navicon siderTriggerBtn with-icon with-pointer"
                   onClick={onToggleCollapse}
-                  style={{ cursor: 'pointer' }}
                 />
               </div>}
             </div>
 
             <div className="adp-flex-right">
-              Icons here
+              <span className="notification-button-wrapper has-notifications">
+                <button className="notification-button with-icon with-pointer">
+                  <Icon type="bell" />
+                </button>
+              </span>
+
+              <Dropdown overlay={userMenu}>
+                <a className="user-menu-link" href="" onClick={this.handleTriggerCommand.bind(this, 'user')}>
+                  <Icon className="icon-user" type="user" /><span>Hover me <Icon type="down" /></span>
+                </a>
+              </Dropdown>
             </div>
           </div>
         </Header>

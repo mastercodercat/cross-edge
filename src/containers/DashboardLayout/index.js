@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { Layout } from 'antd'
 import WindowResizeListener from 'react-window-size-listener'
 
 import Topbar from 'components/Topbar'
 import Sidebar from 'components/Sidebar'
+import { signOut } from 'store/modules/auth'
 import StyleWrapper from './style'
 
 
@@ -30,6 +34,15 @@ class DashboardLayout extends Component {
     })
   }
 
+  handleCommand = (command) => {
+    const { history, signOut } = this.props
+    
+    if (command === 'signout') {
+      signOut()
+      history.push('/signin')
+    }
+  }
+
   render() {
     const { children } = this.props
     const { collapsed, appWidth, appHeight } = this.state
@@ -41,6 +54,7 @@ class DashboardLayout extends Component {
           <Topbar
             onToggleCollapse={this.handleToggleCollapse}
             isMobile={isMobile}
+            onCommand={this.handleCommand}
           />
           <Layout>
             <Sidebar
@@ -60,4 +74,11 @@ class DashboardLayout extends Component {
   }
 }
 
-export default DashboardLayout
+const actions = {
+  signOut,
+}
+
+export default compose(
+  withRouter,
+  connect(null, actions)
+)(DashboardLayout)

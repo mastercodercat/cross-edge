@@ -19,7 +19,7 @@ import {
   setChannelEntriesPage,
   setChannelEntriesPageSize,
 } from 'store/modules/channels'
-import { isLoading } from 'utils/state-helpers'
+import { isLoading, needsLoading } from 'utils/state-helpers'
 import StyleWrapper from './style'
 
 
@@ -65,7 +65,10 @@ class Channels extends Component {
   }
 
   componentDidMount() {
-    this.props.loadChannels()
+    const { channels, loadChannels } = this.props
+    if (needsLoading(channels.state)) {
+      loadChannels()
+    }
   }
 
   render() {

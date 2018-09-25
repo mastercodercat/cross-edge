@@ -20,6 +20,7 @@ import {
   setChannelEntriesPageSize,
 } from 'store/modules/channels'
 import { isLoading, needsLoading } from 'utils/state-helpers'
+import { sorter } from 'utils/list'
 import StyleWrapper from './style'
 
 
@@ -95,16 +96,19 @@ class Channels extends Component {
               title="Name"
               dataIndex="name"
               key="name"
+              sorter={sorter}
             />
             <Column
               title="GLN"
               dataIndex="gln"
               key="gln"
+              sorter={sorter}
             />
             <Column
               title="Country"
               dataIndex="country"
               key="country"
+              sorter={sorter}
             />
             <Column
               title="Action"

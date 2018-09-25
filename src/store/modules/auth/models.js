@@ -7,4 +7,5 @@ export const AuthData = createDetailDataType('')
 
 export const InitialState = Immutable.Record({
   auth: AuthData(),
+  email: '',
 })

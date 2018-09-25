@@ -11,6 +11,7 @@ const { Header } = Layout
 class Topbar extends Component {
 
   static propTypes = {
+    username: PropTypes.string.isRequired,
     onCommand: PropTypes.func.isRequired,
     onToggleCollapse: PropTypes.func.isRequired,
     isMobile: PropTypes.bool,
@@ -29,7 +30,7 @@ class Topbar extends Component {
   }
 
   render() {
-    const { onToggleCollapse, isMobile } = this.props
+    const { username, onToggleCollapse, isMobile } = this.props
 
     const userMenu = (
       <Menu onClick={this.handleClickUserMenu}>
@@ -65,7 +66,7 @@ class Topbar extends Component {
 
               <Dropdown overlay={userMenu}>
                 <a className="user-menu-link" href="" onClick={this.handleTriggerCommand.bind(this, 'user')}>
-                  <Icon className="icon-user" type="user" /><span>Hover me <Icon type="down" /></span>
+                  <Icon className="icon-user" type="user" /><span>{username} <Icon type="down" /></span>
                 </a>
               </Dropdown>
             </div>

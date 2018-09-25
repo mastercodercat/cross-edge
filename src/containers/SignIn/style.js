@@ -50,8 +50,9 @@ const SignInStyleWrapper = styled.div`
 
     .adpLogoWrapper {
       width: 100%;
+      max-width: 400px;
+      margin: 0 auto 15px;
       display: flex;
-      margin-bottom: 50px;
       justify-content: center;
       flex-shrink: 0;
     }

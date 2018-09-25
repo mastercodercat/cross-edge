@@ -45,10 +45,14 @@ class SignInForm extends Component {
             )}
           </Form.Item>
 
-          <div className="adpInputWrapper adpCenterComponent">
-            <Button type="primary" htmlType="submit" size="large" disabled={submitting}>
-              Sign In
-            </Button>
+          <div className="adpInputWrapper">
+            <div className="adp-flex">
+              <div className="adp-flex-right">
+                <Button type="primary" htmlType="submit" size="large" disabled={submitting}>
+                  Sign In
+                </Button>
+              </div>
+            </div>
           </div>
         </SignInStyleWrapper>
       </Form>

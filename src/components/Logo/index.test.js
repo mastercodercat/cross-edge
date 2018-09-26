@@ -11,3 +11,9 @@ it('should show colored logo by default', () => {
 
   expect(wrapper.find('img').getDOMNode().src).toContain(logoColor)
 })
+
+it('should show white logo if specified', () => {
+  const wrapper = mount(<Logo color="white" />)
+
+  expect(wrapper.find('img').getDOMNode().src).toContain(logoWhite)
+})

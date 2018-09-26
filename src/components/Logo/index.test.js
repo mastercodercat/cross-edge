@@ -9,5 +9,5 @@ import logoWhite from 'images/logo-white.png'
 it('should show colored logo by default', () => {
   const wrapper = mount(<Logo />)
 
-  expect(wrapper.find('img').getDOMNode().src).toEqual(logoColor)
+  expect(wrapper.find('img').getDOMNode().src).toContain(logoColor)
 })

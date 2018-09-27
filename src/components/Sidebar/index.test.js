@@ -16,11 +16,11 @@ it('should render without any errors', () => {
 })
 
 it('should collapse when prop specifies to do so', () => {
-  const mockOnToggle = jest.fn(e => e)
+  const onToggleMock = jest.fn(e => e)
 
   const wrapper = mount(<Sidebar
     collapsed={false}
-    onToggleCollapse={mockOnToggle}
+    onToggleCollapse={onToggleMock}
     location={{ pathname: '/' }}
   />)
 

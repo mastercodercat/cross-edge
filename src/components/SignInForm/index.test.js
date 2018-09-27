@@ -41,9 +41,9 @@ it('should not submit when validation fails', () => {
   }
 
   let submittedData = null
-  const mockSubmitHandler = jest.fn()
+  const onSubmitMock = jest.fn()
   const wrapper = mount(<SignInForm
-    onSubmit={mockSubmitHandler}
+    onSubmit={onSubmitMock}
     submitting={false}
   />)
 
@@ -53,11 +53,11 @@ it('should not submit when validation fails', () => {
   changeInputValue(wrapper.find('input[type="password"]'), formData.password)
   wrapper.find('form').simulate('submit', { preventDefault: jest.fn() })
 
-  expect(mockSubmitHandler.mock.called).not.toBeTruthy()
+  expect(onSubmitMock.mock.called).not.toBeTruthy()
 
   changeInputValue(wrapper.find('input[type="email"]'), formData.email)
   changeInputValue(wrapper.find('input[type="password"]'), '')
   wrapper.find('form').simulate('submit', { preventDefault: jest.fn() })
 
-  expect(mockSubmitHandler.mock.called).not.toBeTruthy()
+  expect(onSubmitMock.mock.called).not.toBeTruthy()
 })

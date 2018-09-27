@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import SignInStyleWrapper from "./style"
 
 
-class SignInForm extends Component {
+export class SignInForm extends Component {
 
   static propTypes = {
     form: PropTypes.object.isRequired,

@@ -4,3 +4,8 @@ export const mockPagination = {
   pageSize: 10,
   onChange: e => e,
 }
+
+export function changeInputValue(inputWrapper, value) {
+  inputWrapper.getDOMNode().value = value
+  inputWrapper.simulate('change', inputWrapper)
+}

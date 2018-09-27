@@ -14,3 +14,19 @@ it('should render without any errors', () => {
 
   expect(wrapper.contains(Menu)).toBe(true)
 })
+
+it('should collapse when prop specifies to do so', () => {
+  const mockOnToggle = jest.fn(e => e)
+
+  const wrapper = mount(<Sidebar
+    collapsed={false}
+    onToggleCollapse={mockOnToggle}
+    location={{ pathname: '/' }}
+  />)
+
+  wrapper.setProps({
+    collapsed: true
+  })
+
+  expect(wrapper.find('ant-layout-sider-collapsed')).toBeTruthy()
+})

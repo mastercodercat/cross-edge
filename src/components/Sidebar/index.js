@@ -9,7 +9,7 @@ import StyleWrapper from './style'
 
 const { Sider } = Layout
 
-class Sidebar extends Component {
+export class Sidebar extends Component {
 
   static propTypes = {
     collapsed: PropTypes.bool,

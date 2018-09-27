@@ -25,6 +25,7 @@ import {
   InitialState,
   Channel,
   ChannelData,
+  ChannelEntrySubRecord,
   ChannelEntry,
 } from './models'
 
@@ -85,7 +86,13 @@ export const reducer = handleActions({
     action: LOAD_CHANNEL_ENTRIES,
     dataField: 'currentChannelEntries',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload.results, ChannelEntry),
+    getDataFromPayload: payload => convertToListRecord(payload.results, record => (
+      ChannelEntry({
+        ...record,
+        channel: ChannelEntrySubRecord(record.channel),
+        product: ChannelEntrySubRecord(record.product),
+      })
+    )),
     usePagination: true,
   }),
 

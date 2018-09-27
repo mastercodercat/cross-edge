@@ -18,9 +18,14 @@ export const Channel = Immutable.Record({
   time_zone_offset: 0
 })
 
+export const ChannelEntrySubRecord = Immutable.Record({
+  id: 0,
+  name: '',
+})
+
 export const ChannelEntry = Immutable.Record({
-  channel: 0,
-  product: 0,
+  channel: ChannelEntrySubRecord(),
+  product: ChannelEntrySubRecord(),
   serial_number: '',
   ship_date: '',
 })

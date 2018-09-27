@@ -12,6 +12,11 @@ const ChannelEntryList = ({ loading, channelEntries, actions, pagination }) => (
       rowKey="serial_number"
     >
       <Column
+        title="Product"
+        dataIndex="product.name"
+        key="product.name"
+      />
+      <Column
         title="Serial number"
         dataIndex="serial_number"
         key="serial_number"

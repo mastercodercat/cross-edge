@@ -15,12 +15,12 @@ import {
 import { isLoading } from 'utils/state-helpers'
 
 
-class ChannelDetail extends Component {
+export class ChannelDetail extends Component {
 
   static propTypes = {
     currentChannel: ImmutablePropTypes.record,
     loadChannel: PropTypes.func.isRequired,
-    history: PropTypes.object,
+    match: PropTypes.object.isRequired,
   }
 
   componentDidMount() {

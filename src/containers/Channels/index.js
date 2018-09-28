@@ -5,8 +5,9 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Table, Spin, Icon, Modal } from 'antd'
+import { Icon, Modal } from 'antd'
 
+import ChannelList from 'components/ChannelList'
 import ChannelEntryList from 'components/ChannelEntryList'
 import { REQUEST_INITIAL } from 'constants.js'
 import {
@@ -20,13 +21,10 @@ import {
   setChannelEntriesPageSize,
 } from 'store/modules/channels'
 import { isLoading, needsLoading } from 'utils/state-helpers'
-import { sorter } from 'utils/list'
 import StyleWrapper from './style'
 
 
-const { Column } = Table
-
-class Channels extends Component {
+export class Channels extends Component {
 
   static propTypes = {
     channels: ImmutablePropTypes.record.isRequired,
@@ -37,7 +35,8 @@ class Channels extends Component {
     setChannelEntriesChannel: PropTypes.func.isRequired,
     setChannelEntriesPage: PropTypes.func.isRequired,
     setChannelEntriesPageSize: PropTypes.func.isRequired,
-    history: PropTypes.object,
+    history: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
   }
 
   handleClickColumn = (record, ev) => {
@@ -92,43 +91,13 @@ class Channels extends Component {
           <Icon type="cluster" /> Channel Manager
         </h1>
 
-        <Spin spinning={isLoading(channels.state)}>
-          <Table
-            dataSource={channels.data.toArray()}
-            pagination={false}
-            rowClassName={this.rowClassName}
-            rowKey="id"
-          >
-            <Column
-              title="Name"
-              dataIndex="name"
-              key="name"
-              sorter={sorter}
-            />
-            <Column
-              title="GLN"
-              dataIndex="gln"
-              key="gln"
-              sorter={sorter}
-            />
-            <Column
-              title="Country"
-              dataIndex="country"
-              key="country"
-              sorter={sorter}
-            />
-            <Column
-              title="Action"
-              key="action"
-              render={(text, record) => (
-                <span>
-                  <a className="mr" href={`/channels/${record.id}`} onClick={this.handleClickColumn.bind(this, record)}>Details</a>
-                  <a href="/channels" onClick={this.handleClickEntries.bind(this, record)}>Entries</a>
-                </span>
-              )}
-            />
-          </Table>
-        </Spin>
+        <ChannelList
+          loading={isLoading(channels.state)}
+          channels={channels.data.toArray()}
+          rowClassName={this.rowClassName}
+          onClickColumn={this.handleClickColumn}
+          onClickEntries={this.handleClickEntries}
+        />
 
         {
           currentChannelEntries.state !== REQUEST_INITIAL &&

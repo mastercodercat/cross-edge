@@ -53,11 +53,11 @@ it('should not submit when validation fails', () => {
   changeInputValue(wrapper.find('input[type="password"]'), formData.password)
   wrapper.find('form').simulate('submit', { preventDefault: jest.fn() })
 
-  expect(onSubmitMock.mock.called).not.toBeTruthy()
+  expect(onSubmitMock).toHaveBeenCalledTimes(0)
 
   changeInputValue(wrapper.find('input[type="email"]'), formData.email)
   changeInputValue(wrapper.find('input[type="password"]'), '')
   wrapper.find('form').simulate('submit', { preventDefault: jest.fn() })
 
-  expect(onSubmitMock.mock.called).not.toBeTruthy()
+  expect(onSubmitMock).toHaveBeenCalledTimes(0)
 })

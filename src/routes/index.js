@@ -26,10 +26,15 @@ const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
       <Route exact path="/" component={Dashboard} />
-      <Route exact path="/channels" component={Channels} />
-      <Route exact path="/channels/:id" component={ChannelDetail} />
+      <Route path="/channels" component={ChannelManagerRoutes} />
     </Switch>
   </DashboardLayout>
+)
+
+const ChannelManagerRoutes = () => (
+  <Channels>
+    <Route exact path="/channels/:id" component={ChannelDetail} />
+  </Channels>
 )
 
 const Routes = ({ history }) => (

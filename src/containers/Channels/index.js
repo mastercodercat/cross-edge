@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Table, Spin, Icon } from 'antd'
+import { Table, Spin, Icon, Modal } from 'antd'
 
 import ChannelEntryList from 'components/ChannelEntryList'
 import { REQUEST_INITIAL } from 'constants.js'
@@ -65,6 +65,11 @@ class Channels extends Component {
     this.props.loadChannelEntries()
   }
 
+  handleCloseModal = () => {
+    const { history } = this.props
+    history.push('/channels')
+  }
+
   componentDidMount() {
     const { channels, loadChannels } = this.props
     if (needsLoading(channels.state)) {
@@ -77,6 +82,8 @@ class Channels extends Component {
       channels,
       currentChannelEntries,
       currentChannelEntriesChannel,
+      children,
+      location,
     } = this.props
 
     return (
@@ -143,6 +150,15 @@ class Channels extends Component {
             />
           </div>
         }
+
+        <Modal
+          title={null}
+          footer={null}
+          visible={location.pathname !== '/channels'}
+          onCancel={this.handleCloseModal}
+        >
+          {children}
+        </Modal>
       </StyleWrapper>
     )
   }

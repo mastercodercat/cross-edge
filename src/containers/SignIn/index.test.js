@@ -32,7 +32,7 @@ it('should call signIn when sign in form submitted', () => {
     password: 'abcde123'
   }
 
-  const signInForm = wrapper.find(SignInForm).dive()
+  const signInForm = wrapper.find(SignInForm)
   signInForm.prop('onSubmit')(loginData)
   expect(signInMock).toHaveBeenCalledWith(loginData)
 })

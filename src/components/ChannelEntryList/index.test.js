@@ -2,8 +2,9 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import ChannelEntryList from './index'
-import { mockPagination } from 'utils/test-helpers'
 import { ChannelEntry, ChannelEntrySubRecord } from 'store/modules/channels'
+import { mockPagination } from 'test/helpers'
+import channelEntryListMock from 'test/fixtures/channelEntries'
 
 
 it('should show spinner when data not loaded', () => {
@@ -18,27 +19,6 @@ it('should show spinner when data not loaded', () => {
 })
 
 it('should display data records with actions when data loaded', () => {
-  const data = [
-    ChannelEntry({
-      channel: ChannelEntrySubRecord({ id: 1, name: 'Channel A' }),
-      product: ChannelEntrySubRecord({ id: 1, name: 'Product 1' }),
-      serial_number: 'DHYUD11001',
-      ship_date: '2018-10-01',
-    }),
-    ChannelEntry({
-      channel: ChannelEntrySubRecord({ id: 1, name: 'Channel A' }),
-      product: ChannelEntrySubRecord({ id: 2, name: 'Product 2' }),
-      serial_number: 'DHYUD11002',
-      ship_date: '2018-10-02',
-    }),
-    ChannelEntry({
-      channel: ChannelEntrySubRecord({ id: 2, name: 'Channel B' }),
-      product: ChannelEntrySubRecord({ id: 2, name: 'Product 2' }),
-      serial_number: 'DHYUD11010',
-      ship_date: '2018-10-03',
-    }),
-  ]
-
   const actions = [
     { text: 'Edit', handler: e => e },
     { text: 'Delete', handler: e => e },
@@ -46,7 +26,7 @@ it('should display data records with actions when data loaded', () => {
 
   const wrapper = mount(<ChannelEntryList
     loading={false}
-    channelEntries={data}
+    channelEntries={channelEntryListMock.toArray()}
     actions={actions}
     pagination={mockPagination}
   />)

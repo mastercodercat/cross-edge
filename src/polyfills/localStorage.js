@@ -116,7 +116,10 @@ try {
     window.localStorage = localStorage
     window.sessionStorage = sessionStorage
     // For Safari private browsing need to also set the proto value.
-    window.localStorage.__proto__ = localStorage
-    window.sessionStorage.__proto__ = sessionStorage
+    try {
+      window.localStorage.__proto__ = localStorage
+      window.sessionStorage.__proto__ = sessionStorage
+    } catch(e) {
+    }
   })()
 }

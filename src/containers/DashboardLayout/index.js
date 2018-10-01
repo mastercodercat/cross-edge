@@ -15,7 +15,7 @@ import StyleWrapper from './style'
 
 const { Content } = Layout
 
-class DashboardLayout extends Component {
+export class DashboardLayout extends Component {
 
   static propTypes = {
     email: PropTypes.string.isRequired,

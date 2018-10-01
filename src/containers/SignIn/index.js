@@ -16,7 +16,7 @@ import {
 import SignInStyleWrapper from "./style"
 
 
-class SignIn extends Component {
+export class SignIn extends Component {
 
   static propTypes = {
     auth: ImmutablePropTypes.record.isRequired,

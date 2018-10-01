@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import ChannelList from './index'
-import { mockPagination } from 'utils/test-helpers'
+import { mockPagination } from 'test/helpers'
 import { Channel } from 'store/modules/channels'
 
 

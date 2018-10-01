@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import SignInForm from './index'
-import { changeInputValue } from 'utils/test-helpers'
+import { changeInputValue } from 'test/helpers'
 
 
 it('should render sign in form', () => {

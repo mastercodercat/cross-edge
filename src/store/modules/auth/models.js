@@ -5,7 +5,7 @@ import { createDetailDataType } from 'store/common/models'
 
 export const AuthData = createDetailDataType('')
 
-export const InitialState = Immutable.Record({
+export const State = Immutable.Record({
   auth: AuthData(),
   email: '',
 })

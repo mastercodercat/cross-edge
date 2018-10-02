@@ -32,7 +32,7 @@ export const ChannelEntry = Immutable.Record({
 
 export const ChannelData = createDetailDataType(Channel())
 
-export const InitialState = Immutable.Record({
+export const State = Immutable.Record({
   channels: PaginatedListData(),
 
   currentChannel: ChannelData(),

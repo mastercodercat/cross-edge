@@ -16,7 +16,7 @@ import {
 } from './constants'
 
 import {
-  InitialState,
+  State,
   Channel,
   ChannelData,
   ChannelEntrySubRecord,
@@ -26,7 +26,7 @@ import {
 
 /* Initial state */
 
-const initialState = new InitialState({
+const initialState = new State({
   channels: PaginatedListData(),
 
   currentChannel: ChannelData(),

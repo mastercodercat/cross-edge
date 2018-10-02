@@ -14,13 +14,13 @@ import {
 } from './constants'
 import {
   AuthData,
-  InitialState,
+  State,
 } from './models'
 
 
 /* Initial state */
 
-const initialState = new InitialState({
+const initialState = new State({
   auth: AuthData({ data: getAuthToken() || '' }),
   email: getAuthEmail() || '',
 })

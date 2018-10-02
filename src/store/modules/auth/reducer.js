@@ -6,12 +6,10 @@ import {
 } from 'utils/storage'
 
 import { REQUEST_INITIAL } from 'constants.js'
-import { generateRequestLoopHandlers } from 'utils/state-helpers'
+import { generateRequestLoopHandlers, successAction, failAction } from 'utils/state-helpers'
 
 import {
   AUTH_SIGNIN,
-  AUTH_SIGNIN_SUCCESS,
-  AUTH_SIGNIN_FAIL,
   AUTH_SIGNOUT,
 } from './constants'
 import {
@@ -30,8 +28,8 @@ const initialState = new InitialState({
 /* Action creators */
 
 export const signIn = createAction(AUTH_SIGNIN)
-export const signInSuccess = createAction(AUTH_SIGNIN_SUCCESS)
-export const signInFail = createAction(AUTH_SIGNIN_FAIL)
+export const signInSuccess = createAction(successAction(AUTH_SIGNIN))
+export const signInFail = createAction(failAction(AUTH_SIGNIN))
 export const signOut = createAction(AUTH_SIGNOUT)
 
 /* Reducer */

@@ -21,6 +21,14 @@ export function convertToListRecord(data, SingleModelOrRecordCreator) {
   )
 }
 
+export function successAction(action) {
+  return `${action}/success`
+}
+
+export function failAction(action) {
+  return `${action}/fail`
+}
+
 export function generateRequestLoopHandlers(config) {
   /*
    * This function will be used for registering async request loop handlers such as API.
@@ -63,7 +71,7 @@ export function generateRequestLoopHandlers(config) {
       }
     }),
 
-    [`${action}/success`]: (state, { payload }) => state.withMutations(record => {
+    [successAction(action)]: (state, { payload }) => state.withMutations(record => {
       record.setIn([dataField, 'data'], getDataFromPayload(payload))
       record.setIn([dataField, 'state'], REQUEST_SUCCESS)
       if (usePagination) {
@@ -74,7 +82,7 @@ export function generateRequestLoopHandlers(config) {
       }
     }),
 
-    [`${action}/fail`]: (state, { payload }) => state.withMutations(record => {
+    [failAction(action)]: (state, { payload }) => state.withMutations(record => {
       record.setIn([dataField, 'state'], initialValue)
       record.setIn([dataField, 'state'], REQUEST_FAIL)
       if (onFail) {

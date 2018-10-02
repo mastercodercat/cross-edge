@@ -15,6 +15,8 @@ import {
 } from './reducer'
 
 
+/* Auth loop */
+
 it('reducer should return initial state when state not provided', () => {
   const dummyAction = createAction('dummyAction')
   const initialState = reducer(undefined, dummyAction())

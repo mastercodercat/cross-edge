@@ -46,7 +46,7 @@ export function generateRequestLoopHandlers(config) {
     throw new Error('action, dataField and getDataFromPayload should be set for generating request loop handlers')
   }
 
-  initialValue = initialValue || null
+  initialValue = (typeof initialValue === 'undefined') ? null : initialValue
 
   let paginationHandlers = {}
   if (usePagination) {
@@ -83,7 +83,7 @@ export function generateRequestLoopHandlers(config) {
     }),
 
     [failAction(action)]: (state, { payload }) => state.withMutations(record => {
-      record.setIn([dataField, 'state'], initialValue)
+      record.setIn([dataField, 'data'], initialValue)
       record.setIn([dataField, 'state'], REQUEST_FAIL)
       if (onFail) {
         onFail(record, payload)

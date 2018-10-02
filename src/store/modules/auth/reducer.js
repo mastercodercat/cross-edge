@@ -41,7 +41,10 @@ export const reducer = handleActions({
     dataField: 'auth',
     initialValue: '',
     getDataFromPayload: payload => payload.token,
-    onInitial: (record, payload) => setAuthEmail(payload.email),
+    onInitial: (record, payload) => {
+      record.set('email', payload.email)
+      setAuthEmail(payload.email)
+    },
     onSuccess: (record, payload) => setAuthToken(payload.token),
     onFail: () => {
       clearAuthToken()
@@ -52,6 +55,7 @@ export const reducer = handleActions({
   [AUTH_SIGNOUT]: (state) => state.withMutations(record => {
     record.setIn(['auth', 'data'], '')
     record.setIn(['auth', 'state'], REQUEST_INITIAL)
+    record.set('email', '')
     clearAuthToken()
     clearAuthEmail()
   }),

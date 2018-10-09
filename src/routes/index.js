@@ -13,6 +13,7 @@ import DashboardLayout from 'containers/DashboardLayout'
 import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
+import BusinessProcessModule from 'containers/BusinessProcessModule'
 
 
 const UnauthenticatedRoutes = () => (
@@ -27,6 +28,7 @@ const AuthenticatedRoutes = () => (
     <Switch>
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelManagerRoutes} />
+      <Route exact path="/business-process-module" component={BusinessProcessModule} />
     </Switch>
   </DashboardLayout>
 )

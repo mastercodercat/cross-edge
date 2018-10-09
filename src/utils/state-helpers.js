@@ -29,6 +29,14 @@ export function failAction(action) {
   return `${action}/fail`
 }
 
+export function setPageAction(action) {
+  return `${action}/set_page`
+}
+
+export function setPageSizeAction(action) {
+  return `${action}/set_page_size`
+}
+
 export function generateRequestLoopHandlers(config) {
   /*
    * This function will be used for registering async request loop handlers such as API.
@@ -39,7 +47,7 @@ export function generateRequestLoopHandlers(config) {
   let {
     action, dataField, initialValue, getDataFromPayload,
     onInitial, onSuccess, onFail,
-    usePagination, setPageAction, setPageSizeAction,
+    usePagination, setPageAction: _setPageAction, setPageSizeAction: _setPageSizeAction,
   } = config
 
   if (!action || !dataField || !getDataFromPayload) {
@@ -50,14 +58,14 @@ export function generateRequestLoopHandlers(config) {
 
   let paginationHandlers = {}
   if (usePagination) {
-    setPageAction = setPageAction || (`${action}/set_page`)
-    setPageSizeAction = setPageSizeAction || (`${action}/set_page_size`)
+    _setPageAction = _setPageAction || setPageAction(action)
+    _setPageSizeAction = _setPageSizeAction || setPageSizeAction(action)
 
     paginationHandlers = {
-      [setPageAction]: (state, { payload }) => state.withMutations(record =>
+      [_setPageAction]: (state, { payload }) => state.withMutations(record =>
         record.setIn([dataField, 'page'], payload)),
 
-      [setPageSizeAction]: (state, { payload }) => state.withMutations(record =>
+      [_setPageSizeAction]: (state, { payload }) => state.withMutations(record =>
         record.setIn([dataField, 'pageSize'], payload)),
     }
   }

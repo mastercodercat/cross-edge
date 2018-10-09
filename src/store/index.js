@@ -9,8 +9,9 @@ import { all } from 'redux-saga/effects'
 import authMiddleware from 'store/middlewares/auth'
 
 import { reducer as authReducer, saga as authSaga } from 'store/modules/auth'
-import { reducer as channelsReducer, saga as channelsSaga } from 'store/modules/channels'
 import { reducer as routerReducer } from 'store/modules/router'
+import { reducer as channelsReducer, saga as channelsSaga } from 'store/modules/channels'
+import { reducer as sitesReducer, saga as sitesSaga } from 'store/modules/sites'
 
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -46,6 +47,7 @@ export const store = createStore(
     router: routerReducer,
     auth: authReducer,
     channels: channelsReducer,
+    sites: sitesReducer,
   }),
   Immutable.Map(),
   composeEnhancers(...enhancers)
@@ -56,5 +58,6 @@ sagaMiddleware.run(function* rootSaga() {
   yield all([
     authSaga(),
     channelsSaga(),
+    sitesSaga(),
   ])
 })

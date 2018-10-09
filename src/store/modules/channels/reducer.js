@@ -3,7 +3,10 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
 
-import { generateRequestLoopHandlers, successAction, failAction } from 'utils/state-helpers'
+import {
+  generateRequestLoopHandlers,
+  successAction, failAction, setPageAction, setPageSizeAction,
+} from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
 
 import {
@@ -11,8 +14,6 @@ import {
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
   SET_CHANNEL_ENTRIES_CHANNEL,
-  SET_CHANNEL_ENTRIES_PAGE,
-  SET_CHANNEL_ENTRIES_PAGE_SIZE,
 } from './constants'
 
 import {
@@ -49,8 +50,8 @@ export const loadChannelEntries = createAction(LOAD_CHANNEL_ENTRIES)
 export const loadChannelEntriesSuccess = createAction(successAction(LOAD_CHANNEL_ENTRIES))
 export const loadChannelEntriesFail = createAction(failAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesChannel = createAction(SET_CHANNEL_ENTRIES_CHANNEL)
-export const setChannelEntriesPage = createAction(SET_CHANNEL_ENTRIES_PAGE)
-export const setChannelEntriesPageSize = createAction(SET_CHANNEL_ENTRIES_PAGE_SIZE)
+export const setChannelEntriesPage = createAction(setPageAction(LOAD_CHANNEL_ENTRIES))
+export const setChannelEntriesPageSize = createAction(setPageSizeAction(LOAD_CHANNEL_ENTRIES))
 
 /* Reducer */
 

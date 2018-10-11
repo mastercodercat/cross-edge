@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Spin } from 'antd'
+import { Row, Col, Icon, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
+import SiteCard from 'components/SiteCard'
 import {
   loadSites,
   setSitesPage,
@@ -44,7 +45,18 @@ export class BusinessProcessModule extends Component {
             loading ?
             <SpinnerDummyContent />
             :
-            <div>Content here</div>
+            (
+              sites.data ?
+              (<Row gutter={15}>
+                {sites.data.map(site => (
+                  <Col key={site.id} sm={24} md={12} lg={8}>
+                    <SiteCard site={site} />
+                  </Col>
+                ))}
+              </Row>)
+              :
+              <div>No sites found</div>
+            )
           }
         </Spin>
       </div>

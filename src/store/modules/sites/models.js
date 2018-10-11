@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { PaginatedListData } from 'store/common/models'
+import { PaginatedListData, createDetailDataType } from 'store/common/models'
 
 
 export const Site = Immutable.Record({
@@ -10,6 +10,10 @@ export const Site = Immutable.Record({
   image: '',
 })
 
+export const SiteData = createDetailDataType(Site())
+
 export const State = Immutable.Record({
   sites: PaginatedListData(),
+
+  currentSite: SiteData(),
 })

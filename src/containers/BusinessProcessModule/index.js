@@ -3,6 +3,7 @@ import { Row, Col, Icon, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
@@ -31,7 +32,7 @@ export class BusinessProcessModule extends Component {
   }
 
   render() {
-    const { sites } = this.props
+    const { sites, history } = this.props
     const loading = isLoading(sites.state)
 
     return (
@@ -47,13 +48,17 @@ export class BusinessProcessModule extends Component {
             :
             (
               sites.data ?
-              (<Row gutter={15}>
+              <Row gutter={15}>
                 {sites.data.map(site => (
                   <Col key={site.id} sm={24} md={12} lg={8}>
-                    <SiteCard site={site} />
+                    <SiteCard
+                      site={site}
+                      onClickSubsites={() => history.push(`/sites/${site.id}/sublocations`)}
+                      onClickBusinessProcesses={() => history.push(`/sites/${site.id}/business-processes`)}
+                    />
                   </Col>
                 ))}
-              </Row>)
+              </Row>
               :
               <div>No sites found</div>
             )
@@ -75,5 +80,6 @@ const actions = {
 }
 
 export default compose(
-  connect(selector, actions)
+  withRouter,
+  connect(selector, actions),
 )(BusinessProcessModule)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin } from 'antd'
+import { Spin, Icon } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -9,38 +9,29 @@ import { withRouter } from 'react-router'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
-  loadSiteOrGetFromCache,
   selectCurrentSite,
 } from 'store/modules/sites'
 import { isLoading } from 'utils/state-helpers'
 
-export class Site extends Component {
+
+export class SiteBusinessProcesses extends Component {
 
   static propTypes = {
     site: ImmutablePropTypes.record.isRequired,
-    loadSiteOrGetFromCache: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
-  }
-
-  componentDidMount() {
-    const { match, loadSiteOrGetFromCache } = this.props
-    loadSiteOrGetFromCache({ id: match.params.id })
   }
 
   render() {
-    const { site, children } = this.props
-    const loading = isLoading(site.state)
+    const { site } = this.props
 
     return (
-      <Spin spinning={loading}>
-        {
-          loading ?
-          <SpinnerDummyContent /> :
-          children
-        }
-      </Spin>
+      <div>
+        <h1>
+          <Icon type="profile" /> {site.data.name} Sub Locations
+        </h1>
+      </div>
     )
   }
+
 }
 
 const selector = createStructuredSelector({
@@ -48,10 +39,9 @@ const selector = createStructuredSelector({
 })
 
 const actions = {
-  loadSiteOrGetFromCache,
 }
 
 export default compose(
   withRouter,
   connect(selector, actions),
-)(Site)
+)(SiteBusinessProcesses)

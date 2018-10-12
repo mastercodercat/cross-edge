@@ -2,6 +2,8 @@ import styled from 'styled-components'
 
 
 const StyleWrapper = styled.div`
+  margin-bottom: 30px;
+
   .site-image-wrapper {
     position: relative;
     padding-top: 35%;

@@ -14,7 +14,30 @@ import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
 import BusinessProcessModule from 'containers/BusinessProcessModule'
+import Site from 'containers/Site'
+import SiteSubsites from 'containers/SiteSubsites'
+import SiteBusinessProcesses from 'containers/SiteBusinessProcesses'
 
+
+const ChannelManagerRoutes = () => (
+  <Channels>
+    <Route exact path="/channels/:id" component={ChannelDetail} />
+  </Channels>
+)
+
+const SiteRoutes = () => (
+  <Site>
+    <Route
+      exact
+      path="/sites/:id"
+      render={props => (
+        <Redirect to={`/sites/${props.match.params.id}/sublocations`} />
+      )}
+    />
+    <Route exact path="/sites/:id/sublocations" component={SiteSubsites} />
+    <Route exact path="/sites/:id/business-processes" component={SiteBusinessProcesses} />
+  </Site>
+)
 
 const UnauthenticatedRoutes = () => (
   <Switch>
@@ -29,14 +52,9 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelManagerRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
+      <Route path="/sites/:id" component={SiteRoutes} />
     </Switch>
   </DashboardLayout>
-)
-
-const ChannelManagerRoutes = () => (
-  <Channels>
-    <Route exact path="/channels/:id" component={ChannelDetail} />
-  </Channels>
 )
 
 const Routes = ({ history }) => (

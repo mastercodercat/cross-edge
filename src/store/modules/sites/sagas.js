@@ -1,5 +1,5 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects'
-import axios from 'axios';
+import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
 
@@ -7,6 +7,7 @@ import {
   LOAD_SITES,
   LOAD_SITE_OR_GET_FROM_CACHE,
   LOAD_SITE,
+  LOAD_SITE_SUBSITES,
 } from './constants'
 import {
   loadSitesSuccess,
@@ -15,6 +16,8 @@ import {
   loadSiteSuccess,
   loadSiteFail,
   setCurrentSite,
+  loadSiteSubsitesSuccess,
+  loadSiteSubsitesFail,
 } from './reducer'
 import {
   selectSites
@@ -23,28 +26,11 @@ import {
 
 const doLoadSites = function* (action) {
   try {
-    // const response = yield call(
-    //   axios.get,
-    //   `${API_BASE_URL}/mdm/site/list`,
-    // )
-    // yield put(loadSitesSuccess(response.data))
-    yield put(loadSitesSuccess({
-      count: 0,
-      results: [
-        {
-          id: 1,
-          name: 'First Site',
-          description: 'Site generated as mock data for testing',
-          image: '/images/1.jpg',
-        },
-        {
-          id: 2,
-          name: 'Second Site',
-          description: 'Another Site generated as mock data',
-          image: '/images/2.png',
-        }
-      ]
-    }))
+    const response = yield call(
+      axios.get,
+      `${API_BASE_URL}/mdm/site/list/`,
+    )
+    yield put(loadSitesSuccess(response.data))
   } catch (error) {
     yield put(loadSitesFail(error.response ? error.response.data : {}))
   }
@@ -65,19 +51,25 @@ const doLoadSite = function* (action) {
   const { id } = action.payload
   
   try {
-    // const response = yield call(
-    //   axios.get,
-    //   `${API_BASE_URL}/mdm/site/detail/${id}`,
-    // )
-    // yield put(loadSiteSuccess(response.data))
-    yield put(loadSiteSuccess({
-      id: 1,
-      name: 'First Site',
-      description: 'Site generated as mock data for testing',
-      image: '/images/1.jpg',
-    }))
+    const response = yield call(
+      axios.get,
+      `${API_BASE_URL}/mdm/site/detail/${id}/`,
+    )
+    yield put(loadSiteSuccess(response.data))
   } catch (error) {
     yield put(loadSiteFail(error.response ? error.response.data : {}))
+  }
+}
+
+const doLoadSiteSubsites = function* (action) {
+  try {
+    const response = yield call(
+      axios.get,
+      `${API_BASE_URL}/mdm/subsite/list/`,
+    )
+    yield put(loadSiteSubsitesSuccess(response.data))
+  } catch (error) {
+    yield put(loadSiteSubsitesFail(error.response ? error.response.data : {}))
   }
 }
 
@@ -85,4 +77,5 @@ export const saga = function* () {
   yield takeLatest(LOAD_SITES, doLoadSites)
   yield takeLatest(LOAD_SITE_OR_GET_FROM_CACHE, doLoadSiteOrGetFromCache)
   yield takeLatest(LOAD_SITE, doLoadSite)
+  yield takeLatest(LOAD_SITE_SUBSITES, doLoadSiteSubsites)
 }

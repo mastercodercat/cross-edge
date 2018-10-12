@@ -4,7 +4,7 @@ import { Button } from 'antd'
 import StyleWrapper from './style'
 
 
-const SiteCard = ({ site }) => (
+const SiteCard = ({ site, isSubsite, onClickSubsites, onClickBusinessProcesses }) => (
   <StyleWrapper>
     <div class="site-image-wrapper">
       <div class="site-image" style={{ backgroundImage: `url(${site.image})` }} />
@@ -16,10 +16,13 @@ const SiteCard = ({ site }) => (
       </div>
       <div class="buttons">
         <div class="button-wrapper">
-          <Button type="primary" block>Subsites</Button>
+          {
+            !isSubsite &&
+            <Button type="primary" block onClick={onClickSubsites}>Subsites</Button>
+          }
         </div>
         <div class="button-wrapper">
-          <Button type="primary" block>Business Processes</Button>
+          <Button type="primary" block onClick={onClickBusinessProcesses}>Business Processes</Button>
         </div>
       </div>
     </div>

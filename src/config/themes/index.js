@@ -1,4 +1,4 @@
-import themedefault from './themedefault';
+import themedefault from './themedefault'
 
 const themes = {
   themedefault,

@@ -41,6 +41,8 @@ const initialState = new State({
 export const loadChannels = createAction(LOAD_CHANNELS)
 export const loadChannelsSuccess = createAction(successAction(LOAD_CHANNELS))
 export const loadChannelsFail = createAction(failAction(LOAD_CHANNELS))
+export const setChannelsPage = createAction(setPageAction(LOAD_CHANNELS))
+export const setChannelsPageSize = createAction(setPageSizeAction(LOAD_CHANNELS))
 
 export const loadChannel = createAction(LOAD_CHANNEL)
 export const loadChannelSuccess = createAction(successAction(LOAD_CHANNEL))
@@ -67,7 +69,7 @@ export const reducer = handleActions({
     usePagination: true,
   }),
 
-  /* Load single channel detail*/
+  /* Load single channel detail */
 
   ...generateRequestLoopHandlers({
     action: LOAD_CHANNEL,

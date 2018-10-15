@@ -6,13 +6,13 @@ import { sorter } from 'utils/list'
 
 const { Column } = Table
 
-const ChannelList = ({ loading, channels, rowClassName, onClickColumn, onClickEntries }) => (
+const ChannelList = ({ loading, channels, rowClassName, onClickColumn, onClickEntries, pagination }) => (
   <Spin spinning={loading}>
     <Table
       dataSource={channels}
       rowClassName={rowClassName}
       rowKey="id"
-      pagination={false}
+      pagination={pagination}
     >
       <Column
         title="Name"

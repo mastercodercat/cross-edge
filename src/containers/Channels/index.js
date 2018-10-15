@@ -15,6 +15,8 @@ import {
   selectCurrentChannelEntries,
   selectCurrentChannelEntriesChannel,
   loadChannels,
+  setChannelsPage,
+  setChannelsPageSize,
   loadChannelEntries,
   setChannelEntriesChannel,
   setChannelEntriesPage,
@@ -31,6 +33,8 @@ export class Channels extends Component {
     currentChannelEntries: ImmutablePropTypes.record.isRequired,
     currentChannelEntriesChannel: ImmutablePropTypes.record,
     loadChannels: PropTypes.func.isRequired,
+    setChannelsPage: PropTypes.func.isRequired,
+    setChannelsPageSize: PropTypes.func.isRequired,
     loadChannelEntries: PropTypes.func.isRequired,
     setChannelEntriesChannel: PropTypes.func.isRequired,
     setChannelEntriesPage: PropTypes.func.isRequired,
@@ -56,6 +60,12 @@ export class Channels extends Component {
     const { currentChannelEntriesChannel } = this.props
     return currentChannelEntriesChannel && currentChannelEntriesChannel.id === record.id ?
       'table-row-active' : 'table-row-inactive'
+  }
+
+  handleChannelsPage = (page, pageSize) => {
+    this.props.setChannelsPage(page)
+    this.props.setChannelsPageSize(pageSize)
+    this.props.loadChannels()
   }
 
   handleChangeChannelEntriesPage = (page, pageSize) => {
@@ -97,6 +107,12 @@ export class Channels extends Component {
           rowClassName={this.rowClassName}
           onClickColumn={this.handleClickColumn}
           onClickEntries={this.handleClickEntries}
+          pagination={{
+            total: channels.count,
+            current: channels.page,
+            pageSize: channels.pageSize,
+            onChange: this.handleChannelsPage,
+          }}
         />
 
         {
@@ -141,6 +157,8 @@ const selector = createStructuredSelector({
 
 const actions = {
   loadChannels,
+  setChannelsPage,
+  setChannelsPageSize,
   loadChannelEntries,
   setChannelEntriesChannel,
   setChannelEntriesPage,

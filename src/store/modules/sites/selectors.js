@@ -9,3 +9,6 @@ export const selectCurrentSite = state =>
 
 export const selectSiteSubsites = state =>
   state.getIn(['sites', 'siteSubsites'])
+
+export const selectCurrentSubsite = state =>
+  state.getIn(['sites', 'currentSubsite'])

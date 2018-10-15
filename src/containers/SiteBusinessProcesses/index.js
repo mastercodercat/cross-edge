@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin, Icon } from 'antd'
+import { Row, Col, Spin, Icon, Pagination } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -8,26 +8,101 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { withRouter } from 'react-router'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
+import BusinessProcessCard from 'components/BusinessProcessCard'
 import {
   selectCurrentSite,
+  selectCurrentSubsite,
+  loadSubsiteOrGetFromCache,
 } from 'store/modules/sites'
+import {
+  selectBusinessProcesses,
+  loadBusinessProcesses,
+  setBusinessProcessesPage,
+  setBusinessProcessesPageSize,
+} from 'store/modules/businessProcesses'
 import { isLoading } from 'utils/state-helpers'
 
 
 export class SiteBusinessProcesses extends Component {
 
   static propTypes = {
+    match: PropTypes.object.isRequired,
     site: ImmutablePropTypes.record.isRequired,
+    subsite: ImmutablePropTypes.record.isRequired,
+    businessProcesses: ImmutablePropTypes.record.isRequired,
+    loadSubsiteOrGetFromCache: PropTypes.func.isRequired,
+    loadBusinessProcesses: PropTypes.func.isRequired,
+    setBusinessProcessesPage: PropTypes.func.isRequired,
+    setBusinessProcessesPageSize: PropTypes.func.isRequired,
+  }
+
+  handleChangeBusinessProcessesPage = (page, pageSize) => {
+    const { loadBusinessProcesses, setBusinessProcessesPage, setBusinessProcessesPageSize } = this.props
+    setBusinessProcessesPage(page)
+    setBusinessProcessesPageSize(pageSize)
+    loadBusinessProcesses()
+  }
+
+  componentDidMount() {
+    const { match, loadSubsiteOrGetFromCache, loadBusinessProcesses } = this.props
+
+    if (match.params.subsiteId) {
+      loadSubsiteOrGetFromCache({
+        id: match.params.subsiteId,
+      })
+    }
+
+    loadBusinessProcesses({
+      siteId: match.params.siteId,
+      subsiteId: match.params.subsiteId,
+    })
   }
 
   render() {
-    const { site } = this.props
+    const { match, site, subsite, businessProcesses } = this.props
+    const currentSite = match.params.siteId ? site : subsite
+    const loading = isLoading(businessProcesses.state)
+
+    if (isLoading(currentSite.state)) {
+      return <Spin spinning={loading}>
+        <SpinnerDummyContent />
+      </Spin>
+    }
 
     return (
       <div>
         <h1>
-          <Icon type="profile" /> {site.data.name} Sub Locations
+          <Icon type="profile" /> Business Processes for {currentSite.data.name}
         </h1>
+
+        <Spin spinning={loading}>
+          {
+            loading ?
+            <SpinnerDummyContent /> :
+            <React.Fragment>
+              <Row gutter={15}>
+                {
+                  businessProcesses.data.map(businessProcess => (
+                    <Col key={businessProcess.id} sm={24} md={12} lg={8}>
+                      <BusinessProcessCard
+                        businessProcess={businessProcess}
+                        onClickGo={e => e}
+                      />
+                    </Col>
+                  ))
+                }
+              </Row>
+              <div className="text-right">
+                <Pagination
+                  total={businessProcesses.count}
+                  current={businessProcesses.page}
+                  pageSize={businessProcesses.pageSize}
+                  onChange={this.handleChangeBusinessProcessesPage}
+                />
+              </div>
+            </React.Fragment>
+          }
+        </Spin>
       </div>
     )
   }
@@ -36,9 +111,15 @@ export class SiteBusinessProcesses extends Component {
 
 const selector = createStructuredSelector({
   site: selectCurrentSite,
+  subsite: selectCurrentSubsite,
+  businessProcesses: selectBusinessProcesses,
 })
 
 const actions = {
+  loadSubsiteOrGetFromCache,
+  loadBusinessProcesses,
+  setBusinessProcessesPage,
+  setBusinessProcessesPageSize,
 }
 
 export default compose(

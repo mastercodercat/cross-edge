@@ -35,7 +35,7 @@ const SiteRoutes = () => (
       )}
     />
     <Route exact path="/sites/:id/sublocations" component={SiteSubsites} />
-    <Route exact path="/sites/:id/business-processes" component={SiteBusinessProcesses} />
+    <Route exact path="/sites/:siteId/business-processes" component={SiteBusinessProcesses} />
   </Site>
 )
 
@@ -53,6 +53,7 @@ const AuthenticatedRoutes = () => (
       <Route path="/channels" component={ChannelManagerRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
       <Route path="/sites/:id" component={SiteRoutes} />
+      <Route exact path="/subsites/:subsiteId/business-processes" component={SiteBusinessProcesses} />
     </Switch>
   </DashboardLayout>
 )

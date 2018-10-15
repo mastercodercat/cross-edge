@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { PaginatedListData, createDetailDataType } from 'store/common/models'
 
 
-export const Site = Immutable.Record({
+export const BusinessProcess = Immutable.Record({
   id: 0,
   name: '',
   description: '',
@@ -18,11 +18,10 @@ export const Site = Immutable.Record({
   time_zone_offset: 0,
 })
 
-export const SiteData = createDetailDataType(Site())
+export const BusinessProcessData = createDetailDataType(BusinessProcess())
 
 export const State = Immutable.Record({
-  sites: PaginatedListData(),
-  currentSite: SiteData(),
-  siteSubsites: PaginatedListData(),
-  currentSubsite: SiteData(),
+  businessProcesses: PaginatedListData(),
+
+  currrentBusinessProcess: BusinessProcessData(),
 })

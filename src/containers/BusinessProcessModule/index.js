@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Icon, Spin } from 'antd'
+import { Row, Col, Icon, Spin, Pagination } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -21,10 +21,18 @@ import { isLoading } from 'utils/state-helpers'
 export class BusinessProcessModule extends Component {
 
   static propTypes = {
+    history: PropTypes.object.isRequired,
     sites: ImmutablePropTypes.record.isRequired,
     loadSites: PropTypes.func.isRequired,
     setSitesPage: PropTypes.func.isRequired,
     setSitesPageSize: PropTypes.func.isRequired,
+  }
+
+  handleChangeSitesPage = (page, pageSize) => {
+    const { loadSites, setSitesPage, setSitesPageSize } = this.props
+    setSitesPage(page)
+    setSitesPageSize(pageSize)
+    loadSites()
   }
 
   componentDidMount() {
@@ -48,17 +56,27 @@ export class BusinessProcessModule extends Component {
             :
             (
               sites.data ?
-              <Row gutter={15}>
-                {sites.data.map(site => (
-                  <Col key={site.id} sm={24} md={12} lg={8}>
-                    <SiteCard
-                      site={site}
-                      onClickSubsites={() => history.push(`/sites/${site.id}/sublocations`)}
-                      onClickBusinessProcesses={() => history.push(`/sites/${site.id}/business-processes`)}
-                    />
-                  </Col>
-                ))}
-              </Row>
+              <React.Fragment>
+                <Row gutter={15}>
+                  {sites.data.map(site => (
+                    <Col key={site.id} sm={24} md={12} lg={8}>
+                      <SiteCard
+                        site={site}
+                        onClickSubsites={() => history.push(`/sites/${site.id}/sublocations`)}
+                        onClickBusinessProcesses={() => history.push(`/sites/${site.id}/business-processes`)}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+                <div className="text-right">
+                  <Pagination
+                    total={sites.count}
+                    current={sites.page}
+                    pageSize={sites.pageSize}
+                    onChange={this.handleChangeSitesPage}
+                  />
+                </div>
+              </React.Fragment>
               :
               <div>No sites found</div>
             )

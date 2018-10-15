@@ -62,7 +62,7 @@ export class Channels extends Component {
       'table-row-active' : 'table-row-inactive'
   }
 
-  handleChannelsPage = (page, pageSize) => {
+  handleChangeChannelsPage = (page, pageSize) => {
     this.props.setChannelsPage(page)
     this.props.setChannelsPageSize(pageSize)
     this.props.loadChannels()
@@ -111,7 +111,7 @@ export class Channels extends Component {
             total: channels.count,
             current: channels.page,
             pageSize: channels.pageSize,
-            onChange: this.handleChannelsPage,
+            onChange: this.handleChangeChannelsPage,
           }}
         />
 

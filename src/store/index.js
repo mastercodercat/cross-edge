@@ -12,6 +12,7 @@ import { reducer as authReducer, saga as authSaga } from 'store/modules/auth'
 import { reducer as routerReducer } from 'store/modules/router'
 import { reducer as channelsReducer, saga as channelsSaga } from 'store/modules/channels'
 import { reducer as sitesReducer, saga as sitesSaga } from 'store/modules/sites'
+import { reducer as businessProcessesReducer, saga as businessProcessesSaga } from 'store/modules/businessProcesses'
 
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -48,6 +49,7 @@ export const store = createStore(
     auth: authReducer,
     channels: channelsReducer,
     sites: sitesReducer,
+    businessProcesses: businessProcessesReducer,
   }),
   Immutable.Map(),
   composeEnhancers(...enhancers)
@@ -59,5 +61,6 @@ sagaMiddleware.run(function* rootSaga() {
     authSaga(),
     channelsSaga(),
     sitesSaga(),
+    businessProcessesSaga(),
   ])
 })

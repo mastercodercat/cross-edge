@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Spin, Icon } from 'antd'
+import { Row, Col, Spin, Icon, Pagination } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -13,6 +13,8 @@ import {
   selectCurrentSite,
   selectSiteSubsites,
   loadSiteSubsites,
+  setSiteSubsitesPage,
+  setSiteSubsitesPageSize,
 } from 'store/modules/sites'
 import { isLoading } from 'utils/state-helpers'
 
@@ -20,9 +22,19 @@ import { isLoading } from 'utils/state-helpers'
 export class SiteSubsites extends Component {
 
   static propTypes = {
+    history: PropTypes.object.isRequired,
     site: ImmutablePropTypes.record.isRequired,
     siteSubsites: ImmutablePropTypes.record.isRequired,
     loadSiteSubsites: PropTypes.func.isRequired,
+    setSiteSubsitesPage: PropTypes.func.isRequired,
+    setSiteSubsitesPageSize: PropTypes.func.isRequired,
+  }
+
+  handleChangeSiteSubsitesPage = (page, pageSize) => {
+    const { loadSiteSubsites, setSiteSubsitesPage, setSiteSubsitesPageSize } = this.props
+    setSiteSubsitesPage(page)
+    setSiteSubsitesPageSize(pageSize)
+    loadSiteSubsites()
   }
 
   componentDidMount() {
@@ -33,7 +45,7 @@ export class SiteSubsites extends Component {
   }
 
   render() {
-    const { site, siteSubsites } = this.props
+    const { history, site, siteSubsites } = this.props
     const loading = isLoading(siteSubsites.state)
 
     return (
@@ -46,19 +58,29 @@ export class SiteSubsites extends Component {
           {
             loading ?
             <SpinnerDummyContent /> :
-            <Row gutter={15}>
-              {
-                siteSubsites.data.map(subsite => (
-                  <Col key={subsite.id} sm={24} md={12} lg={8}>
-                    <SiteCard
-                      isSubsite
-                      site={subsite}
-                      onClickBusinessProcesses={e => e}
-                    />
-                  </Col>
-                ))
-              }
-            </Row>
+            <React.Fragment>
+              <Row gutter={15}>
+                {
+                  siteSubsites.data.map(subsite => (
+                    <Col key={subsite.id} sm={24} md={12} lg={8}>
+                      <SiteCard
+                        isSubsite
+                        site={subsite}
+                        onClickBusinessProcesses={() => history.push(`/subsites/${subsite.id}/business-processes`)}
+                      />
+                    </Col>
+                  ))
+                }
+              </Row>
+              <div className="text-right">
+                <Pagination
+                  total={siteSubsites.count}
+                  current={siteSubsites.page}
+                  pageSize={siteSubsites.pageSize}
+                  onChange={this.handleChangeSiteSubsitesPage}
+                />
+              </div>
+            </React.Fragment>
           }
         </Spin>
       </div>
@@ -74,6 +96,8 @@ const selector = createStructuredSelector({
 
 const actions = {
   loadSiteSubsites,
+  setSiteSubsitesPage,
+  setSiteSubsitesPageSize,
 }
 
 export default compose(

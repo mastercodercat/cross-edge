@@ -6,22 +6,22 @@ import StyleWrapper from './style'
 
 const SiteCard = ({ site, isSubsite, onClickSubsites, onClickBusinessProcesses }) => (
   <StyleWrapper>
-    <div class="site-image-wrapper">
-      <div class="site-image" style={{ backgroundImage: `url(${site.image})` }} />
+    <div className="site-image-wrapper">
+      <div className="site-image" style={{ backgroundImage: `url(${site.image})` }} />
     </div>
-    <div class="content">
-      <h3 class="title"><center>{site.name}</center></h3>
-      <div class="description">
+    <div className="content">
+      <h3 className="title"><center>{site.name}</center></h3>
+      <div className="description">
         {site.description}
       </div>
-      <div class="buttons">
-        <div class="button-wrapper">
+      <div className="buttons">
+        <div className="button-wrapper">
           {
             !isSubsite &&
             <Button type="primary" block onClick={onClickSubsites}>Subsites</Button>
           }
         </div>
-        <div class="button-wrapper">
+        <div className="button-wrapper">
           <Button type="primary" block onClick={onClickBusinessProcesses}>Business Processes</Button>
         </div>
       </div>

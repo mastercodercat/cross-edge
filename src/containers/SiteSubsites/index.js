@@ -26,7 +26,10 @@ export class SiteSubsites extends Component {
   }
 
   componentDidMount() {
-    this.props.loadSiteSubsites()
+    const { site, loadSiteSubsites } = this.props
+    loadSiteSubsites({
+      id: site.id,
+    })
   }
 
   render() {

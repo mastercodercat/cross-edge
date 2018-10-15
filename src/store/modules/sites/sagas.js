@@ -39,7 +39,7 @@ const doLoadSites = function* (action) {
 const doLoadSiteOrGetFromCache = function* (action) {
   const { id } = action.payload
   const loadedSites = yield select(selectSites)
-  const site = loadedSites.find(_site => _site.id === id)
+  const site = loadedSites.data.find(_site => _site.id === parseInt(id))
   if (site) {
     yield put(setCurrentSite(site))
   } else {

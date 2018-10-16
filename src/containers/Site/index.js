@@ -12,7 +12,7 @@ import {
   loadSiteOrGetFromCache,
   selectCurrentSite,
 } from 'store/modules/sites'
-import { isLoading } from 'utils/state-helpers'
+import { isLoading, hasFailed } from 'utils/state-helpers'
 
 export class Site extends Component {
 
@@ -30,6 +30,10 @@ export class Site extends Component {
   render() {
     const { site, children } = this.props
     const loading = isLoading(site.state)
+
+    if (hasFailed(site.state)) {
+      return <div>Failed to load site information.</div>
+    }
 
     return (
       <Spin spinning={loading}>

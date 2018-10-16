@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Spin, Icon, Pagination } from 'antd'
+import { Row, Col, Spin, Icon } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -27,6 +27,7 @@ export class SiteBusinessProcesses extends Component {
 
   static propTypes = {
     match: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
     site: ImmutablePropTypes.record.isRequired,
     subsite: ImmutablePropTypes.record.isRequired,
     businessProcesses: ImmutablePropTypes.record.isRequired,
@@ -59,7 +60,7 @@ export class SiteBusinessProcesses extends Component {
   }
 
   render() {
-    const { match, site, subsite, businessProcesses } = this.props
+    const { match, history, site, subsite, businessProcesses } = this.props
     const currentSite = match.params.siteId ? site : subsite
     const loading = isLoading(businessProcesses.state)
 
@@ -80,26 +81,31 @@ export class SiteBusinessProcesses extends Component {
             loading ?
             <SpinnerDummyContent /> :
             <React.Fragment>
-              <Row gutter={15}>
-                {
-                  businessProcesses.data.map(businessProcess => (
-                    <Col key={businessProcess.id} sm={24} md={12} lg={8}>
-                      <BusinessProcessCard
-                        businessProcess={businessProcess}
-                        onClickGo={e => e}
-                      />
-                    </Col>
-                  ))
-                }
-              </Row>
-              <div className="text-right">
+              {
+                businessProcesses.data.size > 0 ?
+                <Row gutter={15}>
+                  {
+                    businessProcesses.data.map(businessProcess => (
+                      <Col key={businessProcess.id} sm={24} md={12} lg={8}>
+                        <BusinessProcessCard
+                          businessProcess={businessProcess}
+                          onClickGo={() => history.push(`/business-processes/${businessProcess.name}`)}
+                        />
+                      </Col>
+                    ))
+                  }
+                </Row>
+                :
+                <div>No business processes found.</div>
+              }
+              {/*<div className="text-right">
                 <Pagination
                   total={businessProcesses.count}
                   current={businessProcesses.page}
                   pageSize={businessProcesses.pageSize}
                   onChange={this.handleChangeBusinessProcessesPage}
                 />
-              </div>
+              </div>*/}
             </React.Fragment>
           }
         </Spin>

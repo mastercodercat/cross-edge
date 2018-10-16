@@ -23,5 +23,5 @@ export const BusinessProcessData = createDetailDataType(BusinessProcess())
 export const State = Immutable.Record({
   businessProcesses: PaginatedListData(),
 
-  currrentBusinessProcess: BusinessProcessData(),
+  currentBusinessProcess: BusinessProcessData(),
 })

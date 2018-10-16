@@ -15,6 +15,10 @@ import {
   setSitesPageSize,
   selectSites,
 } from 'store/modules/sites'
+import {
+  loadPartners,
+  selectPartners,
+} from 'store/modules/partners'
 import { isLoading } from 'utils/state-helpers'
 
 
@@ -23,9 +27,11 @@ export class BusinessProcessModule extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
     sites: ImmutablePropTypes.record.isRequired,
+    partners: ImmutablePropTypes.record.isRequired,
     loadSites: PropTypes.func.isRequired,
     setSitesPage: PropTypes.func.isRequired,
     setSitesPageSize: PropTypes.func.isRequired,
+    loadPartners: PropTypes.func.isRequired,
   }
 
   handleChangeSitesPage = (page, pageSize) => {
@@ -36,12 +42,14 @@ export class BusinessProcessModule extends Component {
   }
 
   componentDidMount() {
-    this.props.loadSites()
+    const { loadSites, loadPartners } = this.props
+    loadSites()
+    loadPartners()
   }
 
   render() {
-    const { sites, history } = this.props
-    const loading = isLoading(sites.state)
+    const { sites, partners, history } = this.props
+    const loading = isLoading(sites.state) || isLoading(partners.state)
 
     return (
       <div>
@@ -67,6 +75,15 @@ export class BusinessProcessModule extends Component {
                       />
                     </Col>
                   ))}
+                  {partners.data.map(partner => (
+                    <Col key={partner.id} sm={24} md={12} lg={8}>
+                      <SiteCard
+                        site={partner}
+                        onClickSubsites={e => e}
+                        onClickBusinessProcesses={e => e}
+                      />
+                    </Col>
+                  ))}
                 </Row>
                 <div className="text-right">
                   <Pagination
@@ -89,12 +106,14 @@ export class BusinessProcessModule extends Component {
 
 const selector = createStructuredSelector({
   sites: selectSites,
+  partners: selectPartners,
 })
 
 const actions = {
   loadSites,
   setSitesPage,
   setSitesPageSize,
+  loadPartners,
 }
 
 export default compose(

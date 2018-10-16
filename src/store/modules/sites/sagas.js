@@ -70,9 +70,10 @@ const doLoadSite = function* (action) {
 
 const doLoadSiteSubsites = function* (action) {
   try {
+    const { id } = action.payload
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/mdm/subsite/list/`,
+      `${API_BASE_URL}/mdm/subsite/by-site/${id}/`,
     )
     yield put(loadSiteSubsitesSuccess(response.data))
   } catch (error) {

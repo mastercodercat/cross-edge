@@ -22,7 +22,10 @@ const SiteCard = ({ site, isSubsite, onClickSubsites, onClickBusinessProcesses }
           }
         </div>
         <div className="button-wrapper">
-          <Button type="primary" block onClick={onClickBusinessProcesses}>Business Processes</Button>
+          {
+            site.has_business_processes &&
+            <Button type="primary" block onClick={onClickBusinessProcesses}>Business Processes</Button>
+          }
         </div>
       </div>
     </div>

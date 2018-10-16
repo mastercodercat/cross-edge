@@ -15,6 +15,10 @@ export function needsLoading(requestState) {
   return requestState === REQUEST_INITIAL || requestState === REQUEST_FAIL
 }
 
+export function hasFailed(requestState) {
+  return requestState === REQUEST_FAIL
+}
+
 export function convertToListRecord(data, SingleModelOrRecordCreator) {
   return Immutable.List(
     (data || []).map(record => SingleModelOrRecordCreator(record))

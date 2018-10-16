@@ -73,8 +73,8 @@ export const reducer = handleActions({
     action: LOAD_SITES,
     dataField: 'sites',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload.results, Site),
-    usePagination: true,
+    getDataFromPayload: payload => convertToListRecord(payload, Site),
+    usePagination: false,
   }),
 
   /* Load site */
@@ -96,8 +96,8 @@ export const reducer = handleActions({
     action: LOAD_SITE_SUBSITES,
     dataField: 'siteSubsites',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload.results, Site),
-    usePagination: true,
+    getDataFromPayload: payload => convertToListRecord(payload, Site),
+    usePagination: false,
   }),
 
   /* Load subsite */

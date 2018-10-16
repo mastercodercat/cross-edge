@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Spin, Icon, Pagination } from 'antd'
+import { Row, Col, Spin, Icon } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -31,16 +31,18 @@ export class SiteSubsites extends Component {
   }
 
   handleChangeSiteSubsitesPage = (page, pageSize) => {
-    const { loadSiteSubsites, setSiteSubsitesPage, setSiteSubsitesPageSize } = this.props
+    const { site, loadSiteSubsites, setSiteSubsitesPage, setSiteSubsitesPageSize } = this.props
     setSiteSubsitesPage(page)
     setSiteSubsitesPageSize(pageSize)
-    loadSiteSubsites()
+    loadSiteSubsites({
+      id: site.data.id,
+    })
   }
 
   componentDidMount() {
     const { site, loadSiteSubsites } = this.props
     loadSiteSubsites({
-      id: site.id,
+      id: site.data.id,
     })
   }
 
@@ -59,27 +61,32 @@ export class SiteSubsites extends Component {
             loading ?
             <SpinnerDummyContent /> :
             <React.Fragment>
-              <Row gutter={15}>
-                {
-                  siteSubsites.data.map(subsite => (
-                    <Col key={subsite.id} sm={24} md={12} lg={8}>
-                      <SiteCard
-                        isSubsite
-                        site={subsite}
-                        onClickBusinessProcesses={() => history.push(`/subsites/${subsite.id}/business-processes`)}
-                      />
-                    </Col>
-                  ))
-                }
-              </Row>
-              <div className="text-right">
+              {
+                siteSubsites.data.size > 0 ?
+                <Row gutter={15}>
+                  {
+                    siteSubsites.data.map(subsite => (
+                      <Col key={subsite.id} sm={24} md={12} lg={8}>
+                        <SiteCard
+                          isSubsite
+                          site={subsite}
+                          onClickBusinessProcesses={() => history.push(`/subsites/${subsite.id}/business-processes`)}
+                        />
+                      </Col>
+                    ))
+                  }
+                </Row>
+                :
+                <div>No sub locations found.</div>
+              }
+              {/*<div className="text-right">
                 <Pagination
                   total={siteSubsites.count}
                   current={siteSubsites.page}
                   pageSize={siteSubsites.pageSize}
                   onChange={this.handleChangeSiteSubsitesPage}
                 />
-              </div>
+              </div>*/}
             </React.Fragment>
           }
         </Spin>

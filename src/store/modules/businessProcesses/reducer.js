@@ -27,7 +27,7 @@ import {
 const initialState = new State({
   businessProcesses: PaginatedListData(),
 
-  currrentBusinessProcess: BusinessProcessData(),
+  currentBusinessProcess: BusinessProcessData(),
 })
 
 /* Action creators */
@@ -52,15 +52,15 @@ export const reducer = handleActions({
     action: LOAD_BUSINESS_PROCESSES,
     dataField: 'businessProcesses',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload.results, BusinessProcess),
-    usePagination: true,
+    getDataFromPayload: payload => convertToListRecord(payload, BusinessProcess),
+    usePagination: false,
   }),
 
   /* Load business process */
 
   ...generateRequestLoopHandlers({
     action: LOAD_BUSINESS_PROCESS,
-    dataField: 'currrentBusinessProcess',
+    dataField: 'currentBusinessProcess',
     getDataFromPayload: payload => BusinessProcess(payload),
   }),
 

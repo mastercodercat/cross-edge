@@ -16,6 +16,7 @@ export const Site = Immutable.Record({
   postal_code: '',
   state: '',
   time_zone_offset: 0,
+  has_business_processes: false,
 })
 
 export const SiteData = createDetailDataType(Site())

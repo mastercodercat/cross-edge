@@ -3,3 +3,6 @@ export const selectPartnersStore = state =>
 
 export const selectPartners = state =>
   state.getIn(['partners', 'partners'])
+
+export const selectCurrentPartner = state =>
+  state.getIn(['partners', 'currentPartner'])

@@ -79,7 +79,7 @@ export class BusinessProcessModule extends Component {
                     <Col key={partner.id} sm={24} md={12} lg={8}>
                       <SiteCard
                         site={partner}
-                        onClickSubsites={e => e}
+                        onClickSubsites={() => history.push(`/partners/${partner.id}/sublocations`)}
                         onClickBusinessProcesses={e => e}
                       />
                     </Col>

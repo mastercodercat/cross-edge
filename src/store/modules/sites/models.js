@@ -24,6 +24,6 @@ export const SiteData = createDetailDataType(Site())
 export const State = Immutable.Record({
   sites: PaginatedListData(),
   currentSite: SiteData(),
-  siteSubsites: PaginatedListData(),
+  subsites: PaginatedListData(),
   currentSubsite: SiteData(),
 })

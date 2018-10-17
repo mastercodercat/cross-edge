@@ -10,50 +10,52 @@ import { withRouter } from 'react-router'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import SiteCard from 'components/SiteCard'
 import {
-  selectCurrentSite,
+  selectCurrentPartner,
+  loadPartnerOrGetFromCache,
+} from 'store/modules/partners'
+import {
   selectSubsites,
-  loadSiteSubsites,
-  setSiteSubsitesPage,
-  setSiteSubsitesPageSize,
+  loadPartnerSubsites,
 } from 'store/modules/sites'
 import { isLoading } from 'utils/state-helpers'
 
 
-export class SiteSubsites extends Component {
+export class PartnerSubsites extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired,
-    site: ImmutablePropTypes.record.isRequired,
+    partner: ImmutablePropTypes.record.isRequired,
     subsites: ImmutablePropTypes.record.isRequired,
-    loadSiteSubsites: PropTypes.func.isRequired,
-    setSiteSubsitesPage: PropTypes.func.isRequired,
-    setSiteSubsitesPageSize: PropTypes.func.isRequired,
-  }
-
-  handleChangeSiteSubsitesPage = (page, pageSize) => {
-    const { site, loadSiteSubsites, setSiteSubsitesPage, setSiteSubsitesPageSize } = this.props
-    setSiteSubsitesPage(page)
-    setSiteSubsitesPageSize(pageSize)
-    loadSiteSubsites({
-      id: site.data.id,
-    })
+    loadPartnerSubsites: PropTypes.func.isRequired,
+    loadPartnerOrGetFromCache: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { site, loadSiteSubsites } = this.props
-    loadSiteSubsites({
-      id: site.data.id,
+    const { match, loadPartnerOrGetFromCache, loadPartnerSubsites } = this.props
+
+    loadPartnerOrGetFromCache({
+      id: match.params.partnerId,
+    })
+
+    loadPartnerSubsites({
+      id: match.params.partnerId,
     })
   }
 
   render() {
-    const { history, site, subsites } = this.props
+    const { history, partner, subsites } = this.props
     const loading = isLoading(subsites.state)
+
+    if (isLoading(partner.state)) {
+      return <Spin spinning>
+        <SpinnerDummyContent />
+      </Spin>
+    }
 
     return (
       <div>
         <h1>
-          <Icon type="profile" /> {site.data.name} Sub Locations
+          <Icon type="profile" /> {partner.data.name} Sub Locations
         </h1>
 
         <Spin spinning={loading}>
@@ -79,14 +81,6 @@ export class SiteSubsites extends Component {
                 :
                 <div>No sub locations found.</div>
               }
-              {/*<div className="text-right">
-                <Pagination
-                  total={subsites.count}
-                  current={subsites.page}
-                  pageSize={subsites.pageSize}
-                  onChange={this.handleChangeSiteSubsitesPage}
-                />
-              </div>*/}
             </React.Fragment>
           }
         </Spin>
@@ -97,17 +91,16 @@ export class SiteSubsites extends Component {
 }
 
 const selector = createStructuredSelector({
-  site: selectCurrentSite,
+  partner: selectCurrentPartner,
   subsites: selectSubsites,
 })
 
 const actions = {
-  loadSiteSubsites,
-  setSiteSubsitesPage,
-  setSiteSubsitesPageSize,
+  loadPartnerSubsites,
+  loadPartnerOrGetFromCache,
 }
 
 export default compose(
   withRouter,
   connect(selector, actions),
-)(SiteSubsites)
+)(PartnerSubsites)

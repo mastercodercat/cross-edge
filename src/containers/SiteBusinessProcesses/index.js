@@ -65,7 +65,7 @@ export class SiteBusinessProcesses extends Component {
     const loading = isLoading(businessProcesses.state)
 
     if (isLoading(currentSite.state)) {
-      return <Spin spinning={loading}>
+      return <Spin spinning>
         <SpinnerDummyContent />
       </Spin>
     }

@@ -8,6 +8,7 @@ import {
   LOAD_SITE_OR_GET_FROM_CACHE,
   LOAD_SITE,
   LOAD_SITE_SUBSITES,
+  LOAD_PARTNER_SUBSITES,
   LOAD_SUBSITE_OR_GET_FROM_CACHE,
   LOAD_SUBSITE,
 } from './constants'
@@ -20,6 +21,8 @@ import {
   setCurrentSite,
   loadSiteSubsitesSuccess,
   loadSiteSubsitesFail,
+  loadPartnerSubsitesSuccess,
+  loadPartnerSubsitesFail,
   loadSubsite,
   loadSubsiteSuccess,
   loadSubsiteFail,
@@ -27,7 +30,7 @@ import {
 } from './reducer'
 import {
   selectSites,
-  selectSiteSubsites,
+  selectSubsites,
 } from './selectors'
 
 
@@ -81,9 +84,22 @@ const doLoadSiteSubsites = function* (action) {
   }
 }
 
+const doLoadPartnerSubsites = function* (action) {
+  try {
+    const { id } = action.payload
+    const response = yield call(
+      axios.get,
+      `${API_BASE_URL}/mdm/subsite/by-partner/${id}/`,
+    )
+    yield put(loadPartnerSubsitesSuccess(response.data))
+  } catch (error) {
+    yield put(loadPartnerSubsitesFail(error.response ? error.response.data : {}))
+  }
+}
+
 const doLoadSubsiteOrGetFromCache = function* (action) {
   const { id } = action.payload
-  const loadedSubsites = yield select(selectSiteSubsites)
+  const loadedSubsites = yield select(selectSubsites)
   const subsite = loadedSubsites.data.find(_subsite => _subsite.id === parseInt(id, 10))
   if (subsite) {
     yield put(setCurrentSubsite(subsite))
@@ -111,6 +127,7 @@ export const saga = function* () {
   yield takeLatest(LOAD_SITE_OR_GET_FROM_CACHE, doLoadSiteOrGetFromCache)
   yield takeLatest(LOAD_SITE, doLoadSite)
   yield takeLatest(LOAD_SITE_SUBSITES, doLoadSiteSubsites)
+  yield takeLatest(LOAD_PARTNER_SUBSITES, doLoadPartnerSubsites)
   yield takeLatest(LOAD_SUBSITE_OR_GET_FROM_CACHE, doLoadSubsiteOrGetFromCache)
   yield takeLatest(LOAD_SUBSITE, doLoadSubsite)
 }

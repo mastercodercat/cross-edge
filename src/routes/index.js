@@ -18,6 +18,7 @@ import Site from 'containers/Site'
 import SiteSubsites from 'containers/SiteSubsites'
 import SiteBusinessProcesses from 'containers/SiteBusinessProcesses'
 import BusinessProcess from 'containers/BusinessProcess'
+import PartnerSubsites from 'containers/PartnerSubsites'
 
 
 const ChannelManagerRoutes = () => (
@@ -56,6 +57,7 @@ const AuthenticatedRoutes = () => (
       <Route path="/sites/:id" component={SiteRoutes} />
       <Route exact path="/subsites/:subsiteId/business-processes" component={SiteBusinessProcesses} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
+      <Route exact path="/partners/:partnerId/sublocations" component={PartnerSubsites} />
     </Switch>
   </DashboardLayout>
 )

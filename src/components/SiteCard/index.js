@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Card } from 'antd'
 
 import StyleWrapper from './style'
 
@@ -18,22 +18,19 @@ const SiteCard = ({ site, isSubsite, onClickSubsites, onClickBusinessProcesses }
 
   return (
     <StyleWrapper>
-      <div className="site-image-wrapper">
-        <div className="site-image" style={{ backgroundImage: `url(${site.image})` }} />
-      </div>
-      <div className="content">
-        <h3 className="title"><center>{site.name}</center></h3>
-        <div className="description">
-          {site.description}
-        </div>
-        <div className="buttons">
-          {
-            buttons.map((button, index) => (
-              <div key={index} className="button-wrapper">{button}</div>
-            ))
-          }
-        </div>
-      </div>
+      <Card
+        hoverable
+        cover={<div className="image-wrapper">
+          <div className="image" style={{ backgroundImage: `url(${site.image})` }} />
+        </div>}
+        actions={buttons}
+        bodyStyle={{ minHeight: 110 }}
+      >
+        <Card.Meta
+          title={site.name}
+          description={site.description}
+        />
+      </Card>
     </StyleWrapper>
   )
 }

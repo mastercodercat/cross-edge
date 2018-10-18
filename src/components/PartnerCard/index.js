@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Card } from 'antd'
 
 import StyleWrapper from './style'
 
@@ -16,22 +16,19 @@ const PartnerCard = ({ partner, onClickSites, onClickBusinessProcesses }) => {
 
   return (
     <StyleWrapper>
-      <div className="partner-image-wrapper">
-        <div className="partner-image" style={{ backgroundImage: `url(${partner.image})` }} />
-      </div>
-      <div className="content">
-        <h3 className="title"><center>{partner.name}</center></h3>
-        <div className="description">
-          {partner.description}
-        </div>
-        <div className="buttons">
-          {
-            buttons.map((button, index) => (
-              <div key={index} className="button-wrapper">{button}</div>
-            ))
-          }
-        </div>
-      </div>
+      <Card
+        hoverable
+        cover={<div className="image-wrapper">
+          <div className="image" style={{ backgroundImage: `url(${partner.image})` }} />
+        </div>}
+        actions={buttons}
+        bodyStyle={{ minHeight: 110 }}
+      >
+        <Card.Meta
+          title={partner.name}
+          description={partner.description}
+        />
+      </Card>
     </StyleWrapper>
   )
 }

@@ -7,12 +7,19 @@ import {
 } from 'constants.js'
 
 
-export function isLoading(requestState) {
+export function isLoading(requestState, strict = false) {
+  if (strict) {
+    return requestState === REQUEST_PENDING
+  }
   return requestState === REQUEST_INITIAL || requestState === REQUEST_PENDING
 }
 
 export function needsLoading(requestState) {
   return requestState === REQUEST_INITIAL || requestState === REQUEST_FAIL
+}
+
+export function hasSucceeded(requestState) {
+  return requestState === REQUEST_SUCCESS
 }
 
 export function hasFailed(requestState) {

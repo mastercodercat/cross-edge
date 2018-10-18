@@ -17,10 +17,18 @@ import {
 
 const doLoadBusinessProcesses = function* (action) {
   try {
-    const { siteId, subsiteId } = action.payload
+    const { siteId, subsiteId, partnerId } = action.payload
     const response = yield call(
       axios.get,
-      siteId ? `${API_BASE_URL}/bpm/list/site/${siteId}/` : `${API_BASE_URL}/bpm/list/subsite/${subsiteId}/`,
+      (
+        partnerId ?
+        `${API_BASE_URL}/bpm/list/partner/${partnerId}/` :
+        (
+          siteId ?
+          `${API_BASE_URL}/bpm/list/site/${siteId}/` :
+          `${API_BASE_URL}/bpm/list/subsite/${subsiteId}/`
+        )
+      )
     )
     yield put(loadBusinessProcessesSuccess(response.data))
   } catch (error) {

@@ -11,51 +11,39 @@ import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import SiteCard from 'components/SiteCard'
 import {
   selectCurrentPartner,
-  loadPartnerOrGetFromCache,
 } from 'store/modules/partners'
 import {
-  selectSubsites,
-  loadPartnerSubsites,
+  selectSites,
+  loadPartnerSites,
 } from 'store/modules/sites'
 import { isLoading } from 'utils/state-helpers'
 
 
-export class PartnerSubsites extends Component {
+export class PartnerSites extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired,
     partner: ImmutablePropTypes.record.isRequired,
-    subsites: ImmutablePropTypes.record.isRequired,
-    loadPartnerSubsites: PropTypes.func.isRequired,
-    loadPartnerOrGetFromCache: PropTypes.func.isRequired,
+    sites: ImmutablePropTypes.record.isRequired,
+    loadPartnerSites: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { match, loadPartnerOrGetFromCache, loadPartnerSubsites } = this.props
+    const { match, loadPartnerSites } = this.props
 
-    loadPartnerOrGetFromCache({
-      id: match.params.partnerId,
-    })
-
-    loadPartnerSubsites({
+    loadPartnerSites({
       id: match.params.partnerId,
     })
   }
 
   render() {
-    const { history, partner, subsites } = this.props
-    const loading = isLoading(subsites.state)
-
-    if (isLoading(partner.state)) {
-      return <Spin spinning>
-        <SpinnerDummyContent />
-      </Spin>
-    }
+    const { history, partner, sites } = this.props
+    const loading = isLoading(sites.state)
 
     return (
       <div>
         <h1>
-          <Icon type="profile" /> {partner.data.name} Sub Locations
+          <Icon type="profile" /> Sites for {partner.data.name}
         </h1>
 
         <Spin spinning={loading}>
@@ -64,22 +52,23 @@ export class PartnerSubsites extends Component {
             <SpinnerDummyContent /> :
             <React.Fragment>
               {
-                subsites.data.size > 0 ?
+                sites.data.size > 0 ?
                 <Row gutter={15}>
                   {
-                    subsites.data.map(subsite => (
-                      <Col key={subsite.id} sm={24} md={12} lg={8}>
+                    sites.data.map(site => (
+                      <Col key={site.id} sm={24} md={12} lg={8}>
                         <SiteCard
-                          isSubsite
-                          site={subsite}
-                          onClickBusinessProcesses={() => history.push(`/subsites/${subsite.id}/business-processes`)}
+                          isSite
+                          site={site}
+                          onClickSubsites={() => history.push(`/sites/${site.id}/sublocations`)}
+                          onClickBusinessProcesses={() => history.push(`/sites/${site.id}/business-processes`)}
                         />
                       </Col>
                     ))
                   }
                 </Row>
                 :
-                <div>No sub locations found.</div>
+                <div>No sites found.</div>
               }
             </React.Fragment>
           }
@@ -92,15 +81,14 @@ export class PartnerSubsites extends Component {
 
 const selector = createStructuredSelector({
   partner: selectCurrentPartner,
-  subsites: selectSubsites,
+  sites: selectSites,
 })
 
 const actions = {
-  loadPartnerSubsites,
-  loadPartnerOrGetFromCache,
+  loadPartnerSites,
 }
 
 export default compose(
   withRouter,
   connect(selector, actions),
-)(PartnerSubsites)
+)(PartnerSites)

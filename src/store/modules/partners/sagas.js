@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
 
+import { loadSites } from 'store/modules/sites'
 import {
   LOAD_PARTNERS,
   LOAD_PARTNER_OR_GET_FROM_CACHE,
@@ -23,11 +24,16 @@ import {
 
 const doLoadPartners = function* (action) {
   try {
+    const { loadSitesIfResponseEmpty } = action.payload
     const response = yield call(
       axios.get,
       `${API_BASE_URL}/mdm/partner/list/`,
     )
     yield put(loadPartnersSuccess(response.data))
+
+    if (!response.data.length && loadSitesIfResponseEmpty) {
+      yield put(loadSites())
+    }
   } catch (error) {
     yield put(loadPartnersFail(error.response ? error.response.data : {}))
   }
@@ -46,7 +52,7 @@ const doLoadPartnerOrGetFromCache = function* (action) {
 
 const doLoadPartner = function* (action) {
   const { id } = action.payload
-  
+
   try {
     const response = yield call(
       axios.get,

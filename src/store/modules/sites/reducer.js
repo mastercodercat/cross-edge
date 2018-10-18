@@ -5,7 +5,7 @@ import { convertToListRecord } from 'utils/state-helpers'
 
 import {
   generateRequestLoopHandlers,
-  successAction, failAction, setPageAction, setPageSizeAction,
+  successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
 import { REQUEST_SUCCESS } from 'constants.js'
@@ -16,7 +16,7 @@ import {
   LOAD_SITE,
   SET_CURRENT_SITE,
   LOAD_SITE_SUBSITES,
-  LOAD_PARTNER_SUBSITES,
+  LOAD_PARTNER_SITES,
   LOAD_SUBSITE_OR_GET_FROM_CACHE,
   LOAD_SUBSITE,
   SET_CURRENT_SUBSITE,
@@ -43,8 +43,6 @@ const initialState = new State({
 export const loadSites = createAction(LOAD_SITES)
 export const loadSitesSuccess = createAction(successAction(LOAD_SITES))
 export const loadSitesFail = createAction(failAction(LOAD_SITES))
-export const setSitesPage = createAction(setPageAction(LOAD_SITES))
-export const setSitesPageSize = createAction(setPageSizeAction(LOAD_SITES))
 
 export const loadSiteOrGetFromCache = createAction(LOAD_SITE_OR_GET_FROM_CACHE)
 export const loadSite = createAction(LOAD_SITE)
@@ -55,14 +53,10 @@ export const setCurrentSite = createAction(SET_CURRENT_SITE)
 export const loadSiteSubsites = createAction(LOAD_SITE_SUBSITES)
 export const loadSiteSubsitesSuccess = createAction(successAction(LOAD_SITE_SUBSITES))
 export const loadSiteSubsitesFail = createAction(failAction(LOAD_SITE_SUBSITES))
-export const setSiteSubsitesPage = createAction(setPageAction(LOAD_SITE_SUBSITES))
-export const setSiteSubsitesPageSize = createAction(setPageSizeAction(LOAD_SITE_SUBSITES))
 
-export const loadPartnerSubsites = createAction(LOAD_PARTNER_SUBSITES)
-export const loadPartnerSubsitesSuccess = createAction(successAction(LOAD_PARTNER_SUBSITES))
-export const loadPartnerSubsitesFail = createAction(failAction(LOAD_PARTNER_SUBSITES))
-export const setPartnerSubsitesPage = createAction(setPageAction(LOAD_PARTNER_SUBSITES))
-export const setPartnerSubsitesPageSize = createAction(setPageSizeAction(LOAD_PARTNER_SUBSITES))
+export const loadPartnerSites = createAction(LOAD_PARTNER_SITES)
+export const loadPartnerSitesSuccess = createAction(successAction(LOAD_PARTNER_SITES))
+export const loadPartnerSitesFail = createAction(failAction(LOAD_PARTNER_SITES))
 
 export const loadSubsiteOrGetFromCache = createAction(LOAD_SUBSITE_OR_GET_FROM_CACHE)
 export const loadSubsite = createAction(LOAD_SUBSITE)
@@ -110,8 +104,8 @@ export const reducer = handleActions({
   /* Load partner subsites */
 
   ...generateRequestLoopHandlers({
-    action: LOAD_PARTNER_SUBSITES,
-    dataField: 'subsites',
+    action: LOAD_PARTNER_SITES,
+    dataField: 'sites',
     initialValue: Immutable.List(),
     getDataFromPayload: payload => convertToListRecord(payload, Site),
     usePagination: false,

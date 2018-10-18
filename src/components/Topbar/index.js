@@ -49,12 +49,15 @@ class Topbar extends Component {
 
           <div className="topbarContent adp-flex">
             <div className="adp-flex-left">
-              {!isMobile && <div>
-                <button
-                  className="ion-navicon siderTriggerBtn with-icon with-pointer"
-                  onClick={onToggleCollapse}
-                />
-              </div>}
+              {
+                !isMobile &&
+                <div>
+                  <button
+                    className="ion-navicon siderTriggerBtn with-icon with-pointer"
+                    onClick={onToggleCollapse}
+                  />
+                </div>
+              }
             </div>
 
             <div className="adp-flex-right">

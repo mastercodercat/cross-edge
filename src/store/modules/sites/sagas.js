@@ -8,7 +8,7 @@ import {
   LOAD_SITE_OR_GET_FROM_CACHE,
   LOAD_SITE,
   LOAD_SITE_SUBSITES,
-  LOAD_PARTNER_SUBSITES,
+  LOAD_PARTNER_SITES,
   LOAD_SUBSITE_OR_GET_FROM_CACHE,
   LOAD_SUBSITE,
 } from './constants'
@@ -21,8 +21,8 @@ import {
   setCurrentSite,
   loadSiteSubsitesSuccess,
   loadSiteSubsitesFail,
-  loadPartnerSubsitesSuccess,
-  loadPartnerSubsitesFail,
+  loadPartnerSitesSuccess,
+  loadPartnerSitesFail,
   loadSubsite,
   loadSubsiteSuccess,
   loadSubsiteFail,
@@ -59,7 +59,7 @@ const doLoadSiteOrGetFromCache = function* (action) {
 
 const doLoadSite = function* (action) {
   const { id } = action.payload
-  
+
   try {
     const response = yield call(
       axios.get,
@@ -84,16 +84,16 @@ const doLoadSiteSubsites = function* (action) {
   }
 }
 
-const doLoadPartnerSubsites = function* (action) {
+const doLoadPartnerSites = function* (action) {
   try {
     const { id } = action.payload
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/mdm/subsite/by-partner/${id}/`,
+      `${API_BASE_URL}/mdm/site/by-partner/${id}/`,
     )
-    yield put(loadPartnerSubsitesSuccess(response.data))
+    yield put(loadPartnerSitesSuccess(response.data))
   } catch (error) {
-    yield put(loadPartnerSubsitesFail(error.response ? error.response.data : {}))
+    yield put(loadPartnerSitesFail(error.response ? error.response.data : {}))
   }
 }
 
@@ -110,7 +110,7 @@ const doLoadSubsiteOrGetFromCache = function* (action) {
 
 const doLoadSubsite = function* (action) {
   const { id } = action.payload
-  
+
   try {
     const response = yield call(
       axios.get,
@@ -127,7 +127,7 @@ export const saga = function* () {
   yield takeLatest(LOAD_SITE_OR_GET_FROM_CACHE, doLoadSiteOrGetFromCache)
   yield takeLatest(LOAD_SITE, doLoadSite)
   yield takeLatest(LOAD_SITE_SUBSITES, doLoadSiteSubsites)
-  yield takeLatest(LOAD_PARTNER_SUBSITES, doLoadPartnerSubsites)
+  yield takeLatest(LOAD_PARTNER_SITES, doLoadPartnerSites)
   yield takeLatest(LOAD_SUBSITE_OR_GET_FROM_CACHE, doLoadSubsiteOrGetFromCache)
   yield takeLatest(LOAD_SUBSITE, doLoadSubsite)
 }

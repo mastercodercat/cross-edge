@@ -10,10 +10,8 @@ import { withRouter } from 'react-router'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import BusinessProcessCard from 'components/BusinessProcessCard'
 import {
-  selectCurrentSite,
-  selectCurrentSubsite,
-  loadSubsiteOrGetFromCache,
-} from 'store/modules/sites'
+  selectCurrentPartner,
+} from 'store/modules/partners'
 import {
   selectBusinessProcesses,
   loadBusinessProcesses,
@@ -21,39 +19,29 @@ import {
 import { isLoading } from 'utils/state-helpers'
 
 
-export class SiteBusinessProcesses extends Component {
+export class PartnerBusinessProcesses extends Component {
 
   static propTypes = {
     match: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    site: ImmutablePropTypes.record.isRequired,
-    subsite: ImmutablePropTypes.record.isRequired,
+    partner: ImmutablePropTypes.record.isRequired,
     businessProcesses: ImmutablePropTypes.record.isRequired,
-    loadSubsiteOrGetFromCache: PropTypes.func.isRequired,
     loadBusinessProcesses: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { match, loadSubsiteOrGetFromCache, loadBusinessProcesses } = this.props
-
-    if (match.params.subsiteId) {
-      loadSubsiteOrGetFromCache({
-        id: match.params.subsiteId,
-      })
-    }
+    const { match, loadBusinessProcesses } = this.props
 
     loadBusinessProcesses({
-      siteId: match.params.siteId,
-      subsiteId: match.params.subsiteId,
+      partnerId: match.params.partnerId,
     })
   }
 
   render() {
-    const { match, history, site, subsite, businessProcesses } = this.props
-    const currentSite = match.params.siteId ? site : subsite
+    const { history, partner, businessProcesses } = this.props
     const loading = isLoading(businessProcesses.state)
 
-    if (isLoading(currentSite.state)) {
+    if (isLoading(partner.state)) {
       return <Spin spinning>
         <SpinnerDummyContent />
       </Spin>
@@ -62,7 +50,7 @@ export class SiteBusinessProcesses extends Component {
     return (
       <div>
         <h1>
-          <Icon type="profile" /> Business Processes for {currentSite.data.name}
+          <Icon type="profile" /> Business Processes for {partner.data.name}
         </h1>
 
         <Spin spinning={loading}>
@@ -97,17 +85,15 @@ export class SiteBusinessProcesses extends Component {
 }
 
 const selector = createStructuredSelector({
-  site: selectCurrentSite,
-  subsite: selectCurrentSubsite,
+  partner: selectCurrentPartner,
   businessProcesses: selectBusinessProcesses,
 })
 
 const actions = {
-  loadSubsiteOrGetFromCache,
   loadBusinessProcesses,
 }
 
 export default compose(
   withRouter,
   connect(selector, actions),
-)(SiteBusinessProcesses)
+)(PartnerBusinessProcesses)

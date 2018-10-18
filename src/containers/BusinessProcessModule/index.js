@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Icon, Spin, Pagination } from 'antd'
+import { Row, Col, Icon, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -9,10 +9,8 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import SiteCard from 'components/SiteCard'
+import PartnerCard from 'components/PartnerCard'
 import {
-  loadSites,
-  setSitesPage,
-  setSitesPageSize,
   selectSites,
 } from 'store/modules/sites'
 import {
@@ -28,28 +26,20 @@ export class BusinessProcessModule extends Component {
     history: PropTypes.object.isRequired,
     sites: ImmutablePropTypes.record.isRequired,
     partners: ImmutablePropTypes.record.isRequired,
-    loadSites: PropTypes.func.isRequired,
-    setSitesPage: PropTypes.func.isRequired,
-    setSitesPageSize: PropTypes.func.isRequired,
     loadPartners: PropTypes.func.isRequired,
   }
 
-  handleChangeSitesPage = (page, pageSize) => {
-    const { loadSites, setSitesPage, setSitesPageSize } = this.props
-    setSitesPage(page)
-    setSitesPageSize(pageSize)
-    loadSites()
-  }
-
   componentDidMount() {
-    const { loadSites, loadPartners } = this.props
-    loadSites()
-    loadPartners()
+    const { loadPartners } = this.props
+    loadPartners({
+      loadSitesIfResponseEmpty: true,
+    })
   }
 
   render() {
     const { sites, partners, history } = this.props
-    const loading = isLoading(sites.state) || isLoading(partners.state)
+    const loading = isLoading(partners.state) || isLoading(sites.state, true)
+    const showPartners = !isLoading(partners.state) && partners.data.size > 0
 
     return (
       <div>
@@ -62,11 +52,21 @@ export class BusinessProcessModule extends Component {
             loading ?
             <SpinnerDummyContent />
             :
-            (
-              sites.data ?
-              <React.Fragment>
-                <Row gutter={15}>
-                  {sites.data.map(site => (
+            <React.Fragment>
+              <Row gutter={15}>
+                {
+                  showPartners ?
+                  partners.data.map(partner => (
+                    <Col key={partner.id} sm={24} md={12} lg={8}>
+                      <PartnerCard
+                        partner={partner}
+                        onClickSites={() => history.push(`/partners/${partner.id}/sites`)}
+                        onClickBusinessProcesses={() => history.push(`/partners/${partner.id}/business-processes`)}
+                      />
+                    </Col>
+                  ))
+                  :
+                  sites.data.map(site => (
                     <Col key={site.id} sm={24} md={12} lg={8}>
                       <SiteCard
                         site={site}
@@ -74,29 +74,14 @@ export class BusinessProcessModule extends Component {
                         onClickBusinessProcesses={() => history.push(`/sites/${site.id}/business-processes`)}
                       />
                     </Col>
-                  ))}
-                  {partners.data.map(partner => (
-                    <Col key={partner.id} sm={24} md={12} lg={8}>
-                      <SiteCard
-                        site={partner}
-                        onClickSubsites={() => history.push(`/partners/${partner.id}/sublocations`)}
-                        onClickBusinessProcesses={e => e}
-                      />
-                    </Col>
-                  ))}
-                </Row>
-                <div className="text-right">
-                  <Pagination
-                    total={sites.count}
-                    current={sites.page}
-                    pageSize={sites.pageSize}
-                    onChange={this.handleChangeSitesPage}
-                  />
-                </div>
-              </React.Fragment>
-              :
-              <div>No sites found</div>
-            )
+                  ))
+                }
+                {
+                  (!loading && !partners.data.size && !sites.data.size) &&
+                  <div>No sites found</div>
+                }
+              </Row>
+            </React.Fragment>
           }
         </Spin>
       </div>
@@ -110,9 +95,6 @@ const selector = createStructuredSelector({
 })
 
 const actions = {
-  loadSites,
-  setSitesPage,
-  setSitesPageSize,
   loadPartners,
 }
 

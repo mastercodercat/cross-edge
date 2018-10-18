@@ -13,8 +13,6 @@ import {
   selectCurrentSite,
   selectSubsites,
   loadSiteSubsites,
-  setSiteSubsitesPage,
-  setSiteSubsitesPageSize,
 } from 'store/modules/sites'
 import { isLoading } from 'utils/state-helpers'
 
@@ -26,17 +24,6 @@ export class SiteSubsites extends Component {
     site: ImmutablePropTypes.record.isRequired,
     subsites: ImmutablePropTypes.record.isRequired,
     loadSiteSubsites: PropTypes.func.isRequired,
-    setSiteSubsitesPage: PropTypes.func.isRequired,
-    setSiteSubsitesPageSize: PropTypes.func.isRequired,
-  }
-
-  handleChangeSiteSubsitesPage = (page, pageSize) => {
-    const { site, loadSiteSubsites, setSiteSubsitesPage, setSiteSubsitesPageSize } = this.props
-    setSiteSubsitesPage(page)
-    setSiteSubsitesPageSize(pageSize)
-    loadSiteSubsites({
-      id: site.data.id,
-    })
   }
 
   componentDidMount() {
@@ -79,14 +66,6 @@ export class SiteSubsites extends Component {
                 :
                 <div>No sub locations found.</div>
               }
-              {/*<div className="text-right">
-                <Pagination
-                  total={subsites.count}
-                  current={subsites.page}
-                  pageSize={subsites.pageSize}
-                  onChange={this.handleChangeSiteSubsitesPage}
-                />
-              </div>*/}
             </React.Fragment>
           }
         </Spin>
@@ -103,8 +82,6 @@ const selector = createStructuredSelector({
 
 const actions = {
   loadSiteSubsites,
-  setSiteSubsitesPage,
-  setSiteSubsitesPageSize,
 }
 
 export default compose(

@@ -5,7 +5,7 @@ import { convertToListRecord } from 'utils/state-helpers'
 
 import {
   generateRequestLoopHandlers,
-  successAction, failAction, setPageAction, setPageSizeAction,
+  successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
 // import { REQUEST_SUCCESS } from 'constants.js'
@@ -35,8 +35,6 @@ const initialState = new State({
 export const loadBusinessProcesses = createAction(LOAD_BUSINESS_PROCESSES)
 export const loadBusinessProcessesSuccess = createAction(successAction(LOAD_BUSINESS_PROCESSES))
 export const loadBusinessProcessesFail = createAction(failAction(LOAD_BUSINESS_PROCESSES))
-export const setBusinessProcessesPage = createAction(setPageAction(LOAD_BUSINESS_PROCESSES))
-export const setBusinessProcessesPageSize = createAction(setPageSizeAction(LOAD_BUSINESS_PROCESSES))
 
 export const loadBusinessProcess = createAction(LOAD_BUSINESS_PROCESS)
 export const loadBusinessProcessSuccess = createAction(successAction(LOAD_BUSINESS_PROCESS))

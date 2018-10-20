@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
+import RouteWithProps from 'components/RouteWithProps'
 import ScrollToTop from 'components/ScrollToTop'
 import {
   userIsAuthenticated,
@@ -14,13 +15,10 @@ import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
 import BusinessProcessModule from 'containers/BusinessProcessModule'
-import Partner from 'containers/Partner'
-import PartnerSites from 'containers/PartnerSites'
-import PartnerBusinessProcesses from 'containers/PartnerBusinessProcesses'
-import Site from 'containers/Site'
-import SiteSubsites from 'containers/SiteSubsites'
-import SiteBusinessProcesses from 'containers/SiteBusinessProcesses'
+import ParentContainer from 'containers/ParentContainer'
+import ChildList from 'containers/ChildList'
 import BusinessProcess from 'containers/BusinessProcess'
+import setTypeProp from 'hoc/setTypeProp'
 
 
 const UnauthenticatedRoutes = () => (
@@ -37,31 +35,44 @@ const ChannelManagerRoutes = () => (
 )
 
 const PartnerRoutes = () => (
-  <Partner>
+  <ParentContainer type="partner">
     <Route
       exact
-      path="/partners/:id"
+      path="/partners/:parentId"
       render={props => (
-        <Redirect to={`/partners/${props.match.params.id}/sites`} />
+        <Redirect to={`/partners/${props.match.params.parentId}/sites`} />
       )}
     />
-    <Route exact path="/partners/:partnerId/sites" component={PartnerSites} />
-    <Route exact path="/partners/:partnerId/business-processes" component={PartnerBusinessProcesses} />
-  </Partner>
+    <RouteWithProps exact path="/partners/:parentId/sites" component={setTypeProp('site')(ChildList)} />
+    <RouteWithProps exact path="/partners/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
+  </ParentContainer>
 )
 
 const SiteRoutes = () => (
-  <Site>
+  <ParentContainer type="site">
     <Route
       exact
-      path="/sites/:id"
+      path="/sites/:parentId"
       render={props => (
-        <Redirect to={`/sites/${props.match.params.id}/sublocations`} />
+        <Redirect to={`/sites/${props.match.params.parentId}/subsites`} />
       )}
     />
-    <Route exact path="/sites/:id/sublocations" component={SiteSubsites} />
-    <Route exact path="/sites/:siteId/business-processes" component={SiteBusinessProcesses} />
-  </Site>
+    <RouteWithProps exact path="/sites/:parentId/subsites" component={setTypeProp('subsite')(ChildList)} />
+    <RouteWithProps exact path="/sites/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
+  </ParentContainer>
+)
+
+const SubsiteRoutes = () => (
+  <ParentContainer type="subsite">
+    <Route
+      exact
+      path="/subsites/:parentId"
+      render={props => (
+        <Redirect to={`/subsites/${props.match.params.parentId}/business-processes`} />
+      )}
+    />
+    <RouteWithProps exact path="/subsites/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
+  </ParentContainer>
 )
 
 const AuthenticatedRoutes = () => (
@@ -70,9 +81,9 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelManagerRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
-      <Route path="/partners/:id" component={PartnerRoutes} />
-      <Route path="/sites/:id" component={SiteRoutes} />
-      <Route exact path="/subsites/:subsiteId/business-processes" component={SiteBusinessProcesses} />
+      <Route path="/partners/:parentId" component={PartnerRoutes} />
+      <Route path="/sites/:parentId" component={SiteRoutes} />
+      <Route path="/subsites/:parentId" component={SubsiteRoutes} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
     </Switch>
   </DashboardLayout>

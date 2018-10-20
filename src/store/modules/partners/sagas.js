@@ -3,7 +3,6 @@ import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
 
-import { loadSites } from 'store/modules/sites'
 import {
   LOAD_PARTNERS,
   LOAD_PARTNER_OR_GET_FROM_CACHE,
@@ -24,16 +23,16 @@ import {
 
 const doLoadPartners = function* (action) {
   try {
-    const { loadSitesIfResponseEmpty } = action.payload
+    // const { parentId, parentType } = action.payload
+    // if (PARENT_TYPES.indexOf(parentType) === -1) {
+    //   throw new Error('Invalid parent type for partner list')
+    // }
+
     const response = yield call(
       axios.get,
       `${API_BASE_URL}/mdm/partner/list/`,
     )
     yield put(loadPartnersSuccess(response.data))
-
-    if (!response.data.length && loadSitesIfResponseEmpty) {
-      yield put(loadSites())
-    }
   } catch (error) {
     yield put(loadPartnersFail(error.response ? error.response.data : {}))
   }

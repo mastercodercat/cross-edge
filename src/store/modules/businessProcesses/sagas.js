@@ -6,6 +6,7 @@ import { API_BASE_URL } from 'config/base'
 import {
   LOAD_BUSINESS_PROCESSES,
   LOAD_BUSINESS_PROCESS,
+  PARENT_TYPES,
 } from './constants'
 import {
   loadBusinessProcessesSuccess,
@@ -17,18 +18,14 @@ import {
 
 const doLoadBusinessProcesses = function* (action) {
   try {
-    const { siteId, subsiteId, partnerId } = action.payload
+    const { parentId, parentType } = action.payload
+    if (PARENT_TYPES.indexOf(parentType) === -1) {
+      throw new Error('Invalid parent type for business process list')
+    }
+
     const response = yield call(
       axios.get,
-      (
-        partnerId ?
-        `${API_BASE_URL}/bpm/list/partner/${partnerId}/` :
-        (
-          siteId ?
-          `${API_BASE_URL}/bpm/list/site/${siteId}/` :
-          `${API_BASE_URL}/bpm/list/subsite/${subsiteId}/`
-        )
-      )
+      `${API_BASE_URL}/bpm/list/${parentType}/${parentId}/`
     )
     yield put(loadBusinessProcessesSuccess(response.data))
   } catch (error) {

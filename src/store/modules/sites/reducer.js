@@ -15,8 +15,7 @@ import {
   LOAD_SITE_OR_GET_FROM_CACHE,
   LOAD_SITE,
   SET_CURRENT_SITE,
-  LOAD_SITE_SUBSITES,
-  LOAD_PARTNER_SITES,
+  LOAD_SUBSITES,
   LOAD_SUBSITE_OR_GET_FROM_CACHE,
   LOAD_SUBSITE,
   SET_CURRENT_SUBSITE,
@@ -50,13 +49,9 @@ export const loadSiteSuccess = createAction(successAction(LOAD_SITE))
 export const loadSiteFail = createAction(failAction(LOAD_SITE))
 export const setCurrentSite = createAction(SET_CURRENT_SITE)
 
-export const loadSiteSubsites = createAction(LOAD_SITE_SUBSITES)
-export const loadSiteSubsitesSuccess = createAction(successAction(LOAD_SITE_SUBSITES))
-export const loadSiteSubsitesFail = createAction(failAction(LOAD_SITE_SUBSITES))
-
-export const loadPartnerSites = createAction(LOAD_PARTNER_SITES)
-export const loadPartnerSitesSuccess = createAction(successAction(LOAD_PARTNER_SITES))
-export const loadPartnerSitesFail = createAction(failAction(LOAD_PARTNER_SITES))
+export const loadSubsites = createAction(LOAD_SUBSITES)
+export const loadSubsitesSuccess = createAction(successAction(LOAD_SUBSITES))
+export const loadSubsitesFail = createAction(failAction(LOAD_SUBSITES))
 
 export const loadSubsiteOrGetFromCache = createAction(LOAD_SUBSITE_OR_GET_FROM_CACHE)
 export const loadSubsite = createAction(LOAD_SUBSITE)
@@ -91,21 +86,11 @@ export const reducer = handleActions({
     record.setIn(['currentSite', 'state'], REQUEST_SUCCESS)
   }),
 
-  /* Load site subsites */
+  /* Load subsites */
 
   ...generateRequestLoopHandlers({
-    action: LOAD_SITE_SUBSITES,
+    action: LOAD_SUBSITES,
     dataField: 'subsites',
-    initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Site),
-    usePagination: false,
-  }),
-
-  /* Load partner subsites */
-
-  ...generateRequestLoopHandlers({
-    action: LOAD_PARTNER_SITES,
-    dataField: 'sites',
     initialValue: Immutable.List(),
     getDataFromPayload: payload => convertToListRecord(payload, Site),
     usePagination: false,

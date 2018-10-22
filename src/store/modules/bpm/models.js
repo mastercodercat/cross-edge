@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { PaginatedListData } from 'store/common/models'
+import { PaginatedListData, createDetailDataType } from 'store/common/models'
 
 
 export const Subscriber = Immutable.Record({
@@ -14,6 +14,10 @@ export const Subscriber = Immutable.Record({
   time_zone_offset: 0,
 })
 
+export const SubscriberData = createDetailDataType(Subscriber())
+
 export const State = Immutable.Record({
   homeContent: PaginatedListData(),
+
+  currentSubscriber: SubscriberData(),
 })

@@ -14,6 +14,11 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
 import {
+  loadSubscriberOrGetFromCache,
+  selectCurrentSubscriber,
+} from 'store/modules/bpm'
+
+import {
   loadPartners,
   loadPartnerOrGetFromCache,
   selectPartners,
@@ -39,6 +44,10 @@ import {
 } from 'store/modules/businessProcesses'
 
 const ACTIONS_AND_SELECTS_BY_TYPES = {
+  subscriber: {
+    loadDetail: loadSubscriberOrGetFromCache,
+    selectDetail: selectCurrentSubscriber,
+  },
   partner: {
     loadList: loadPartners,
     loadDetail: loadPartnerOrGetFromCache,

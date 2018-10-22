@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
+import SubscriberCard from 'components/SubscriberCard'
 import PartnerCard from 'components/PartnerCard'
 import SiteCard from 'components/SiteCard'
 import BusinessProcessCard from 'components/BusinessProcessCard'
@@ -27,7 +28,7 @@ export class BusinessProcessModule extends Component {
   }
 
   static cardComponents = {
-    subscriber: PartnerCard,
+    subscriber: SubscriberCard,
     partner: PartnerCard,
     businessProcess: BusinessProcessCard,
     site: SiteCard,

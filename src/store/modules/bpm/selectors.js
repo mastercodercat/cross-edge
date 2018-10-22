@@ -3,3 +3,6 @@ export const selectBPMStore = state =>
 
 export const selectHomeContent = state =>
   state.getIn(['bpm', 'homeContent'])
+
+export const selectCurrentSubscriber = state =>
+  state.getIn(['bpm', 'currentSubscriber'])

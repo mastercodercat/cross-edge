@@ -34,6 +34,20 @@ const ChannelManagerRoutes = () => (
   </Channels>
 )
 
+const SubscriberRoutes = () => (
+  <ParentContainer type="subscriber">
+    <Route
+      exact
+      path="/subscribers/:parentId"
+      render={props => (
+        <Redirect to={`/subscribers/${props.match.params.parentId}/partners`} />
+      )}
+    />
+    <RouteWithProps exact path="/subscribers/:parentId/partners" component={setTypeProp('partner')(ChildList)} />
+    <RouteWithProps exact path="/subscribers/:parentId/sites" component={setTypeProp('site')(ChildList)} />
+  </ParentContainer>
+)
+
 const PartnerRoutes = () => (
   <ParentContainer type="partner">
     <Route
@@ -81,6 +95,7 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelManagerRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
+      <Route path="/subscribers/:parentId" component={SubscriberRoutes} />
       <Route path="/partners/:parentId" component={PartnerRoutes} />
       <Route path="/sites/:parentId" component={SiteRoutes} />
       <Route path="/subsites/:parentId" component={SubsiteRoutes} />

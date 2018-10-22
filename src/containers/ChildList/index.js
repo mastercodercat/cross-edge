@@ -4,6 +4,7 @@ import { Row, Col, Spin, Icon } from 'antd'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { withRouter } from 'react-router'
+import { pluralize, titleize } from 'inflection'
 
 import connectByType from 'hoc/connectByType'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
@@ -52,11 +53,13 @@ export class ChildList extends Component {
     }
 
     const spinning = isLoading(list.state) || error
+    let typeTitle = type.replace(/[A-Z]/g, c => ' ' + c)
+    typeTitle = pluralize(titleize(typeTitle))
 
     return (
       <div>
         <h1>
-          <Icon type="profile" /> {type}s for {parent.data.name}
+          <Icon type="profile" /> {typeTitle} for {parent.data.name}
         </h1>
 
         <Spin spinning={spinning}>

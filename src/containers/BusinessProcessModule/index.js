@@ -9,10 +9,12 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import PartnerCard from 'components/PartnerCard'
+import SiteCard from 'components/SiteCard'
+import BusinessProcessCard from 'components/BusinessProcessCard'
 import {
-  loadPartners,
-  selectPartners,
-} from 'store/modules/partners'
+  loadHome,
+  selectHomeContent,
+} from 'store/modules/bpm'
 import { isLoading } from 'utils/state-helpers'
 
 
@@ -20,18 +22,26 @@ export class BusinessProcessModule extends Component {
 
   static propTypes = {
     history: PropTypes.object.isRequired,
-    partners: ImmutablePropTypes.record.isRequired,
-    loadPartners: PropTypes.func.isRequired,
+    homeContent: ImmutablePropTypes.record.isRequired,
+    loadHome: PropTypes.func.isRequired,
+  }
+
+  static cardComponents = {
+    subscriber: PartnerCard,
+    partner: PartnerCard,
+    businessProcess: BusinessProcessCard,
+    site: SiteCard,
+    subsite: SiteCard,
   }
 
   componentDidMount() {
-    const { loadPartners } = this.props
-    loadPartners()
+    const { loadHome } = this.props
+    loadHome()
   }
 
   render() {
-    const { partners, history } = this.props
-    const loading = isLoading(partners.state)
+    const { homeContent, history } = this.props
+    const loading = isLoading(homeContent.state)
 
     return (
       <div>
@@ -47,14 +57,15 @@ export class BusinessProcessModule extends Component {
             <React.Fragment>
               <Row gutter={15}>
                 {
-                  partners.data.map(partner => (
-                    <Col key={partner.id} sm={24} md={12} lg={8}>
-                      <PartnerCard
-                        data={partner}
+                  homeContent.data.map(object => {
+                    const Card = BusinessProcessModule.cardComponents[object.mdm_type]
+                    return <Col key={object.id} sm={24} md={12} lg={8}>
+                      <Card
+                        data={object}
                         history={history}
                       />
                     </Col>
-                  ))
+                  })
                 }
               </Row>
             </React.Fragment>
@@ -66,11 +77,11 @@ export class BusinessProcessModule extends Component {
 }
 
 const selector = createStructuredSelector({
-  partners: selectPartners,
+  homeContent: selectHomeContent,
 })
 
 const actions = {
-  loadPartners,
+  loadHome,
 }
 
 export default compose(

@@ -27,7 +27,7 @@ const doLoadPartners = function* (action) {
     // if (PARENT_TYPES.indexOf(parentType) === -1) {
     //   throw new Error('Invalid parent type for partner list')
     // }
-
+axios.get(`${API_BASE_URL}/bpm/home/?${Math.floor(Math.random() * 999999)}`)
     const response = yield call(
       axios.get,
       `${API_BASE_URL}/mdm/partner/list/`,

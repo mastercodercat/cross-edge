@@ -8,6 +8,9 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
+import Wizard from 'components/Wizard'
+import ScanOrEnterIDs from 'components/BusinessProcessSteps/ScanOrEnterIDs'
+import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubmit'
 import {
   loadBusinessProcess,
   selectCurrentBusinessProcess,
@@ -48,7 +51,15 @@ export class BusinessProcess extends Component {
             <h1>
               <Icon type="profile" /> {businessProcess.data.name}
             </h1>
-            <div>content</div>
+            
+            <Wizard onSubmit={console.log}>
+              <Wizard.Page>
+                <ScanOrEnterIDs />
+              </Wizard.Page>
+              <Wizard.Page>
+                <CheckDataAndSubmit />
+              </Wizard.Page>
+            </Wizard>
           </React.Fragment>
         }
       </Spin>

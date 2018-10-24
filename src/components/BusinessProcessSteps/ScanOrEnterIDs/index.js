@@ -6,14 +6,19 @@ import ScanOrEnterIDsComponent from './component'
 
 export class ScanOrEnterIDs extends Component {
 
+  static validate = values => {
+    if (!values || !values.barcodes || !values.barcodes.length) {
+      return { barcodes: 'At least one barcode should be entered' }
+    }
+    return {}
+  }
+
   render() {
     return (
       <div>
         <Field
-          name="testValue"
+          name="barcodes"
           component={ScanOrEnterIDsComponent}
-          type="text"
-          placeholder=""
         />
       </div>
     )

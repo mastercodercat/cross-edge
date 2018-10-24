@@ -53,7 +53,7 @@ export class BusinessProcess extends Component {
             </h1>
             
             <Wizard onSubmit={console.log}>
-              <Wizard.Page>
+              <Wizard.Page validate={ScanOrEnterIDs.validate}>
                 <ScanOrEnterIDs />
               </Wizard.Page>
               <Wizard.Page>

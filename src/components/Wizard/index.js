@@ -87,9 +87,7 @@ export class Wizard extends React.Component {
               <div className="wizardButtons">
                 {
                   page > 0 &&
-                  <Button type="button" onClick={this.previous}>
-                    « Previous
-                  </Button>
+                  <Button type="button" onClick={this.previous}>Previous</Button>
                 }
                 {
                   !isLastPage &&

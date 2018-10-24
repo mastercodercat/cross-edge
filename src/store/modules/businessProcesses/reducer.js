@@ -2,17 +2,19 @@ import Immutable from 'immutable'
 import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
+import { REQUEST_SUCCESS } from 'constants.js'
 
 import {
-  generateRequestLoopHandlers,
+  requestLoopHandlersForGet,
+  requestLoopHandlersForUpdate,
   successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
-// import { REQUEST_SUCCESS } from 'constants.js'
 
 import {
   LOAD_BUSINESS_PROCESSES,
   LOAD_BUSINESS_PROCESS,
+  SUBMIT_DATA,
 } from './constants'
 
 import {
@@ -28,6 +30,8 @@ const initialState = new State({
   businessProcesses: PaginatedListData(),
 
   currentBusinessProcess: BusinessProcessData(),
+
+  submitDataState: REQUEST_SUCCESS,
 })
 
 /* Action creators */
@@ -40,13 +44,17 @@ export const loadBusinessProcess = createAction(LOAD_BUSINESS_PROCESS)
 export const loadBusinessProcessSuccess = createAction(successAction(LOAD_BUSINESS_PROCESS))
 export const loadBusinessProcessFail = createAction(failAction(LOAD_BUSINESS_PROCESS))
 
+export const submitData = createAction(SUBMIT_DATA)
+export const submitDataSuccess = createAction(successAction(SUBMIT_DATA))
+export const submitDataFail = createAction(failAction(SUBMIT_DATA))
+
 /* Reducer */
 
 export const reducer = handleActions({
 
   /* Load business processes */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_BUSINESS_PROCESSES,
     dataField: 'businessProcesses',
     initialValue: Immutable.List(),
@@ -56,10 +64,17 @@ export const reducer = handleActions({
 
   /* Load business process */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_BUSINESS_PROCESS,
     dataField: 'currentBusinessProcess',
     getDataFromPayload: payload => BusinessProcess(payload),
+  }),
+
+  /* Submit data */
+
+  ...requestLoopHandlersForUpdate({
+    action: SUBMIT_DATA,
+    stateField: 'submitDataState'
   }),
 
 }, initialState)

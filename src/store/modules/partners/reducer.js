@@ -4,7 +4,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { REQUEST_SUCCESS } from 'constants.js'
 import { convertToListRecord } from 'utils/state-helpers'
 import {
-  generateRequestLoopHandlers,
+  requestLoopHandlersForGet,
   successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
@@ -46,7 +46,7 @@ export const reducer = handleActions({
 
   /* Load partners */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_PARTNERS,
     dataField: 'partners',
     initialValue: Immutable.List(),
@@ -56,7 +56,7 @@ export const reducer = handleActions({
 
   /* Load partner */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_PARTNER,
     dataField: 'currentPartner',
     getDataFromPayload: payload => Partner(payload),

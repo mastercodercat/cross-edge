@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { createAction, handleActions } from 'redux-actions'
 
 import {
-  generateRequestLoopHandlers,
+  requestLoopHandlersForGet,
   successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
@@ -59,7 +59,7 @@ export const reducer = handleActions({
 
   /* Load business processes */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_HOME,
     dataField: 'homeContent',
     initialValue: Immutable.List(),
@@ -71,7 +71,7 @@ export const reducer = handleActions({
 
   /* Load subscriber */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_SUBSCRIBER,
     dataField: 'currentSubscriber',
     getDataFromPayload: payload => Subscriber(payload),

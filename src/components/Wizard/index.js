@@ -10,6 +10,7 @@ export class Wizard extends React.Component {
 
   static propTypes = {
     initialValues: PropTypes.object,
+    submitting: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
   }
 
@@ -63,7 +64,7 @@ export class Wizard extends React.Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, submitting } = this.props
     const { page, values } = this.state
 
     const childrenWithProps = React.Children.map(children, child =>
@@ -81,22 +82,28 @@ export class Wizard extends React.Component {
           validate={this.validate}
           onSubmit={this.handleSubmit}
         >
-          {({ handleSubmit, submitting, values }) => (
+          {({ handleSubmit, values }) => (
             <form onSubmit={handleSubmit}>
               {activePage}
               <div className="wizardButtons">
                 {
                   page > 0 &&
-                  <Button type="button" onClick={this.previous}>Previous</Button>
+                  <Button type="button" onClick={this.previous} disabled={submitting}>
+                    Previous
+                  </Button>
                 }
                 {
                   !isLastPage &&
-                  <Button type="primary" htmlType="submit">Next</Button>
+                  <Button type="primary" htmlType="submit" disabled={submitting}>
+                    Next
+                  </Button>
                 }
                 {
                   isLastPage &&
                   <Button type="primary" htmlType="submit" disabled={submitting}>
-                    Submit
+                    {
+                      submitting ? 'Submitting...' : 'Submit'
+                    }
                   </Button>
                 }
               </div>

@@ -4,7 +4,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { convertToListRecord } from 'utils/state-helpers'
 
 import {
-  generateRequestLoopHandlers,
+  requestLoopHandlersForGet,
   successAction, failAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
@@ -65,7 +65,7 @@ export const reducer = handleActions({
 
   /* Load sites */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_SITES,
     dataField: 'sites',
     initialValue: Immutable.List(),
@@ -75,7 +75,7 @@ export const reducer = handleActions({
 
   /* Load site */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_SITE,
     dataField: 'currentSite',
     getDataFromPayload: payload => Site(payload),
@@ -88,7 +88,7 @@ export const reducer = handleActions({
 
   /* Load subsites */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_SUBSITES,
     dataField: 'subsites',
     initialValue: Immutable.List(),
@@ -98,7 +98,7 @@ export const reducer = handleActions({
 
   /* Load subsite */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_SUBSITE,
     dataField: 'currentSubsite',
     getDataFromPayload: payload => Site(payload),

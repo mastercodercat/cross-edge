@@ -6,3 +6,6 @@ export const selectBusinessProcesses = state =>
 
 export const selectCurrentBusinessProcess = state =>
   state.getIn(['businessProcesses', 'currentBusinessProcess'])
+
+export const selectSubmitDataState = state =>
+  state.getIn(['businessProcesses', 'submitDataState'])

@@ -13,9 +13,11 @@ import ScanOrEnterIDs from 'components/BusinessProcessSteps/ScanOrEnterIDs'
 import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubmit'
 import {
   loadBusinessProcess,
+  submitData,
   selectCurrentBusinessProcess,
+  selectSubmitDataState,
 } from 'store/modules/businessProcesses'
-import { isLoading, hasFailed } from 'utils/state-helpers'
+import { isLoading, isPending, hasFailed } from 'utils/state-helpers'
 
 
 export class BusinessProcess extends Component {
@@ -23,7 +25,18 @@ export class BusinessProcess extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     businessProcess: ImmutablePropTypes.record.isRequired,
+    submitDataState: PropTypes.string.isRequired,
     loadBusinessProcess: PropTypes.func.isRequired,
+    submitData: PropTypes.func.isRequired,
+  }
+
+  handleSubmit = (data) => {
+    const { submitData, businessProcess } = this.props
+
+    submitData({
+      process_name: businessProcess.data.name,
+      data,
+    })
   }
 
   componentDidMount() {
@@ -34,7 +47,7 @@ export class BusinessProcess extends Component {
   }
 
   render() {
-    const { businessProcess } = this.props
+    const { businessProcess, submitDataState } = this.props
     const loading = isLoading(businessProcess.state)
 
     if (hasFailed(businessProcess.state)) {
@@ -52,7 +65,7 @@ export class BusinessProcess extends Component {
               <Icon type="profile" /> {businessProcess.data.name}
             </h1>
             
-            <Wizard onSubmit={console.log}>
+            <Wizard onSubmit={this.handleSubmit} submitting={isPending(submitDataState)}>
               <Wizard.Page validate={ScanOrEnterIDs.validate}>
                 <ScanOrEnterIDs />
               </Wizard.Page>
@@ -69,10 +82,12 @@ export class BusinessProcess extends Component {
 
 const selector = createStructuredSelector({
   businessProcess: selectCurrentBusinessProcess,
+  submitDataState: selectSubmitDataState,
 })
 
 const actions = {
   loadBusinessProcess,
+  submitData,
 }
 
 export default compose(

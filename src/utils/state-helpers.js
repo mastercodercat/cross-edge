@@ -18,6 +18,10 @@ export function needsLoading(requestState) {
   return requestState === REQUEST_INITIAL || requestState === REQUEST_FAIL
 }
 
+export function isPending(requestState) {
+  return requestState === REQUEST_PENDING
+}
+
 export function hasSucceeded(requestState) {
   return requestState === REQUEST_SUCCESS
 }
@@ -48,9 +52,9 @@ export function setPageSizeAction(action) {
   return `${action}/set_page_size`
 }
 
-export function generateRequestLoopHandlers(config) {
+export function requestLoopHandlersForGet(config) {
   /*
-   * This function will be used for registering async request loop handlers such as API.
+   * This function will be used for registering async request loop handlers such as GET API call.
    * It'll handle initial, success and fail cases.
    * In config, action, dataField and getDataFromPayload are required, and
    * getDataFromPayload should be function in the form of (payload) => (do something and return new_dataField_value)
@@ -62,7 +66,7 @@ export function generateRequestLoopHandlers(config) {
   } = config
 
   if (!action || !dataField || !getDataFromPayload) {
-    throw new Error('action, dataField and getDataFromPayload should be set for generating request loop handlers')
+    throw new Error('action, dataField and getDataFromPayload should be set for generating get request loop handlers')
   }
 
   initialValue = (typeof initialValue === 'undefined') ? null : initialValue
@@ -111,5 +115,46 @@ export function generateRequestLoopHandlers(config) {
 
     ...paginationHandlers,
 
+  }
+}
+
+export function requestLoopHandlersForUpdate(config) {
+  /*
+   * This function will be used for registering async request loop handlers for update request
+   * such as POST, PUT and DELETE RESTful API calls.
+   * It'll handle initial, success and fail cases.
+   * In config, action, dataField and getDataFromPayload are required, and
+   * getDataFromPayload should be function in the form of (payload) => (do something and return new_dataField_value)
+   */
+  let {
+    action, stateField,
+    onInitial, onSuccess, onFail,
+  } = config
+
+  if (!action || !stateField) {
+    throw new Error('action and stateField should be set for generating update request loop handlers')
+  }
+
+  return {
+    [action]: (state, { payload }) => state.withMutations(record => {
+      record.set(stateField, REQUEST_PENDING)
+      if (onInitial) {
+        onInitial(record, payload)
+      }
+    }),
+
+    [successAction(action)]: (state, { payload }) => state.withMutations(record => {
+      record.set(stateField, REQUEST_SUCCESS)
+      if (onSuccess) {
+        onSuccess(record, payload)
+      }
+    }),
+
+    [failAction(action)]: (state, { payload }) => state.withMutations(record => {
+      record.set(stateField, REQUEST_FAIL)
+      if (onFail) {
+        onFail(record, payload)
+      }
+    }),
   }
 }

@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 
+import { REQUEST_SUCCESS } from 'constants.js'
 import { PaginatedListData, createDetailDataType } from 'store/common/models'
 
 
@@ -24,4 +25,6 @@ export const State = Immutable.Record({
   businessProcesses: PaginatedListData(),
 
   currentBusinessProcess: BusinessProcessData(),
+
+  submitDataState: REQUEST_SUCCESS,
 })

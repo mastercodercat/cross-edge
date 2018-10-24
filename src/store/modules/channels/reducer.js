@@ -4,7 +4,7 @@ import { createAction, handleActions } from 'redux-actions'
 import { convertToListRecord } from 'utils/state-helpers'
 
 import {
-  generateRequestLoopHandlers,
+  requestLoopHandlersForGet,
   successAction, failAction, setPageAction, setPageSizeAction,
 } from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
@@ -61,7 +61,7 @@ export const reducer = handleActions({
 
   /* Load channels */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNELS,
     dataField: 'channels',
     initialValue: Immutable.List(),
@@ -71,7 +71,7 @@ export const reducer = handleActions({
 
   /* Load single channel detail */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNEL,
     dataField: 'currentChannel',
     getDataFromPayload: payload => Channel(payload),
@@ -79,7 +79,7 @@ export const reducer = handleActions({
 
   /* Load channel entries of a channel */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNEL_ENTRIES,
     dataField: 'currentChannelEntries',
     initialValue: Immutable.List(),

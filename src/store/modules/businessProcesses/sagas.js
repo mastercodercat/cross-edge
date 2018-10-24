@@ -6,6 +6,7 @@ import { API_BASE_URL } from 'config/base'
 import {
   LOAD_BUSINESS_PROCESSES,
   LOAD_BUSINESS_PROCESS,
+  SUBMIT_DATA,
   PARENT_TYPES,
 } from './constants'
 import {
@@ -13,6 +14,8 @@ import {
   loadBusinessProcessesFail,
   loadBusinessProcessSuccess,
   loadBusinessProcessFail,
+  submitDataSuccess,
+  submitDataFail,
 } from './reducer'
 
 
@@ -47,7 +50,21 @@ const doLoadBusinessProcess = function* (action) {
   }
 }
 
+const doSubmitData = function* (action) {
+  try {
+    const response = yield call(
+      axios.post,
+      `${API_BASE_URL}/bpm/`,
+      action.payload
+    )
+    yield put(submitDataSuccess(response.data))
+  } catch (error) {
+    yield put(submitDataFail(error.response ? error.response.data : {}))
+  }
+}
+
 export const saga = function* () {
   yield takeLatest(LOAD_BUSINESS_PROCESSES, doLoadBusinessProcesses)
   yield takeLatest(LOAD_BUSINESS_PROCESS, doLoadBusinessProcess)
+  yield takeLatest(SUBMIT_DATA, doSubmitData)
 }

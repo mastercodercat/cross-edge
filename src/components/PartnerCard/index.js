@@ -20,7 +20,7 @@ const PartnerCard = ({ data, history }) => {
       <Button
         type="primary"
         block
-        onClick={`/partners/${data.id}/business-processes`}
+        onClick={() => history.push(`/partners/${data.id}/business-processes`)}
       >
         Business Processes
       </Button>

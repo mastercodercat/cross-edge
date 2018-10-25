@@ -17,8 +17,8 @@ it('should render correctly', () => {
     history={mockHistory}
   />)
 
-  expect(wrapper.find('.title').text()).toEqual(bp.name)
-  expect(wrapper.find('.description').text()).toEqual(bp.description)
+  expect(wrapper.text()).toEqual(expect.stringContaining(bp.name))
+  expect(wrapper.text()).toEqual(expect.stringContaining(bp.description))
 })
 
 it('should push business process route to history when Go button clicked', () => {
@@ -31,6 +31,5 @@ it('should push business process route to history when Go button clicked', () =>
   />)
 
   wrapper.find('button').simulate('click')
-
   expect(mockHistory.push.mock.calls[0][0]).toEqual(`/business-processes/${bp.name}`)
 })

@@ -1,33 +1,32 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Button, Card } from 'antd'
 
 import StyleWrapper from './style'
 
 
 const BusinessProcessCard = ({ data, history }) => (
   <StyleWrapper>
-    <div className="business-process-image-wrapper">
-      <div className="business-process-image" style={{ backgroundImage: `url(${data.image})` }} />
-    </div>
-    <div className="content">
-      <h3 className="title"><center>{data.name}</center></h3>
-      <div className="description">
-        {data.description}
-      </div>
-      <div className="buttons">
-        <div className="button-wrapper">
-        </div>
-        <div className="button-wrapper">
-          <Button
-            type="primary"
-            block
-            onClick={() => history.push(`/business-processes/${data.name}`)}
-          >
-            Go
-          </Button>
-        </div>
-      </div>
-    </div>
+    <Card
+      hoverable
+      cover={<div className="image-wrapper">
+        <div className="image" style={{ backgroundImage: `url(${data.image})` }} />
+      </div>}
+      actions={[
+        <Button
+          type="primary"
+          block
+          onClick={() => history.push(`/business-processes/${data.name}`)}
+        >
+          Go
+        </Button>
+      ]}
+      bodyStyle={{ minHeight: 110 }}
+    >
+      <Card.Meta
+        title={data.name}
+        description={<div className="descriptionWrapper">{data.description}</div>}
+      />
+    </Card>
   </StyleWrapper>
 )
 

@@ -23,7 +23,7 @@ it('should render correctly', () => {
   expect(wrapper.text()).toEqual(expect.stringContaining(st.description))
 })
 
-it('should push to correct route to history when any of the buttons clicked', () => {
+it('should push correct route to history when any of the buttons clicked', () => {
   const mockHistory = {
     push: jest.fn()
   }

@@ -16,6 +16,8 @@ const initialProps = {
   currentChannelEntries: PaginatedListData(),
   currentChannelEntriesChannel: null,
   loadChannels: e => e,
+  setChannelsPage: e => e,
+  setChannelsPageSize: e => e,
   loadChannelEntries: e => e,
   setChannelEntriesChannel: e => e,
   setChannelEntriesPage: e => e,

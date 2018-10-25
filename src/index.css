@@ -84,3 +84,11 @@ button.with-icon {
   color: #fff;
   outline: 0;
 }
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}

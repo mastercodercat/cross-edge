@@ -12,7 +12,7 @@ import {
   selectCurrentChannel,
   loadChannel,
 } from 'store/modules/channels'
-import { isLoading } from 'utils/state-helpers'
+import { isLoading, hasFailed } from 'utils/state-helpers'
 
 
 export class ChannelDetail extends Component {
@@ -31,6 +31,10 @@ export class ChannelDetail extends Component {
   render() {
     const { currentChannel } = this.props
     const loading = isLoading(currentChannel.state)
+
+    if (hasFailed(currentChannel.state)) {
+      return <div>Failed to load channel information.</div>
+    }
 
     return (
       <div>

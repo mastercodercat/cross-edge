@@ -43,7 +43,7 @@ export class DashboardLayout extends Component {
 
   handleCommand = (command) => {
     const { history, signOut } = this.props
-    
+
     if (command === 'signout') {
       signOut()
       history.push('/signin')

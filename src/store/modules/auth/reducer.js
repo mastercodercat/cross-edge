@@ -6,7 +6,7 @@ import {
 } from 'utils/storage'
 
 import { REQUEST_INITIAL } from 'constants.js'
-import { generateRequestLoopHandlers, successAction, failAction } from 'utils/state-helpers'
+import { requestLoopHandlersForGet, successAction, failAction } from 'utils/state-helpers'
 
 import {
   AUTH_SIGNIN,
@@ -36,7 +36,7 @@ export const signOut = createAction(AUTH_SIGNOUT)
 
 export const reducer = handleActions({
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: AUTH_SIGNIN,
     dataField: 'auth',
     initialValue: '',

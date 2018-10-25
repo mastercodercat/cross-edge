@@ -3,7 +3,10 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
 
-import { generateRequestLoopHandlers, successAction, failAction } from 'utils/state-helpers'
+import {
+  requestLoopHandlersForGet,
+  successAction, failAction, setPageAction, setPageSizeAction,
+} from 'utils/state-helpers'
 import { PaginatedListData } from 'store/common/models'
 
 import {
@@ -11,8 +14,6 @@ import {
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
   SET_CHANNEL_ENTRIES_CHANNEL,
-  SET_CHANNEL_ENTRIES_PAGE,
-  SET_CHANNEL_ENTRIES_PAGE_SIZE,
 } from './constants'
 
 import {
@@ -40,6 +41,8 @@ const initialState = new State({
 export const loadChannels = createAction(LOAD_CHANNELS)
 export const loadChannelsSuccess = createAction(successAction(LOAD_CHANNELS))
 export const loadChannelsFail = createAction(failAction(LOAD_CHANNELS))
+export const setChannelsPage = createAction(setPageAction(LOAD_CHANNELS))
+export const setChannelsPageSize = createAction(setPageSizeAction(LOAD_CHANNELS))
 
 export const loadChannel = createAction(LOAD_CHANNEL)
 export const loadChannelSuccess = createAction(successAction(LOAD_CHANNEL))
@@ -49,8 +52,8 @@ export const loadChannelEntries = createAction(LOAD_CHANNEL_ENTRIES)
 export const loadChannelEntriesSuccess = createAction(successAction(LOAD_CHANNEL_ENTRIES))
 export const loadChannelEntriesFail = createAction(failAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesChannel = createAction(SET_CHANNEL_ENTRIES_CHANNEL)
-export const setChannelEntriesPage = createAction(SET_CHANNEL_ENTRIES_PAGE)
-export const setChannelEntriesPageSize = createAction(SET_CHANNEL_ENTRIES_PAGE_SIZE)
+export const setChannelEntriesPage = createAction(setPageAction(LOAD_CHANNEL_ENTRIES))
+export const setChannelEntriesPageSize = createAction(setPageSizeAction(LOAD_CHANNEL_ENTRIES))
 
 /* Reducer */
 
@@ -58,7 +61,7 @@ export const reducer = handleActions({
 
   /* Load channels */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNELS,
     dataField: 'channels',
     initialValue: Immutable.List(),
@@ -66,9 +69,9 @@ export const reducer = handleActions({
     usePagination: true,
   }),
 
-  /* Load single channel detail*/
+  /* Load single channel detail */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNEL,
     dataField: 'currentChannel',
     getDataFromPayload: payload => Channel(payload),
@@ -76,7 +79,7 @@ export const reducer = handleActions({
 
   /* Load channel entries of a channel */
 
-  ...generateRequestLoopHandlers({
+  ...requestLoopHandlersForGet({
     action: LOAD_CHANNEL_ENTRIES,
     dataField: 'currentChannelEntries',
     initialValue: Immutable.List(),

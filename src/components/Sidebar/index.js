@@ -26,7 +26,7 @@ export class Sidebar extends Component {
 
     return (
       <Sider
-        width={220}
+        width={230}
         collapsible
         trigger={null}
         collapsed={collapsed}
@@ -41,6 +41,10 @@ export class Sidebar extends Component {
             <Menu.Item key="/channels">
               <Icon type="cluster" />
               <span>Channel Manager</span>
+            </Menu.Item>
+            <Menu.Item key="/business-process-module">
+              <Icon type="profile" />
+              <span>Business Process Module</span>
             </Menu.Item>
           </Menu>
         </StyleWrapper>

@@ -1,5 +1,5 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import axios from 'axios';
+import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
 

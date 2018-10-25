@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-import bgImage from 'images/signin.jpg';
+import bgImage from 'images/signin.jpg'
 
 
 const SignInStyleWrapper = styled.div`

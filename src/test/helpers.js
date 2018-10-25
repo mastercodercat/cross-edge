@@ -9,3 +9,7 @@ export function changeInputValue(inputWrapper, value) {
   inputWrapper.getDOMNode().value = value
   inputWrapper.simulate('change', inputWrapper)
 }
+
+export const mockHistory = {
+  push: e => e,
+}

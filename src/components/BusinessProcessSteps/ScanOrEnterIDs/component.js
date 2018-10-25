@@ -21,7 +21,7 @@ class ScanOrEnterIDsComponent extends Component {
   handleAddBarcode = (barcode) => {
     const { input: { onChange, value } } = this.props
 
-    if (value.indexOf(barcode) >= 0) {
+    if (value && value.indexOf(barcode) >= 0) {
       this.setState({
         enteringBarcode: '',
         error: 'duplicate',

@@ -37,7 +37,7 @@
     "start": "PORT=3001 NODE_PATH=src react-app-rewired start",
     "build": "NODE_PATH=src react-app-rewired build",
     "test": "NODE_PATH=src react-app-rewired test --env=jsdom",
-    "deploy": "aws s3 sync build/ s3://adept-edge"
+    "s3_deploy": "aws s3 sync build/"
   },
   "devDependencies": {
     "enzyme": "^3.6.0",

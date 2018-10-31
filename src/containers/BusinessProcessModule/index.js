@@ -16,7 +16,7 @@ import {
   loadHome,
   selectHomeContent,
 } from 'store/modules/bpm'
-import { isLoading } from 'utils/state-helpers'
+import { isLoading, hasFailed } from 'utils/state-helpers'
 
 
 export class BusinessProcessModule extends Component {
@@ -56,6 +56,11 @@ export class BusinessProcessModule extends Component {
             <SpinnerDummyContent />
             :
             <React.Fragment>
+              {
+                hasFailed(homeContent.state) &&
+                'Failed to load data from server.'
+              }
+
               <Row gutter={15}>
                 {
                   homeContent.data.map(object => {

@@ -11,7 +11,7 @@ import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import BusinessProcessCard from 'components/BusinessProcessCard'
 import PartnerCard from 'components/PartnerCard'
 import SiteCard from 'components/SiteCard'
-import { isLoading } from 'utils/state-helpers'
+import { isLoading, hasFailed } from 'utils/state-helpers'
 
 
 export class ChildList extends Component {
@@ -66,20 +66,26 @@ export class ChildList extends Component {
           {
             spinning ?
             <SpinnerDummyContent /> :
-            (
-              list.data.size > 0 ?
-              <Row gutter={15}>
-                {
-                  list.data.map((child, index) => (
-                    <Col key={index} sm={24} md={12} lg={8}>
-                      <Card data={child} history={history} isSubsite={type === 'subsite'} />
-                    </Col>
-                  ))
-                }
-              </Row>
-              :
-              <div>No {type}s found.</div>
-            )
+            <React.Fragment>
+              {
+                hasFailed(list.state) && `Failed to load ${typeTitle}`
+              }
+
+              {
+                list.data.size > 0 ?
+                <Row gutter={15}>
+                  {
+                    list.data.map((child, index) => (
+                      <Col key={index} sm={24} md={12} lg={8}>
+                        <Card data={child} history={history} isSubsite={type === 'subsite'} />
+                      </Col>
+                    ))
+                  }
+                </Row>
+                :
+                <div>No {type}s found.</div>
+              }
+            </React.Fragment>
           }
         </Spin>
       </div>

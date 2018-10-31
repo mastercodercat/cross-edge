@@ -5,14 +5,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import { Alert } from 'antd'
 
 import Logo from 'components/Logo'
 import SignInForm from 'components/SignInForm'
-import { REQUEST_PENDING } from 'constants.js'
 import {
   signIn,
   selectAuthData,
 } from 'store/modules/auth'
+import { isPending, hasFailed } from 'utils/state-helpers'
 import SignInStyleWrapper from "./style"
 
 
@@ -29,7 +30,6 @@ export class SignIn extends Component {
 
   render() {
     const { auth } = this.props
-    const isSubmitting = auth.state === REQUEST_PENDING
 
     return (
       <SignInStyleWrapper className="adpSignInPage">
@@ -41,9 +41,16 @@ export class SignIn extends Component {
               </Link>
             </div>
 
+            {
+              hasFailed(auth.state) &&
+              <div className="alertWrapper">
+                <Alert message="Failed to login with provided credentials" type="error" />
+              </div>
+            }
+
             <SignInForm
               onSubmit={this.handleLogin}
-              submitting={isSubmitting}
+              submitting={isPending(auth.state)}
             />
           </div>
         </div>

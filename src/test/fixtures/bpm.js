@@ -34,6 +34,18 @@ export const businessProcesses = [
   }
 ]
 
+export const nonExistingBusinessProcesses = {
+  "name":"Nonexisting BP",
+  "description":"",
+  "rule":2,
+  "subscriber":2,
+  "site_location":2,
+  "sub_site_location":null,
+  "partner":3,
+  "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/carry-package.eps?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=Lhdlf5zQroWB%2FXA%2B%2BtF0n4nJuqI%3D&Expires=1540463277",
+  "mdm_type":"business_process"
+}
+
 export const homeContent = [
   {
     "id":1,

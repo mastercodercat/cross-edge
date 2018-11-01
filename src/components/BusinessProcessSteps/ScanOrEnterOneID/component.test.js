@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { mount } from 'enzyme'
 
-import ScanOrEnterIDsComponent from './component'
+import ScanOrEnterOneIDComponent from './component'
 
 
 class TestComponent extends Component {
@@ -15,22 +15,20 @@ class TestComponent extends Component {
   render() {
     const { value } = this.state
 
-    return <ScanOrEnterIDsComponent
+    return <ScanOrEnterOneIDComponent
       input={{ value, onChange: this.onChange }}
       meta={{}}
     />
   }
 }
 
-it('should be able to add barcodes by entering and hitting `Enter` key', () => {
+it('should be able to input barcode identifier', () => {
   const wrapper = mount(<TestComponent />)
 
-  const data = ['1000001', '1000002', '1000003']
+  const data = '1000001'
+
   const inputField = wrapper.find('input')
-  data.forEach(barcode => {
-    inputField.prop('onChange')({ currentTarget: { value: barcode } })
-    inputField.simulate('keydown', { keyCode: 13 })
-  })
+  inputField.prop('onChange')({ currentTarget: { value: data } })
 
   expect(wrapper.state('value')).toEqual(data)
 })

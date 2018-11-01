@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Input, Table, Alert } from 'antd'
-
-import StyleWrapper from './componentStyle'
 
 
 const { Column } = Table
 
 class ScanOrEnterIDsComponent extends Component {
+
+  static propTypes = {
+    input: PropTypes.object.isRequired,
+    meta: PropTypes.object.isRequired,
+  }
 
   state = {
     enteringBarcode: '',
@@ -67,17 +71,17 @@ class ScanOrEnterIDsComponent extends Component {
     const tableData = (value || []).map(v => ({ barcode: v }))
 
     return (
-      <StyleWrapper>
+      <div>
         {
           validationError &&
-          <div className="alertWrapper">
+          <div className="alert-wrapper">
             <Alert message={validationError} type="error" closable />
           </div>
         }
 
         {
           !validationError && error === 'duplicate' &&
-          <div className="alertWrapper">
+          <div className="alert-wrapper">
             <Alert message="Duplicate identifier" type="error" closable />
           </div>
         }
@@ -115,7 +119,7 @@ class ScanOrEnterIDsComponent extends Component {
             />
           </Table>
         </div>
-      </StyleWrapper>
+      </div>
     )
   }
 }

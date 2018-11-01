@@ -27,7 +27,7 @@ it('should show spinner when data not loaded', () => {
     {...props}
   />)
 
-  expect(wrapper.find('.ant-spin')).not.toBeNull()
+  expect(wrapper.find('.ant-spin').length).not.toEqual(0)
   expect(props.loadDetail.mock.calls).toBeTruthy()
 })
 

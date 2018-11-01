@@ -14,7 +14,7 @@ it('should show spinner when data not loaded', () => {
     rowClassName={e => ''}
   />)
 
-  expect(wrapper.find('.ant-spin')).not.toBeNull()
+  expect(wrapper.find('.ant-spin').length).not.toEqual(0)
 })
 
 it('should display data records with actions when data loaded', () => {

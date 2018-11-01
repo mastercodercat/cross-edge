@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { BusinessProcess } from 'store/modules/BusinessProcesses'
+import { BusinessProcess } from 'store/modules/businessProcesses'
 import { mockHistory } from 'test/helpers'
 import BusinessProcessCard from './index'
 

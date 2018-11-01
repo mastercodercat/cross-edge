@@ -15,7 +15,7 @@ it('should show spinner when data not loaded', () => {
     pagination={mockPagination}
   />)
 
-  expect(wrapper.find('.ant-spin')).not.toBeNull()
+  expect(wrapper.find('.ant-spin').length).not.toEqual(0)
 })
 
 it('should display data records with actions when data loaded', () => {

@@ -2,19 +2,20 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 
-import ScanOrEnterIDsComponent from './component'
+import ScanOrEnterOneIDComponent from './component'
 
 
-export class ScanOrEnterIDs extends Component {
+export class ScanOrEnterOneID extends Component {
 
   static propTypes = {
     field: PropTypes.string.isRequired,
   }
 
   static validate = (field, values) => {
-    if (!values || !values[field] || !values[field].length) {
-      return { [field]: 'At least one barcode should be entered' }
+    if (!values || !values[field]) {
+      return { [field]: 'This field is required' }
     }
+
     return {}
   }
 
@@ -25,11 +26,11 @@ export class ScanOrEnterIDs extends Component {
       <div>
         <Field
           name={field}
-          component={ScanOrEnterIDsComponent}
+          component={ScanOrEnterOneIDComponent}
         />
       </div>
     )
   }
 }
 
-export default ScanOrEnterIDs
+export default ScanOrEnterOneID

@@ -23,7 +23,7 @@ it('should show spinner when home content not loaded', () => {
     {...props}
   />)
 
-  expect(wrapper.find('.ant-spin')).not.toBeNull()
+  expect(wrapper.find('.ant-spin').length).not.toEqual(0)
   expect(props.loadHome.mock.calls).toBeTruthy()
 })
 

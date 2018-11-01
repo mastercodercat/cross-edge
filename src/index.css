@@ -92,3 +92,7 @@ button.with-icon {
 .text-right {
   text-align: right;
 }
+
+.alert-wrapper {
+  margin-bottom: 25px;
+}

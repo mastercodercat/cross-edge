@@ -33,7 +33,7 @@ it('should show spinner when data not loaded', () => {
   />)
 
   expect(wrapper.find('h1').text().trim()).toEqual(`Sites for ${props.parent.data.name}`)
-  expect(wrapper.find('.ant-spin')).not.toBeNull()
+  expect(wrapper.find('.ant-spin').length).not.toEqual(0)
   expect(props.loadList.mock.calls).toBeTruthy()
 })
 

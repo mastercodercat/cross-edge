@@ -57,6 +57,10 @@ const SignInStyleWrapper = styled.div`
       flex-shrink: 0;
     }
   }
+
+  .alertWrapper {
+    margin-bottom: 20px;
+  }
 `
 
 export default SignInStyleWrapper

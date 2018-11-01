@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import BusinessProcessWizard from './index'
 import Commissioning from './Commissioning'
 
-import { BusinessProcess } from 'store/modules/BusinessProcesses'
+import { BusinessProcess } from 'store/modules/businessProcesses'
 import {
   businessProcesses,
   nonExistingBusinessProcesses,

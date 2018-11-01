@@ -10,7 +10,7 @@ import {
 import {
   BusinessProcess as BusinessProcessModel,
   BusinessProcessData
-} from 'store/modules/BusinessProcesses'
+} from 'store/modules/businessProcesses'
 import { businessProcesses } from 'test/fixtures/bpm'
 
 

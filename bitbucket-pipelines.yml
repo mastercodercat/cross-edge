@@ -13,6 +13,8 @@ pipelines:
     develop:
       - step:
           name: Run tests
+          caches:
+            - node
           script:
             - yarn
             - yarn test

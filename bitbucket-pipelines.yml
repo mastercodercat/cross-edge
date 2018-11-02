@@ -3,8 +3,21 @@ image: node:8.11.2
 pipelines:
   default:
     - step:
+        name: Run tests
         caches:
           - node
         script:
           - yarn
           - yarn test
+  branches:
+    develop:
+      - step:
+          name: Deploy to Staging
+          deployment: staging
+          script:
+            - apt-get update && apt-get install -y python-dev
+            - curl -O https://bootstrap.pypa.io/get-pip.py
+            - python get-pip.py
+            - pip install awscli
+            - REACT_APP_API_URL=$STAGING_API_URL yarn build
+            - yarn s3_deploy s3://$STAGING_S3_BUCKET

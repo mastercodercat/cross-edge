@@ -12,11 +12,14 @@ pipelines:
   branches:
     develop:
       - step:
-          name: Deploy to Staging
-          deployment: staging
+          name: Run tests
           script:
             - yarn
             - yarn test
+      - step:
+          name: Deploy to Staging
+          deployment: staging
+          script:
             - apt-get update && apt-get install -y python-dev
             - curl -O https://bootstrap.pypa.io/get-pip.py
             - python get-pip.py

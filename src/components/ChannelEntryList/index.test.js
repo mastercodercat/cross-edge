@@ -40,3 +40,15 @@ it('should display data records with actions when data loaded', () => {
     expect(actionCell.childAt(i).text()).toEqual(actions[i].text)
   }
 })
+
+it('should display data records without actions if actions not given', () => {
+  const wrapper = mount(<ChannelEntryList
+    loading={false}
+    channelEntries={channelEntryListMock.toArray()}
+    pagination={mockPagination}
+  />)
+
+  expect(wrapper.find('tbody tr')).toHaveLength(3)
+
+  expect(wrapper.find('tbody tr').at(0).find('td').length).toEqual(3)
+})

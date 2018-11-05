@@ -13,7 +13,7 @@ import {
   loadChannels, loadChannelsSuccess, loadChannelsFail,
   loadChannel, loadChannelSuccess, loadChannelFail,
   loadChannelEntries, loadChannelEntriesSuccess, loadChannelEntriesFail,
-  setChannelEntriesChannel, setChannelEntriesPage, setChannelEntriesPageSize,
+  setChannelEntriesPage, setChannelEntriesPageSize,
 } from './reducer'
 
 import channelListMock from 'test/fixtures/channels'

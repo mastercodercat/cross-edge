@@ -14,6 +14,7 @@ import DashboardLayout from 'containers/DashboardLayout'
 import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
+import ChannelEntries from 'containers/ChannelEntries'
 import BusinessProcessModule from 'containers/BusinessProcessModule'
 import ParentContainer from 'containers/ParentContainer'
 import ChildList from 'containers/ChildList'
@@ -28,7 +29,7 @@ const UnauthenticatedRoutes = () => (
   </Switch>
 )
 
-const ChannelManagerRoutes = () => (
+const ChannelListRoutes = () => (
   <Channels>
     <Route exact path="/channels/:id" component={ChannelDetail} />
   </Channels>
@@ -93,7 +94,9 @@ const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
       <Route exact path="/" component={Dashboard} />
-      <Route path="/channels" component={ChannelManagerRoutes} />
+      <Route exact path="/channels" component={ChannelListRoutes} />
+      <Route exact path="/channels/:id" component={ChannelListRoutes} />
+      <Route exact path="/channels/:id/channel-entries" component={ChannelEntries} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
       <Route path="/subscribers/:parentId" component={SubscriberRoutes} />
       <Route path="/partners/:parentId" component={PartnerRoutes} />

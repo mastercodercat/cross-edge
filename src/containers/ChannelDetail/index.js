@@ -49,9 +49,6 @@ export class ChannelDetail extends Component {
               <table className="info-table">
                 <tbody>
                   <tr>
-                    <td>ID</td><td>{currentChannel.data.id}</td>
-                  </tr>
-                  <tr>
                     <td>Name</td><td>{currentChannel.data.name}</td>
                   </tr>
                   <tr>

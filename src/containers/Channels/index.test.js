@@ -14,12 +14,10 @@ import channelEntryListMock from 'test/fixtures/channelEntries'
 const initialProps = {
   channels: PaginatedListData(),
   currentChannelEntries: PaginatedListData(),
-  currentChannelEntriesChannel: null,
   loadChannels: e => e,
   setChannelsPage: e => e,
   setChannelsPageSize: e => e,
   loadChannelEntries: e => e,
-  setChannelEntriesChannel: e => e,
   setChannelEntriesPage: e => e,
   setChannelEntriesPageSize: e => e,
   history: { push: e => e },
@@ -46,27 +44,4 @@ it('should render list when data loaded', () => {
 
   expect(wrapper.find('.ant-spin').length).toBe(0)
   expect(wrapper.find('table').at(0).find('tbody tr').length).toBe(2)
-})
-
-it('should render channel entry list when requested', () => {
-  const props = {
-    ...initialProps,
-    channels: PaginatedListData({
-      data: channelListMock,
-      state: REQUEST_SUCCESS,
-      count: channelListMock.size,
-    }),
-    currentChannelEntriesChannel: channelListMock.get(0),
-    currentChannelEntries: PaginatedListData({
-      data: channelEntryListMock,
-      state: REQUEST_SUCCESS,
-      count: channelEntryListMock.size,
-    }),
-  }
-
-  const wrapper = mount(<Channels {...props} />)
-
-  expect(wrapper.find('.ant-spin').length).toBe(0)
-  expect(wrapper.find('table').at(0).find('tbody tr').length).toBe(2)
-  expect(wrapper.find('table').at(1).find('tbody tr').length).toBe(3)
 })

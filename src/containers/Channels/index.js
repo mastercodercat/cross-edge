@@ -8,19 +8,11 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Icon, Modal } from 'antd'
 
 import ChannelList from 'components/ChannelList'
-import ChannelEntryList from 'components/ChannelEntryList'
-import { REQUEST_INITIAL } from 'constants.js'
 import {
   selectChannels,
-  selectCurrentChannelEntries,
-  selectCurrentChannelEntriesChannel,
   loadChannels,
   setChannelsPage,
   setChannelsPageSize,
-  loadChannelEntries,
-  setChannelEntriesChannel,
-  setChannelEntriesPage,
-  setChannelEntriesPageSize,
 } from 'store/modules/channels'
 import { isLoading, needsLoading } from 'utils/state-helpers'
 import StyleWrapper from './style'
@@ -30,15 +22,9 @@ export class Channels extends Component {
 
   static propTypes = {
     channels: ImmutablePropTypes.record.isRequired,
-    currentChannelEntries: ImmutablePropTypes.record.isRequired,
-    currentChannelEntriesChannel: ImmutablePropTypes.record,
     loadChannels: PropTypes.func.isRequired,
     setChannelsPage: PropTypes.func.isRequired,
     setChannelsPageSize: PropTypes.func.isRequired,
-    loadChannelEntries: PropTypes.func.isRequired,
-    setChannelEntriesChannel: PropTypes.func.isRequired,
-    setChannelEntriesPage: PropTypes.func.isRequired,
-    setChannelEntriesPageSize: PropTypes.func.isRequired,
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
   }
@@ -49,29 +35,16 @@ export class Channels extends Component {
     history.push(`/channels/${record.id}`)
   }
 
-  handleClickEntries = (channel, ev) => {
+  handleClickEntries = (record, ev) => {
     ev.preventDefault()
-
-    this.props.setChannelEntriesChannel(channel)
-    this.props.loadChannelEntries()
-  }
-
-  rowClassName = (record) => {
-    const { currentChannelEntriesChannel } = this.props
-    return currentChannelEntriesChannel && currentChannelEntriesChannel.id === record.id ?
-      'table-row-active' : 'table-row-inactive'
+    const { history } = this.props
+    history.push(`/channels/${record.id}/channel-entries`)
   }
 
   handleChangeChannelsPage = (page, pageSize) => {
     this.props.setChannelsPage(page)
     this.props.setChannelsPageSize(pageSize)
     this.props.loadChannels()
-  }
-
-  handleChangeChannelEntriesPage = (page, pageSize) => {
-    this.props.setChannelEntriesPage(page)
-    this.props.setChannelEntriesPageSize(pageSize)
-    this.props.loadChannelEntries()
   }
 
   handleCloseModal = () => {
@@ -89,8 +62,6 @@ export class Channels extends Component {
   render() {
     const {
       channels,
-      currentChannelEntries,
-      currentChannelEntriesChannel,
       children,
       location,
     } = this.props
@@ -115,26 +86,7 @@ export class Channels extends Component {
           }}
         />
 
-        {
-          currentChannelEntries.state !== REQUEST_INITIAL &&
-          <div>
-            <h2 className="mt">{currentChannelEntriesChannel.name} Entries</h2>
-
-            <ChannelEntryList
-              loading={isLoading(currentChannelEntries.state)}
-              channelEntries={currentChannelEntries.data.toArray()}
-              actions={[
-                { text: 'Details', handler: (record, e) => e.preventDefault() },
-              ]}
-              pagination={{
-                total: currentChannelEntries.count,
-                current: currentChannelEntries.page,
-                pageSize: currentChannelEntries.pageSize,
-                onChange: this.handleChangeChannelEntriesPage,
-              }}
-            />
-          </div>
-        }
+        
 
         <Modal
           title={null}
@@ -151,18 +103,12 @@ export class Channels extends Component {
 
 const selector = createStructuredSelector({
   channels: selectChannels,
-  currentChannelEntries: selectCurrentChannelEntries,
-  currentChannelEntriesChannel: selectCurrentChannelEntriesChannel,
 })
 
 const actions = {
   loadChannels,
   setChannelsPage,
   setChannelsPageSize,
-  loadChannelEntries,
-  setChannelEntriesChannel,
-  setChannelEntriesPage,
-  setChannelEntriesPageSize,
 }
 
 export default compose(

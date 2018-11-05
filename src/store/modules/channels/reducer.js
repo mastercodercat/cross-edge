@@ -13,7 +13,6 @@ import {
   LOAD_CHANNELS,
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
-  SET_CHANNEL_ENTRIES_CHANNEL,
 } from './constants'
 
 import {
@@ -32,7 +31,6 @@ const initialState = new State({
 
   currentChannel: ChannelData(),
 
-  currentChannelEntriesChannel: null,
   currentChannelEntries: PaginatedListData(),
 })
 
@@ -51,7 +49,6 @@ export const loadChannelFail = createAction(failAction(LOAD_CHANNEL))
 export const loadChannelEntries = createAction(LOAD_CHANNEL_ENTRIES)
 export const loadChannelEntriesSuccess = createAction(successAction(LOAD_CHANNEL_ENTRIES))
 export const loadChannelEntriesFail = createAction(failAction(LOAD_CHANNEL_ENTRIES))
-export const setChannelEntriesChannel = createAction(SET_CHANNEL_ENTRIES_CHANNEL)
 export const setChannelEntriesPage = createAction(setPageAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesPageSize = createAction(setPageSizeAction(LOAD_CHANNEL_ENTRIES))
 
@@ -91,10 +88,6 @@ export const reducer = handleActions({
       })
     )),
     usePagination: true,
-  }),
-
-  [SET_CHANNEL_ENTRIES_CHANNEL]: (state, { payload }) => state.withMutations(record => {
-    record.set('currentChannelEntriesChannel', Channel(payload))
   }),
 
 }, initialState)

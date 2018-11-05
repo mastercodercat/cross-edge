@@ -1,0 +1,99 @@
+import React, { Component } from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
+import { createStructuredSelector } from 'reselect'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+import { Spin, Icon } from 'antd'
+
+import ChannelEntryList from 'components/ChannelEntryList'
+import SpinnerDummyContent from 'components/SpinnerDummyContent'
+import {
+  selectCurrentChannel,
+  selectCurrentChannelEntries,
+  loadChannel,
+  loadChannelEntries,
+  setChannelEntriesPage,
+  setChannelEntriesPageSize,
+} from 'store/modules/channels'
+import { isLoading } from 'utils/state-helpers'
+
+
+export class ChannelEntries extends Component {
+
+  static propTypes = {
+    currentChannel: ImmutablePropTypes.record.isRequired,
+    currentChannelEntries: ImmutablePropTypes.record.isRequired,
+    loadChannel: PropTypes.func.isRequired,
+    loadChannelEntries: PropTypes.func.isRequired,
+    setChannelEntriesPage: PropTypes.func.isRequired,
+    setChannelEntriesPageSize: PropTypes.func.isRequired,
+  }
+
+  handleChangeChannelEntriesPage = (page, pageSize) => {
+    this.props.setChannelEntriesPage(page)
+    this.props.setChannelEntriesPageSize(pageSize)
+    this.props.loadChannelEntries()
+  }
+
+  componentDidMount() {
+    const { match, loadChannel, loadChannelEntries } = this.props
+
+    loadChannel({
+      id: match.params.id
+    })
+
+    loadChannelEntries({
+      channelId: match.params.id
+    })
+  }
+
+  render() {
+    const { currentChannel, currentChannelEntries } = this.props
+
+    if (isLoading(currentChannel.state)) {
+      return (
+        <Spin spinning>
+          <SpinnerDummyContent />
+        </Spin>
+      )
+    }
+
+    return (
+      <div>
+        <h1>
+          <Icon type="cluster" /> {currentChannel.data.name} Entries
+        </h1>
+
+        <ChannelEntryList
+          loading={isLoading(currentChannelEntries.state)}
+          channelEntries={currentChannelEntries.data.toArray()}
+          pagination={{
+            total: currentChannelEntries.count,
+            current: currentChannelEntries.page,
+            pageSize: currentChannelEntries.pageSize,
+            onChange: this.handleChangeChannelEntriesPage,
+          }}
+        />
+      </div>
+    )
+  }
+}
+
+const selector = createStructuredSelector({
+  currentChannel: selectCurrentChannel,
+  currentChannelEntries: selectCurrentChannelEntries,
+})
+
+const actions = {
+  loadChannel,
+  loadChannelEntries,
+  setChannelEntriesPage,
+  setChannelEntriesPageSize,
+}
+
+export default compose(
+  withRouter,
+  connect(selector, actions)
+)(ChannelEntries)

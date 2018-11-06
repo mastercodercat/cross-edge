@@ -86,8 +86,6 @@ export class Channels extends Component {
           }}
         />
 
-        
-
         <Modal
           title={null}
           footer={null}

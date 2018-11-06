@@ -29,11 +29,19 @@ const UnauthenticatedRoutes = () => (
   </Switch>
 )
 
-const ChannelListRoutes = () => (
-  <Channels>
-    <Route exact path="/channels/:id" component={ChannelDetail} />
-  </Channels>
-)
+const ChannelListRoutes = ({ location }) => {
+  const showChildrenInModal = /^\/channels\/?(\d+)?$/g.test(location.pathname)
+
+  if (showChildrenInModal) {
+    return <Channels>
+      <Route exact path="/channels/:id" component={ChannelDetail} />
+    </Channels>
+  }
+
+  return (
+    <Route exact path="/channels/:id/channel-entries" component={ChannelEntries} />
+  )
+}
 
 const SubscriberRoutes = () => (
   <ParentContainer type="subscriber">
@@ -94,9 +102,7 @@ const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
       <Route exact path="/" component={Dashboard} />
-      <Route exact path="/channels" component={ChannelListRoutes} />
-      <Route exact path="/channels/:id" component={ChannelListRoutes} />
-      <Route exact path="/channels/:id/channel-entries" component={ChannelEntries} />
+      <Route path="/channels" component={ChannelListRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
       <Route path="/subscribers/:parentId" component={SubscriberRoutes} />
       <Route path="/partners/:parentId" component={PartnerRoutes} />

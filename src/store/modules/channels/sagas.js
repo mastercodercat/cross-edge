@@ -7,6 +7,7 @@ import {
   LOAD_CHANNELS,
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
+  SEARCH_CHANNELS,
 } from './constants'
 import {
   loadChannelsSuccess,
@@ -15,6 +16,8 @@ import {
   loadChannelFail,
   loadChannelEntriesSuccess,
   loadChannelEntriesFail,
+  searchChannelsSuccess,
+  searchChannelsFail,
 } from './reducer'
 import {
   selectChannels,
@@ -65,8 +68,22 @@ const doLoadChannelEntries = function* (action) {
   }
 }
 
+const doSearchChannels = function* (action) {
+  const { serialNumber } = action.payload
+  try {
+    const response = yield call(
+      axios.get,
+      `${API_BASE_URL}/channels/channelentry/search/${serialNumber}/`,
+    )
+    yield put(searchChannelsSuccess(response.data))
+  } catch (error) {
+    yield put(searchChannelsFail(error.response ? error.response.data : {}))
+  }
+}
+
 export const saga = function* () {
   yield takeLatest(LOAD_CHANNELS, doLoadChannels)
   yield takeLatest(LOAD_CHANNEL, doLoadChannel)
   yield takeLatest(LOAD_CHANNEL_ENTRIES, doLoadChannelEntries)
+  yield takeLatest(SEARCH_CHANNELS, doSearchChannels)
 }

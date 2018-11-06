@@ -23,8 +23,6 @@ export const BusinessProcessData = createDetailDataType(BusinessProcess())
 
 export const State = Immutable.Record({
   businessProcesses: PaginatedListData(),
-
   currentBusinessProcess: BusinessProcessData(),
-
   submitDataState: REQUEST_SUCCESS,
 })

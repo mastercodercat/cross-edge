@@ -28,9 +28,7 @@ import {
 
 const initialState = new State({
   businessProcesses: PaginatedListData(),
-
   currentBusinessProcess: BusinessProcessData(),
-
   submitDataState: REQUEST_SUCCESS,
 })
 

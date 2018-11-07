@@ -36,5 +36,5 @@ export const State = Immutable.Record({
   channels: PaginatedListData(),
   currentChannel: ChannelData(),
   currentChannelEntries: PaginatedListData(),
-  searchedChannels: PaginatedListData(),
+  searchedChannelEntries: PaginatedListData(),
 })

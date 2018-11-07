@@ -13,7 +13,7 @@ import {
   LOAD_CHANNELS,
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
-  SEARCH_CHANNELS,
+  SEARCH_CHANNEL_ENTRIES,
 } from './constants'
 
 import {
@@ -31,7 +31,7 @@ const initialState = new State({
   channels: PaginatedListData(),
   currentChannel: ChannelData(),
   currentChannelEntries: PaginatedListData(),
-  searchedChannels: PaginatedListData(),
+  searchedChannelEntries: PaginatedListData(),
 })
 
 /* Action creators */
@@ -52,9 +52,9 @@ export const loadChannelEntriesFail = createAction(failAction(LOAD_CHANNEL_ENTRI
 export const setChannelEntriesPage = createAction(setPageAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesPageSize = createAction(setPageSizeAction(LOAD_CHANNEL_ENTRIES))
 
-export const searchChannels = createAction(SEARCH_CHANNELS)
-export const searchChannelsSuccess = createAction(successAction(SEARCH_CHANNELS))
-export const searchChannelsFail = createAction(failAction(SEARCH_CHANNELS))
+export const searchChannelEntries = createAction(SEARCH_CHANNEL_ENTRIES)
+export const searchChannelEntriesSuccess = createAction(successAction(SEARCH_CHANNEL_ENTRIES))
+export const searchChannelEntriesFail = createAction(failAction(SEARCH_CHANNEL_ENTRIES))
 
 /* Reducer */
 
@@ -97,10 +97,10 @@ export const reducer = handleActions({
   /* Search channel */
 
   ...requestLoopHandlersForGet({
-    action: SEARCH_CHANNELS,
-    dataField: 'searchedChannels',
+    action: SEARCH_CHANNEL_ENTRIES,
+    dataField: 'searchedChannelEntries',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Channel),
+    getDataFromPayload: payload => convertToListRecord(payload, ChannelEntry),
     usePagination: false,
   }),
 

@@ -9,8 +9,8 @@ import { Spin } from 'antd'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
-  selectsearchedChannels,
-  searchChannels,
+  selectSearchedChannelEntries,
+  searchChannelEntries,
 } from 'store/modules/channels'
 import { isLoading } from 'utils/state-helpers'
 
@@ -18,21 +18,21 @@ import { isLoading } from 'utils/state-helpers'
 export class ChannelSearch extends Component {
 
   static propTypes = {
-    searchedChannels: ImmutablePropTypes.record.isRequired,
-    searchChannels: PropTypes.func.isRequired,
+    searchedChannelEntries: ImmutablePropTypes.record.isRequired,
+    searchChannelEntries: PropTypes.func.isRequired,
     match: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
-    const { match, searchChannels } = this.props
-    searchChannels({
+    const { match, searchChannelEntries } = this.props
+    searchChannelEntries({
       serialNumber: match.params.serialNumber,
     })
   }
 
   render() {
-    const { searchedChannels } = this.props
-    const loading = isLoading(searchedChannels.state)
+    const { searchedChannelEntries } = this.props
+    const loading = isLoading(searchedChannelEntries.state)
 
     return <div>
       <h1>
@@ -45,10 +45,10 @@ export class ChannelSearch extends Component {
           <SpinnerDummyContent />
           :
           (
-            searchedChannels.data.size > 0 ?
+            searchedChannelEntries.data.size > 0 ?
             <div>
               {
-                searchedChannels.data.map(channel => <span>{channel.name} </span>)
+                searchedChannelEntries.data.map(channel => <span>{channel.name} </span>)
               }
             </div>
             :
@@ -64,11 +64,11 @@ export class ChannelSearch extends Component {
 }
 
 const selector = createStructuredSelector({
-  searchedChannels: selectsearchedChannels,
+  searchedChannelEntries: selectSearchedChannelEntries,
 })
 
 const actions = {
-  searchChannels,
+  searchChannelEntries,
 }
 
 export default compose(

@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Spin } from 'antd'
 
+import ChannelEntryList from 'components/ChannelEntryList'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
   selectSearchedChannelEntries,
@@ -46,15 +47,14 @@ export class ChannelSearch extends Component {
           :
           (
             searchedChannelEntries.data.size > 0 ?
-            <div>
-              {
-                searchedChannelEntries.data.map(channel => <span>{channel.name} </span>)
-              }
-            </div>
+            <ChannelEntryList
+              loading={loading}
+              channelEntries={searchedChannelEntries.data.toArray()}
+            />
             :
-            <div>
+            <p>
               No results were found.
-            </div>
+            </p>
           )
         }
       </Spin>

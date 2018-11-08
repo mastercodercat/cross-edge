@@ -72,18 +72,21 @@ export class ChildList extends Component {
               }
 
               {
-                list.data.size > 0 ?
-                <Row gutter={15}>
-                  {
-                    list.data.map((child, index) => (
-                      <Col key={index} sm={24} md={12} lg={8}>
-                        <Card data={child} history={history} isSubsite={type === 'subsite'} />
-                      </Col>
-                    ))
-                  }
-                </Row>
-                :
-                <div>No {type}s found.</div>
+                !hasFailed(list.state) &&
+                (
+                  list.data.size > 0 ?
+                  <Row gutter={15}>
+                    {
+                      list.data.map((child, index) => (
+                        <Col key={index} sm={24} md={12} lg={8}>
+                          <Card data={child} history={history} isSubsite={type === 'subsite'} />
+                        </Col>
+                      ))
+                    }
+                  </Row>
+                  :
+                  <div>No {type}s found.</div>
+                )
               }
             </React.Fragment>
           }

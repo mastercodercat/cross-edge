@@ -8,9 +8,7 @@ import { pluralize, titleize } from 'inflection'
 
 import connectByType from 'hoc/connectByType'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
-import BusinessProcessCard from 'components/BusinessProcessCard'
-import PartnerCard from 'components/PartnerCard'
-import SiteCard from 'components/SiteCard'
+import Card from 'components/Card'
 import { isLoading, hasFailed } from 'utils/state-helpers'
 
 
@@ -26,13 +24,6 @@ export class ChildList extends Component {
     loadList: PropTypes.func.isRequired,
   }
 
-  static cardComponents = {
-    partner: PartnerCard,
-    businessProcess: BusinessProcessCard,
-    site: SiteCard,
-    subsite: SiteCard,
-  }
-
   componentDidMount() {
     const { parentType, match, loadList } = this.props
 
@@ -45,12 +36,6 @@ export class ChildList extends Component {
   render() {
     const { type, history, list, parent } = this.props
     let error = false
-
-    const Card = ChildList.cardComponents[type]
-    if (!Card) {
-      console.error(`Card component not found for ${type} type`)
-      error = true
-    }
 
     const spinning = isLoading(list.state) || error
     let typeTitle = type.replace(/[A-Z]/g, c => ' ' + c)
@@ -79,7 +64,7 @@ export class ChildList extends Component {
                     {
                       list.data.map((child, index) => (
                         <Col key={index} sm={24} md={12} lg={8}>
-                          <Card data={child} history={history} isSubsite={type === 'subsite'} />
+                          <Card data={child} history={history} />
                         </Col>
                       ))
                     }

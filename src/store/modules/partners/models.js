@@ -17,6 +17,7 @@ export const Partner = Immutable.Record({
   postal_code: '',
   state: '',
   time_zone_offset: '',
+  mdm_type: '',
 })
 
 export const PartnerData = createDetailDataType(Partner())

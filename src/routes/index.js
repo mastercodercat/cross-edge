@@ -15,6 +15,7 @@ import Dashboard from 'containers/Dashboard'
 import Channels from 'containers/Channels'
 import ChannelDetail from 'containers/ChannelDetail'
 import ChannelEntries from 'containers/ChannelEntries'
+import ChannelSearch from 'containers/ChannelSearch'
 import BusinessProcessModule from 'containers/BusinessProcessModule'
 import ParentContainer from 'containers/ParentContainer'
 import ChildList from 'containers/ChildList'
@@ -29,11 +30,30 @@ const UnauthenticatedRoutes = () => (
   </Switch>
 )
 
-const ChannelListRoutes = () => (
-  <Channels>
-    <Route exact path="/channels/:id" component={ChannelDetail} />
-  </Channels>
-)
+const ChannelListRoutes = ({ location }) => {
+  const routeRegexesToShowInModal = [
+    /^\/channels\/?(\d+)?$/g,
+    /^\/channels\/([^/]+)\/search$/g,
+  ]
+  let showChildrenInModal = false
+  for (let i = 0; i < routeRegexesToShowInModal.length; i += 1) {
+    if (routeRegexesToShowInModal[i].test(location.pathname)) {
+      showChildrenInModal = true;
+      break;
+    }
+  }
+
+  if (showChildrenInModal) {
+    return <Channels>
+      <Route exact path="/channels/:id" component={ChannelDetail} />
+      <Route exact path="/channels/:serialNumber/search" component={ChannelSearch} />
+    </Channels>
+  }
+
+  return (
+    <Route exact path="/channels/:id/channel-entries" component={ChannelEntries} />
+  )
+}
 
 const SubscriberRoutes = () => (
   <ParentContainer type="subscriber">
@@ -94,9 +114,7 @@ const AuthenticatedRoutes = () => (
   <DashboardLayout>
     <Switch>
       <Route exact path="/" component={Dashboard} />
-      <Route exact path="/channels" component={ChannelListRoutes} />
-      <Route exact path="/channels/:id" component={ChannelListRoutes} />
-      <Route exact path="/channels/:id/channel-entries" component={ChannelEntries} />
+      <Route path="/channels" component={ChannelListRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
       <Route path="/subscribers/:parentId" component={SubscriberRoutes} />
       <Route path="/partners/:parentId" component={PartnerRoutes} />

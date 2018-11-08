@@ -18,6 +18,5 @@ export const SubscriberData = createDetailDataType(Subscriber())
 
 export const State = Immutable.Record({
   homeContent: PaginatedListData(),
-
   currentSubscriber: SubscriberData(),
 })

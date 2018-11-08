@@ -37,7 +37,6 @@ const mdmTypeToRecord = {
 
 const initialState = new State({
   home: PaginatedListData(),
-
   currentSubscriber: SubscriberData(),
 })
 

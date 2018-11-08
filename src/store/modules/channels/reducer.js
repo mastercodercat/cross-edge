@@ -13,6 +13,7 @@ import {
   LOAD_CHANNELS,
   LOAD_CHANNEL,
   LOAD_CHANNEL_ENTRIES,
+  SEARCH_CHANNEL_ENTRIES,
 } from './constants'
 
 import {
@@ -28,10 +29,9 @@ import {
 
 const initialState = new State({
   channels: PaginatedListData(),
-
   currentChannel: ChannelData(),
-
   currentChannelEntries: PaginatedListData(),
+  searchedChannelEntries: PaginatedListData(),
 })
 
 /* Action creators */
@@ -51,6 +51,10 @@ export const loadChannelEntriesSuccess = createAction(successAction(LOAD_CHANNEL
 export const loadChannelEntriesFail = createAction(failAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesPage = createAction(setPageAction(LOAD_CHANNEL_ENTRIES))
 export const setChannelEntriesPageSize = createAction(setPageSizeAction(LOAD_CHANNEL_ENTRIES))
+
+export const searchChannelEntries = createAction(SEARCH_CHANNEL_ENTRIES)
+export const searchChannelEntriesSuccess = createAction(successAction(SEARCH_CHANNEL_ENTRIES))
+export const searchChannelEntriesFail = createAction(failAction(SEARCH_CHANNEL_ENTRIES))
 
 /* Reducer */
 
@@ -88,6 +92,16 @@ export const reducer = handleActions({
       })
     )),
     usePagination: true,
+  }),
+
+  /* Search channel */
+
+  ...requestLoopHandlersForGet({
+    action: SEARCH_CHANNEL_ENTRIES,
+    dataField: 'searchedChannelEntries',
+    initialValue: Immutable.List(),
+    getDataFromPayload: payload => convertToListRecord(payload, ChannelEntry),
+    usePagination: false,
   }),
 
 }, initialState)

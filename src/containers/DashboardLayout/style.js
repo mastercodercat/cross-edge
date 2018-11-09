@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const StyleWrapper = styled.div`
   .goBackLinkWrapper {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
   .contentWrapper {

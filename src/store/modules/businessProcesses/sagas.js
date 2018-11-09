@@ -22,14 +22,16 @@ import {
 
 const doLoadBusinessProcesses = function* (action) {
   try {
-    const { parentId, parentType } = action.payload
+    let { parentId, parentType } = action.payload
     if (PARENT_TYPES.indexOf(parentType) === -1) {
       throw new Error('Invalid parent type for business process list')
     }
+    // subsite -> sub_site
+    parentType = parentType === 'subsite' ? 'sub_site' : parentType
 
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/bpm/list/${parentType}/${parentId}/`
+      `${API_BASE_URL}/bpm/filter/?${parentType}_id=${parentId}`
     )
     yield put(loadBusinessProcessesSuccess(response.data))
   } catch (error) {
@@ -43,7 +45,7 @@ const doLoadBusinessProcess = function* (action) {
   try {
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/bpm/list/name/${name}/`,
+      `${API_BASE_URL}/bpm/filter/?name=${name}`,
     )
     yield put(loadBusinessProcessSuccess(response.data))
   } catch (error) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
+import { pluralize, dasherize, tableize } from 'inflection'
 
 import RouteWithProps from 'components/RouteWithProps'
 import ScrollToTop from 'components/ScrollToTop'
@@ -55,60 +56,38 @@ const ChannelListRoutes = ({ location }) => {
   )
 }
 
-const SubscriberRoutes = () => (
-  <ParentContainer type="subscriber">
-    <Route
-      exact
-      path="/subscribers/:parentId"
-      render={props => (
-        <Redirect to={`/subscribers/${props.match.params.parentId}/partners`} />
-      )}
-    />
-    <RouteWithProps exact path="/subscribers/:parentId/partners" component={setTypeProp('partner')(ChildList)} />
-    <RouteWithProps exact path="/subscribers/:parentId/sites" component={setTypeProp('site')(ChildList)} />
-  </ParentContainer>
-)
+export const HierarchyRoutes = ({ type }) => {
+  const types = ['subscriber', 'partner', 'site', 'subsite', 'businessProcess']
+  const pluralizedType = pluralize(type)
+  const typeIndex = types.indexOf(type)
+  if (typeIndex === -1) {
+    throw new Error('Invalid object type')
+  }
+  const subtypes = types.slice(typeIndex + 1)
+  if (subtypes.length === 0) {
+    throw new Error('Invalid parent object type')
+  }
 
-const PartnerRoutes = () => (
-  <ParentContainer type="partner">
+  return <ParentContainer type={type}>
     <Route
       exact
-      path="/partners/:parentId"
+      path={`/${pluralizedType}/:parentId`}
       render={props => (
-        <Redirect to={`/partners/${props.match.params.parentId}/sites`} />
+        <Redirect to={`/${pluralizedType}/${props.match.params.parentId}/${dasherize(tableize(subtypes[0]))}`} />
       )}
     />
-    <RouteWithProps exact path="/partners/:parentId/sites" component={setTypeProp('site')(ChildList)} />
-    <RouteWithProps exact path="/partners/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
+    {
+      subtypes.map(subtype => (
+        <RouteWithProps
+          key={subtype}
+          exact
+          path={`/${pluralizedType}/:parentId/${dasherize(tableize(subtype))}`}
+          component={setTypeProp(subtype)(ChildList)}
+        />
+      ))
+    }
   </ParentContainer>
-)
-
-const SiteRoutes = () => (
-  <ParentContainer type="site">
-    <Route
-      exact
-      path="/sites/:parentId"
-      render={props => (
-        <Redirect to={`/sites/${props.match.params.parentId}/subsites`} />
-      )}
-    />
-    <RouteWithProps exact path="/sites/:parentId/subsites" component={setTypeProp('subsite')(ChildList)} />
-    <RouteWithProps exact path="/sites/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
-  </ParentContainer>
-)
-
-const SubsiteRoutes = () => (
-  <ParentContainer type="subsite">
-    <Route
-      exact
-      path="/subsites/:parentId"
-      render={props => (
-        <Redirect to={`/subsites/${props.match.params.parentId}/business-processes`} />
-      )}
-    />
-    <RouteWithProps exact path="/subsites/:parentId/business-processes" component={setTypeProp('businessProcess')(ChildList)} />
-  </ParentContainer>
-)
+}
 
 const AuthenticatedRoutes = () => (
   <DashboardLayout>
@@ -116,10 +95,10 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelListRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
-      <Route path="/subscribers/:parentId" component={SubscriberRoutes} />
-      <Route path="/partners/:parentId" component={PartnerRoutes} />
-      <Route path="/sites/:parentId" component={SiteRoutes} />
-      <Route path="/subsites/:parentId" component={SubsiteRoutes} />
+      <Route path="/subscribers/:parentId" component={setTypeProp('subscriber')(HierarchyRoutes)} />
+      <Route path="/partners/:parentId" component={setTypeProp('partner')(HierarchyRoutes)} />
+      <Route path="/sites/:parentId" component={setTypeProp('site')(HierarchyRoutes)} />
+      <Route path="/subsites/:parentId" component={setTypeProp('subsite')(HierarchyRoutes)} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
     </Switch>
   </DashboardLayout>

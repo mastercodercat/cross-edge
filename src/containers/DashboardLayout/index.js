@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
-import { Layout } from 'antd'
+import { Layout, Icon } from 'antd'
 import WindowResizeListener from 'react-window-size-listener'
 
 import Topbar from 'components/Topbar'
@@ -50,8 +50,13 @@ export class DashboardLayout extends Component {
     }
   }
 
+  handleClickGoBack = (e) => {
+    e.preventDefault()
+    this.props.history.goBack()
+  }
+
   render() {
-    const { children, email } = this.props
+    const { children, email, history } = this.props
     const { collapsed, appWidth, appHeight } = this.state
     const isMobile = appWidth <= 768
 
@@ -71,6 +76,15 @@ export class DashboardLayout extends Component {
             />
             <Content>
               <div className="contentWrapper">
+                {
+                  history.length > 1 &&
+                  <div className="goBackLinkWrapper">
+                    <a href=":;" onClick={this.handleClickGoBack}>
+                      <Icon type="left" /> Go back
+                    </a>
+                  </div>
+                }
+
                 {children}
               </div>
             </Content>

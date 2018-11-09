@@ -17,6 +17,7 @@ export const BusinessProcess = Immutable.Record({
   postal_code: '',
   state: '',
   time_zone_offset: 0,
+  mdm_type: '',
 })
 
 export const BusinessProcessData = createDetailDataType(BusinessProcess())

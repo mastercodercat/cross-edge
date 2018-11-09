@@ -8,10 +8,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
-import SubscriberCard from 'components/SubscriberCard'
-import PartnerCard from 'components/PartnerCard'
-import SiteCard from 'components/SiteCard'
-import BusinessProcessCard from 'components/BusinessProcessCard'
+import Card from 'components/Card'
 import {
   loadHome,
   selectHomeContent,
@@ -25,14 +22,6 @@ export class BusinessProcessModule extends Component {
     history: PropTypes.object.isRequired,
     homeContent: ImmutablePropTypes.record.isRequired,
     loadHome: PropTypes.func.isRequired,
-  }
-
-  static cardComponents = {
-    subscriber: SubscriberCard,
-    partner: PartnerCard,
-    businessProcess: BusinessProcessCard,
-    site: SiteCard,
-    subsite: SiteCard,
   }
 
   componentDidMount() {
@@ -64,12 +53,8 @@ export class BusinessProcessModule extends Component {
               <Row gutter={15}>
                 {
                   homeContent.data.map(object => {
-                    const Card = BusinessProcessModule.cardComponents[object.mdm_type]
                     return <Col key={object.id} sm={24} md={12} lg={8}>
-                      <Card
-                        data={object}
-                        history={history}
-                      />
+                      <Card data={object} history={history} />
                     </Col>
                   })
                 }

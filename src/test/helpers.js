@@ -11,5 +11,5 @@ export function changeInputValue(inputWrapper, value) {
 }
 
 export const mockHistory = {
-  push: e => e,
+  push: jest.fn(),
 }

@@ -32,9 +32,18 @@ export class ChannelEntries extends Component {
   }
 
   handleChangeChannelEntriesPage = (page, pageSize) => {
-    this.props.setChannelEntriesPage(page)
-    this.props.setChannelEntriesPageSize(pageSize)
-    this.props.loadChannelEntries()
+    const {
+      match,
+      setChannelEntriesPage,
+      setChannelEntriesPageSize,
+      loadChannelEntries,
+    } = this.props
+
+    setChannelEntriesPage(page)
+    setChannelEntriesPageSize(pageSize)
+    loadChannelEntries({
+      channelId: match.params.id
+    })
   }
 
   componentDidMount() {

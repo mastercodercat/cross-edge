@@ -56,7 +56,7 @@ export const reducer = handleActions({
     action: LOAD_BUSINESS_PROCESSES,
     dataField: 'businessProcesses',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, BusinessProcess),
+    getDataFromPayload: payload => convertToListRecord(payload.results, BusinessProcess),
     usePagination: false,
   }),
 
@@ -65,7 +65,7 @@ export const reducer = handleActions({
   ...requestLoopHandlersForGet({
     action: LOAD_BUSINESS_PROCESS,
     dataField: 'currentBusinessProcess',
-    getDataFromPayload: payload => BusinessProcess(payload),
+    getDataFromPayload: payload => BusinessProcess(payload.results[0]),
   }),
 
   /* Submit data */

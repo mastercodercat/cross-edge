@@ -42,7 +42,9 @@ const Card = ({ data, history }) => {
 
     <div className="content">
       <h3 className="title"><strong>{data.name}</strong></h3>
-      {data.description}
+      <div className="descriptionWrapper">
+        {data.description}
+      </div>
     </div>
 
     {

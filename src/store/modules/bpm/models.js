@@ -6,6 +6,9 @@ import { PaginatedListData, createDetailDataType } from 'store/common/models'
 export const Subscriber = Immutable.Record({
   description: '',
   gln: '',
+  has_partners: false,
+  has_sites: false,
+  has_subsites: false,
   has_business_processes: false,
   id: 0,
   image: '',

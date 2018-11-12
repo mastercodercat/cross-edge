@@ -29,11 +29,15 @@ const StyleWrapper = styled.div`
 
   .content {
     padding: 15px;
-    min-height: 110px;
   }
 
   .title {
     margin-bottom: 7px;
+  }
+
+  .descriptionWrapper {
+    height: 42px;
+    overflow: hidden;
   }
 
   .buttonsWrapper {

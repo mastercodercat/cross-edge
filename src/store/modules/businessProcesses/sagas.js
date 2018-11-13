@@ -26,8 +26,6 @@ const doLoadBusinessProcesses = function* (action) {
     if (PARENT_TYPES.indexOf(parentType) === -1) {
       throw new Error('Invalid parent type for business process list')
     }
-    // subsite -> sub_site
-    parentType = parentType === 'subsite' ? 'sub_site' : parentType
 
     const response = yield call(
       axios.get,

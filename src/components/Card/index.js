@@ -50,7 +50,7 @@ const Card = ({ data, history }) => {
     {
       buttons.length > 0 &&
       <div className="buttonsWrapper">
-        <Row gutter={15}>
+        <Row gutter={15} type="flex" justify="end">
           {
             buttons.map((button, index) => (
               <Col key={index} sm={24} md={24} lg={24} xl={12} className="buttonCol">

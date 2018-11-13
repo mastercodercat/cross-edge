@@ -64,7 +64,10 @@ export const homeContent = [
     "gln":"",
     "image":null,
     "time_zone_offset":-5,
-    "has_business_processes":false,
+    "has_partners":true,
+    "has_sites":false,
+    "has_subsites":false,
+    "has_business_processes":true,
     "mdm_type":"subscriber"
   },
   {
@@ -74,6 +77,9 @@ export const homeContent = [
     "gln":"0805555127437",
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/clients/image_JnPNjL1.gif?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=ZRtwmtxYbZLPw8RBJ1XRFXTvm%2B4%3D&Expires=1540463965",
     "time_zone_offset":0,
+    "has_partners":true,
+    "has_sites":false,
+    "has_subsites":false,
     "has_business_processes":false,
     "mdm_type":"subscriber"
   }

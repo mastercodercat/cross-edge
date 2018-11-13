@@ -21,7 +21,8 @@ const Card = ({ data, history }) => {
     )
   } else {
     subtypes.forEach(subtype => {
-      if (data[`has_${subtype}`]) {
+      const subtypeField = subtype === 'subsites' ? 'sub_sites' : subtype
+      if (data[`has_${subtypeField}`]) {
         buttons.push(
           <Button
             type="primary"

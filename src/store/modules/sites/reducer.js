@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import { createAction, handleActions } from 'redux-actions'
 
 import { convertToListRecord } from 'utils/state-helpers'
+import { isRelatedToBPM } from 'utils/data'
 
 import {
   requestLoopHandlersForGet,
@@ -69,7 +70,7 @@ export const reducer = handleActions({
     action: LOAD_SITES,
     dataField: 'sites',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Site),
+    getDataFromPayload: payload => convertToListRecord(payload.filter(isRelatedToBPM), Site),
     usePagination: false,
   }),
 
@@ -92,7 +93,7 @@ export const reducer = handleActions({
     action: LOAD_SUBSITES,
     dataField: 'subsites',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Site),
+    getDataFromPayload: payload => convertToListRecord(payload.filter(isRelatedToBPM), Site),
     usePagination: false,
   }),
 

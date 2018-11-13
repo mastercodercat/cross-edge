@@ -3,6 +3,8 @@ import { createAction, handleActions } from 'redux-actions'
 
 import { REQUEST_SUCCESS } from 'constants.js'
 import { convertToListRecord } from 'utils/state-helpers'
+import { isRelatedToBPM } from 'utils/data'
+
 import {
   requestLoopHandlersForGet,
   successAction, failAction,
@@ -50,7 +52,7 @@ export const reducer = handleActions({
     action: LOAD_PARTNERS,
     dataField: 'partners',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Partner),
+    getDataFromPayload: payload => convertToListRecord(payload.filter(isRelatedToBPM), Partner),
     usePagination: false,
   }),
 

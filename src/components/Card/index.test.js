@@ -13,7 +13,7 @@ const defaultData = {
   mdm_type: 'subscriber',
   has_partners: true,
   has_sites: true,
-  has_subsites: true,
+  has_sub_sites: true,
   has_business_processes: true,
 }
 
@@ -21,7 +21,7 @@ const buttonTexts = [
   'Partners', 'Sites', 'Subsites', 'Business Processes'
 ]
 
-it('should all four buttons if object has them', () => {
+it('should have all four buttons if object has them', () => {
   const wrapper = shallow(<Card data={defaultData} history={mockHistory} />)
 
   expect(wrapper.find(Button).length).toEqual(4)
@@ -29,7 +29,7 @@ it('should all four buttons if object has them', () => {
 
 it('should not display button for the type when object does not have it', () => {
   const hasProps = [
-    'has_partners', 'has_sites', 'has_subsites', 'has_business_processes',
+    'has_partners', 'has_sites', 'has_sub_sites', 'has_business_processes',
   ]
 
   for (let i = 0; i < hasProps.length; i += 1) {
@@ -67,7 +67,7 @@ it('should not have button area when no buttons available', () => {
     ...defaultData,
     has_partners: false,
     has_sites: false,
-    has_subsites: false,
+    has_sub_sites: false,
     has_business_processes: false,
   }
   const wrapper = shallow(<Card data={data} history={mockHistory} />)

@@ -10,6 +10,7 @@ import { Partner } from 'store/modules/partners'
 import { Site } from 'store/modules/sites'
 import { BusinessProcess } from 'store/modules/businessProcesses'
 import { REQUEST_SUCCESS } from 'constants.js'
+import { isRelatedToBPM } from 'utils/data'
 
 import {
   LOAD_HOME,
@@ -62,7 +63,7 @@ export const reducer = handleActions({
     action: LOAD_HOME,
     dataField: 'homeContent',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => Immutable.List(payload.map(record =>
+    getDataFromPayload: payload => Immutable.List(payload.filter(isRelatedToBPM).map(record =>
       mdmTypeToRecord[record.mdm_type](record)
     )),
     usePagination: false,

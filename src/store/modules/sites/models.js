@@ -16,7 +16,7 @@ export const Site = Immutable.Record({
   postal_code: '',
   state: '',
   time_zone_offset: 0,
-  has_subsites: false,
+  has_sub_sites: false,
   has_business_processes: false,
   mdm_type: '',
 })

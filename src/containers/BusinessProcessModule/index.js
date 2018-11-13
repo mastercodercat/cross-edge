@@ -50,15 +50,20 @@ export class BusinessProcessModule extends Component {
                 'Failed to load data from server.'
               }
 
-              <Row gutter={15}>
-                {
-                  homeContent.data.map(object => {
-                    return <Col key={object.id} sm={24} md={12} lg={8}>
-                      <Card data={object} history={history} />
-                    </Col>
-                  })
-                }
-              </Row>
+              {
+                homeContent.data.size > 0 ?
+                  <Row gutter={15}>
+                  {
+                    homeContent.data.map(object => {
+                      return <Col key={object.id} sm={24} md={12} lg={8}>
+                        <Card data={object} history={history} />
+                      </Col>
+                    })
+                  }
+                  </Row>
+                :
+                'No objects found.'
+              }
             </React.Fragment>
           }
         </Spin>

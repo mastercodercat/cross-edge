@@ -8,7 +8,7 @@ export const Subscriber = Immutable.Record({
   gln: '',
   has_partners: false,
   has_sites: false,
-  has_subsites: false,
+  has_sub_sites: false,
   has_business_processes: false,
   id: 0,
   image: '',

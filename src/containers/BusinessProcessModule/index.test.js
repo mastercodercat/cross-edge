@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 
 import { BusinessProcessModule } from './index'
 
@@ -30,7 +31,7 @@ it('should show spinner when home content not loaded', () => {
 it('should show business process module page when loaded', () => {
   const localProps = Object.assign({}, props)
   localProps.homeContent = PaginatedListData({
-    data: homeContent.map(record => Subscriber(record)),
+    data: Immutable.List(homeContent.map(record => Subscriber(record))),
     state: REQUEST_SUCCESS,
   })
 

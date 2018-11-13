@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { createAction, handleActions } from 'redux-actions'
 
+import { isRelatedToBPM } from 'utils/data'
 import { convertToListRecord } from 'utils/state-helpers'
 import { REQUEST_SUCCESS } from 'constants.js'
 
@@ -56,7 +57,7 @@ export const reducer = handleActions({
     action: LOAD_BUSINESS_PROCESSES,
     dataField: 'businessProcesses',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload.results, BusinessProcess),
+    getDataFromPayload: payload => convertToListRecord(payload.results.filter(isRelatedToBPM), BusinessProcess),
     usePagination: false,
   }),
 

@@ -13,7 +13,7 @@ export const Partner = Immutable.Record({
   country: '',
   gln: '',
   has_sites: false,
-  has_subsites: false,
+  has_sub_sites: false,
   has_business_processes: false,
   postal_code: '',
   state: '',

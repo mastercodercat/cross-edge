@@ -70,7 +70,7 @@ export class ChildList extends Component {
                     }
                   </Row>
                   :
-                  <div>No {type}s found.</div>
+                  <div>No {typeTitle}s found.</div>
                 )
               }
             </React.Fragment>

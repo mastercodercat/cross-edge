@@ -25,7 +25,7 @@ const doLoadHome = function* (action) {
   try {
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/bpm/home/?${Math.floor(Math.random() * 100000 + 999999)}`
+      `${API_BASE_URL}/bpm/home/?${Math.floor(Math.random() * 9000000 + 1000000)}`
     )
     yield put(loadHomeSuccess(response.data))
   } catch (error) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Spin } from 'antd'
 
-import { sorter } from 'utils/list'
+import { sorter } from 'utils/data'
 
 
 const { Column } = Table

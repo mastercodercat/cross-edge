@@ -89,6 +89,9 @@ export function requestLoopHandlersForGet(config) {
     [action]: (state, { payload }) => state.withMutations(record => {
       record.setIn([dataField, 'data'], initialValue)
       record.setIn([dataField, 'state'], REQUEST_PENDING)
+      if (payload && payload.id) {
+        record.setIn([dataField, 'id'], payload.id)
+      }
       if (onInitial) {
         onInitial(record, payload)
       }

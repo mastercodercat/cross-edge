@@ -3,11 +3,11 @@ import { shallow } from 'enzyme'
 import { Route } from 'react-router-dom'
 
 import RouteWithProps from 'components/RouteWithProps'
-import { HierarchyRoutes } from './index'
+import { ObjectListRoutes } from './index'
 
 
 it('should render subroutes correctly for subscriber parent', () => {
-  const wrapper = shallow(<HierarchyRoutes type="subscriber" />)
+  const wrapper = shallow(<ObjectListRoutes type="subscriber" />)
 
   expect(wrapper.find(Route).length).toEqual(1)
   expect(wrapper.find(RouteWithProps).length).toEqual(4)
@@ -18,7 +18,7 @@ it('should render subroutes correctly for subscriber parent', () => {
 })
 
 it('should render subroutes correctly for partner parent', () => {
-  const wrapper = shallow(<HierarchyRoutes type="partner" />)
+  const wrapper = shallow(<ObjectListRoutes type="partner" />)
 
   expect(wrapper.find(Route).length).toEqual(1)
   expect(wrapper.find(RouteWithProps).length).toEqual(3)
@@ -28,7 +28,7 @@ it('should render subroutes correctly for partner parent', () => {
 })
 
 it('should render subroutes correctly for site parent', () => {
-  const wrapper = shallow(<HierarchyRoutes type="site" />)
+  const wrapper = shallow(<ObjectListRoutes type="site" />)
 
   expect(wrapper.find(Route).length).toEqual(1)
   expect(wrapper.find(RouteWithProps).length).toEqual(2)
@@ -37,7 +37,7 @@ it('should render subroutes correctly for site parent', () => {
 })
 
 it('should render subroutes correctly for subsite parent', () => {
-  const wrapper = shallow(<HierarchyRoutes type="subsite" />)
+  const wrapper = shallow(<ObjectListRoutes type="subsite" />)
 
   expect(wrapper.find(Route).length).toEqual(1)
   expect(wrapper.find(RouteWithProps).length).toEqual(1)

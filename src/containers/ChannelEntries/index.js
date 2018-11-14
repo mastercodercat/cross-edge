@@ -47,12 +47,13 @@ export class ChannelEntries extends Component {
   }
 
   componentDidMount() {
-    const { match, loadChannel, loadChannelEntries } = this.props
+    const { match, loadChannel, setChannelEntriesPage, loadChannelEntries } = this.props
 
     loadChannel({
       id: match.params.id
     })
 
+    setChannelEntriesPage(1)
     loadChannelEntries({
       channelId: match.params.id
     })

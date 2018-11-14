@@ -56,7 +56,7 @@ const ChannelListRoutes = ({ location }) => {
   )
 }
 
-export const HierarchyRoutes = ({ type }) => {
+export const ObjectListRoutes = ({ type }) => {
   const types = ['subscriber', 'partner', 'site', 'subsite', 'businessProcess']
   const pluralizedType = pluralize(type)
   const typeIndex = types.indexOf(type)
@@ -95,10 +95,10 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/" component={Dashboard} />
       <Route path="/channels" component={ChannelListRoutes} />
       <Route exact path="/business-process-module" component={BusinessProcessModule} />
-      <Route path="/subscribers/:parentId" component={setTypeProp('subscriber')(HierarchyRoutes)} />
-      <Route path="/partners/:parentId" component={setTypeProp('partner')(HierarchyRoutes)} />
-      <Route path="/sites/:parentId" component={setTypeProp('site')(HierarchyRoutes)} />
-      <Route path="/subsites/:parentId" component={setTypeProp('subsite')(HierarchyRoutes)} />
+      <Route path="/subscribers/:parentId" component={setTypeProp('subscriber')(ObjectListRoutes)} />
+      <Route path="/partners/:parentId" component={setTypeProp('partner')(ObjectListRoutes)} />
+      <Route path="/sites/:parentId" component={setTypeProp('site')(ObjectListRoutes)} />
+      <Route path="/subsites/:parentId" component={setTypeProp('subsite')(ObjectListRoutes)} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
     </Switch>
   </DashboardLayout>

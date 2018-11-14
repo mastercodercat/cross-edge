@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 
 import connectByType from 'hoc/connectByType'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
-import { isLoading, hasFailed } from 'utils/state-helpers'
+import { isLoading, isPending, hasFailed } from 'utils/state-helpers'
 
 
 export class ParentContainer extends Component {
@@ -20,10 +20,15 @@ export class ParentContainer extends Component {
   }
 
   componentDidMount() {
-    const { match, loadDetail } = this.props
-    loadDetail({
-      id: match.params.parentId
-    })
+    const { match, loadDetail, detail } = this.props
+    if (
+      detail.id !== match.params.parentId ||
+      !isPending(detail.state)
+    ) {
+      loadDetail({
+        id: match.params.parentId
+      })
+    }
   }
 
   render() {

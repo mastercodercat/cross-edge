@@ -20,4 +20,5 @@ export const PaginatedListData = Immutable.Record({
 export const createDetailDataType = (detailDataInitialValue) => Immutable.Record({
   data: detailDataInitialValue,
   state: REQUEST_INITIAL,
+  id: 0,
 })

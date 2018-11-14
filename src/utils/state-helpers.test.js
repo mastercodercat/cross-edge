@@ -66,9 +66,10 @@ it('should set correct pending state for detail data', () => {
     getDataFromPayload: payload => DummyRecord(payload),
   }), initialState)
 
-  state = reducer(state, testAction())
+  state = reducer(state, testAction({ id: 10 }))
 
   expect(state.dummyRecord.state).toEqual(REQUEST_PENDING)
+  expect(state.dummyRecord.id).toEqual(10)
 
   // requestLoopHandlersForGet has initialValues field, and it's null when omitted
   expect(state.dummyRecord.data).toBeNull()

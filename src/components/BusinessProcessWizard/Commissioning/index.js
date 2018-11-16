@@ -6,14 +6,20 @@ import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubm
 
 
 const Commissioning = ({ onSubmit, submitting }) => (
-  <Wizard onSubmit={onSubmit} submitting={submitting}>
-    <Wizard.Page validate={ScanOrEnterIDs.validate.bind(this, "data")}>
-      <ScanOrEnterIDs field="data" />
-    </Wizard.Page>
-    <Wizard.Page>
-      <CheckDataAndSubmit field="data" />
-    </Wizard.Page>
-  </Wizard>
+  <Wizard
+    onSubmit={onSubmit}
+    submitting={submitting}
+    steps={[
+      {
+        stepComponent: ScanOrEnterIDs,
+        field: 'data,'
+      },
+      {
+        stepComponent: CheckDataAndSubmit,
+        field: 'data,'
+      },
+    ]}
+  />
 )
 
 export default Commissioning

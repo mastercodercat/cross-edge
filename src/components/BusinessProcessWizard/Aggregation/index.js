@@ -7,17 +7,25 @@ import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubm
 
 
 const Aggregation = ({ onSubmit, submitting }) => (
-  <Wizard onSubmit={onSubmit} submitting={submitting}>
-    <Wizard.Page validate={ScanOrEnterIDs.validate.bind(this, "data")}>
-      <ScanOrEnterIDs field="data" />
-    </Wizard.Page>
-    <Wizard.Page validate={ScanOrEnterOneID.validate.bind(this, "parent")}>
-      <ScanOrEnterOneID field="parent" />
-    </Wizard.Page>
-    <Wizard.Page>
-      <CheckDataAndSubmit field="data" parentField="parent" />
-    </Wizard.Page>
-  </Wizard>
+  <Wizard
+    onSubmit={onSubmit}
+    submitting={submitting}
+    steps={[
+      {
+        stepComponent: ScanOrEnterIDs,
+        field: 'data',
+      },
+      {
+        stepComponent: ScanOrEnterOneID,
+        field: 'parent',
+      },
+      {
+        stepComponent: CheckDataAndSubmit,
+        field: 'data',
+        parentField: 'parent',
+      },
+    ]}
+  />
 )
 
 export default Aggregation

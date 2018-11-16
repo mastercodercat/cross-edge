@@ -9,18 +9,19 @@ import StyleWrapper from './style'
 export class Wizard extends React.Component {
 
   static propTypes = {
+    steps: PropTypes.array.isRequired,
     initialValues: PropTypes.object,
     submitting: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
   }
 
-  static Page = ({ values, children }) => (
+  static Page = ({ values, stepComponent: StepComponent, field, ...otherProps }) => (
     <div className="wizardStep">
-      {
-        React.Children.map(children, child => React.cloneElement(child, {
-          values,
-        }))
-      }
+      <StepComponent
+        values={values}
+        field={field}
+        {...otherProps}
+      />
     </div>
   )
 
@@ -34,7 +35,7 @@ export class Wizard extends React.Component {
 
   next = values =>
     this.setState(state => ({
-      page: Math.min(state.page + 1, this.props.children.length - 1),
+      page: Math.min(state.page + 1, this.props.steps.length - 1),
       values
     }))
 
@@ -44,18 +45,22 @@ export class Wizard extends React.Component {
     }))
 
   validate = values => {
-    const { children } = this.props
+    const { steps } = this.props
     const { page } = this.state
 
-    const activePage = React.Children.toArray(children)[page]
-    return activePage.props.validate ? activePage.props.validate(values) : {}
+    const activeStep = steps[page]
+    return activeStep && (
+      activeStep.stepComponent.validate ?
+      activeStep.stepComponent.validate(activeStep.field, values)
+      : {}
+    )
   }
 
   handleSubmit = values => {
-    const { children, onSubmit } = this.props
+    const { steps, onSubmit } = this.props
     const { page } = this.state
 
-    const isLastPage = (page === React.Children.count(children) - 1)
+    const isLastPage = (page === steps.length - 1)
     if (isLastPage) {
       return onSubmit(values)
     } else {
@@ -64,16 +69,11 @@ export class Wizard extends React.Component {
   }
 
   render() {
-    const { children, submitting } = this.props
+    const { steps, submitting } = this.props
     const { page, values } = this.state
 
-    const childrenWithProps = React.Children.map(children, child =>
-      React.cloneElement(child, {
-        values,
-      })
-    )
-    const activePage = React.Children.toArray(childrenWithProps)[page]
-    const isLastPage = (page === React.Children.count(children) - 1)
+    const activeStep = steps[page]
+    const isLastPage = (page === steps.length - 1)
 
     return (
       <StyleWrapper>
@@ -84,7 +84,13 @@ export class Wizard extends React.Component {
         >
           {({ handleSubmit, values }) => (
             <form onSubmit={handleSubmit}>
-              {activePage}
+              {
+                activeStep ?
+                <Wizard.Page values={values} {...activeStep} />
+                :
+                <p>Page not found.</p>
+              }
+
               <div className="wizardButtons">
                 {
                   page > 0 &&

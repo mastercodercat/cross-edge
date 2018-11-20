@@ -11,6 +11,10 @@ const StyleWrapper = styled.div`
     padding: 40px 25px;
   }
 
+  .wizardStepField {
+    margin-bottom: 50px;
+  }
+
   .wizardButtons {
     text-align: right;
     margin-top: 25px;

@@ -30,7 +30,6 @@ class ScanOrEnterOneIDComponent extends Component {
           </div>
         }
 
-        <p>Enter parent identifier:</p>
         <Input
           value={value}
           onChange={this.handleChangeField}

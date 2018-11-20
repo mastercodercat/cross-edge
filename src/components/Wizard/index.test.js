@@ -34,18 +34,16 @@ class TestComponent extends Component {
     return <Wizard
       onSubmit={this.onChange}
       steps={[
-        {
-          stepComponent: InputStep,
-          field: 'field1',
-        },
-        {
-          stepComponent: InputStep,
-          field: 'field2',
-        },
-        {
-          stepComponent: TextareaStep,
-          field: 'textfield',
-        },
+        [
+          { stepComponent: InputStep, field: 'field1', },
+          { stepComponent: InputStep, field: 'field1_2', }
+        ],
+        [
+          { stepComponent: InputStep, field: 'field2', }
+        ],
+        [
+          { stepComponent: TextareaStep, field: 'textfield', }
+        ],
       ]}
     />
   }
@@ -54,13 +52,15 @@ class TestComponent extends Component {
 it('Wizard should submit entered values in all steps correctly', () => {
   const testData = {
     field1: 'test value 1',
+    field1_2: 'test value 1-2',
     field2: 'test value 1',
     textfield: 'this is text entered in textarea',
   }
 
   const wrapper = mount(<TestComponent />)
 
-  wrapper.find('input').prop('onChange')(testData.field1)
+  wrapper.find('input').at(0).prop('onChange')(testData.field1)
+  wrapper.find('input').at(1).prop('onChange')(testData.field1_2)
   wrapper.find('form').simulate('submit')
 
   wrapper.find('input').prop('onChange')(testData.field2)
@@ -75,13 +75,13 @@ it('Wizard should submit entered values in all steps correctly', () => {
 it('Wizard should validate input data in each step', () => {
   const testData = {
     field1: 'test value 1',
-    field2: 'test value 1',
-    textfield: 'this is text entered in textarea',
+    field1_2: 'test value 1-2',
   }
 
   const wrapper = mount(<TestComponent />)
 
-  wrapper.find('input').prop('onChange')(testData.field1)
+  wrapper.find('input').at(0).prop('onChange')(testData.field1)
+  wrapper.find('input').at(1).prop('onChange')(testData.field1_2)
   wrapper.find('form').simulate('submit')
 
   wrapper.find('input').prop('onChange')('')

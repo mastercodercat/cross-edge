@@ -1,30 +1,38 @@
 import React from 'react'
 
-import Commissioning from './Commissioning'
-import Aggregation from './Aggregation'
+import Wizard from 'components/Wizard'
+import ScanOrEnterIDs from 'components/BusinessProcessSteps/ScanOrEnterIDs'
+import ScanOrEnterOneID from 'components/BusinessProcessSteps/ScanOrEnterOneID'
+import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubmit'
 
 
-const NAME_TO_COMPONENT_MAP = {
-  'Commissioning': Commissioning,
-  'Aggregation': Aggregation,
+const TYPE_TO_COMPONENT_MAP = {
+  'scan-single': ScanOrEnterOneID,
+  'scan-multiple': ScanOrEnterIDs,
+  'display': CheckDataAndSubmit,
 }
 
 const BusinessProcessWizard = ({ businessProcess, onSubmit, submitting }) => {
-  const BusinessProcessWizardComponent = NAME_TO_COMPONENT_MAP[businessProcess.name]
+  const steps = businessProcess.steps.map(stepData => {
+    return stepData.map(fieldData => {
+      if (!TYPE_TO_COMPONENT_MAP[fieldData.type]) {
+        return null
+      }
+      const { type, name, label, ...otherFields } = fieldData
+      return {
+        stepComponent: TYPE_TO_COMPONENT_MAP[type],
+        field: name,
+        label: label,
+        ...otherFields,
+      }
+    }).filter(field => !!field)
+  }).filter(step => step.length > 0)
 
-  if (BusinessProcessWizardComponent) {
-    return (
-      <BusinessProcessWizardComponent
-        businessProcess={businessProcess}
-        onSubmit={onSubmit}
-        submitting={submitting}
-      />
-    )
-  } else {
-    return (
-      <div>Invalid business process name</div>
-    )
-  }
+  return <Wizard
+    onSubmit={onSubmit}
+    submitting={submitting}
+    steps={steps}
+  />
 }
 
 export default BusinessProcessWizard

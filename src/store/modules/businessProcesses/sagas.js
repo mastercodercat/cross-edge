@@ -45,7 +45,25 @@ const doLoadBusinessProcess = function* (action) {
       axios.get,
       `${API_BASE_URL}/bpm/filter/?name=${name}`,
     )
-    yield put(loadBusinessProcessSuccess(response.data))
+    yield put(loadBusinessProcessSuccess({
+      results: [
+        {
+          ...response.data.results[0],
+          steps: [
+            [
+              { label: 'Scan or Enter Identifiers', type: 'scan-multiple', name: 'data' },
+              { label: 'Scan or Enter Parent Identifier', type: 'scan-single', name: 'root' }, ///
+            ],
+            [
+              { label: 'Scan or Enter Parent Identifier', type: 'scan-single', name: 'parent' },
+            ],
+            [
+              { type: 'display', name: 'data', parentField: 'parent' },
+            ],
+          ]
+        }
+      ]
+    }))
   } catch (error) {
     yield put(loadBusinessProcessFail(error.response ? error.response.data : {}))
   }

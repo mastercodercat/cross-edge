@@ -47,18 +47,3 @@ it('should show business process wizard when loaded', () => {
   expect(wrapper.find('form').length).not.toBe(0)
   expect(wrapper.find('.wizardButtons')).not.toBe(0)
 })
-
-it('should show error messages when wizard not defined for the name', () => {
-  const bp = BusinessProcessModel(businessProcesses[0])
-  const localProps = Object.assign({}, props)
-  localProps.businessProcess = BusinessProcessData({
-    data: bp,
-    state: REQUEST_SUCCESS,
-  })
-
-  const wrapper = mount(<BusinessProcess
-    {...localProps}
-  />)
-
-  expect(wrapper.text()).toEqual(expect.stringContaining('Invalid business process name'))
-})

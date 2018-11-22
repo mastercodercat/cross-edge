@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
 
 import { ChannelEntries } from './index'
 import { REQUEST_INITIAL, REQUEST_SUCCESS } from 'constants.js'
@@ -45,20 +46,33 @@ it('should render channel entries when loaded', () => {
   expect(wrapper.text()).toEqual(expect.stringContaining(channel.name))
 })
 
-// it('should call loadChannel and loadChannelEntries on mount', () => {
-//   const loadChannelMock = jest.fn()
+// TODO: fix or remove this test
+it('should call loadChannel and loadChannelEntries on mount', () => {
+  const channelData = ChannelData({
+    data: Channel(),
+    state: REQUEST_INITIAL,
+  })
 
-//   const channelData = ChannelData({
-//     data: Channel(),
-//     state: REQUEST_INITIAL,
-//   })
+  const channelEntryListData = PaginatedListData({
+    data: Immutable.List(),
+    state: REQUEST_INITIAL,
+  })
 
-//   const wrapper = mount(<ChannelDetail
-//     currentChannel={channelData}
-//     loadChannel={loadChannelMock}
-//     match={{ params: { id: 1 }}}
-//   />)
+  const props = {
+    ...defaultProps,
+    currentChannel: channelData,
+    currentChannelEntries: channelEntryListData,
+    loadChannel: jest.fn(),
+    loadChannelEntries: jest.fn(),
+  }
 
-//   expect(loadChannelMock).toHaveBeenCalledTimes(1)
-//   expect(loadChannelMock).toHaveBeenLastCalledWith({ id: 1 })
-// })
+  const wrapper = mount(<ChannelEntries
+    {...props}
+    match={{ params: { id: 1 }}}
+  />)
+
+  expect(props.loadChannel).toHaveBeenCalledTimes(1)
+  expect(props.loadChannel).toHaveBeenLastCalledWith({ id: 1 })
+  expect(props.loadChannelEntries).toHaveBeenCalledTimes(1)
+  expect(props.loadChannelEntries).toHaveBeenLastCalledWith({ channelId: 1 })
+})

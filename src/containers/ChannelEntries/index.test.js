@@ -46,7 +46,6 @@ it('should render channel entries when loaded', () => {
   expect(wrapper.text()).toEqual(expect.stringContaining(channel.name))
 })
 
-// TODO: fix or remove this test
 it('should call loadChannel and loadChannelEntries on mount', () => {
   const channelData = ChannelData({
     data: Channel(),

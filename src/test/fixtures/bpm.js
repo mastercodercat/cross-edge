@@ -1,16 +1,3 @@
-export const wizardData = [
-  [
-    { label: 'Scan or Enter Identifiers', type: 'scan-multiple', name: 'data' },
-    { label: 'Scan or Enter Parent Identifier', type: 'scan-single', name: 'root' }, ///
-  ],
-  [
-    { label: 'Scan or Enter Parent Identifier', type: 'scan-single', name: 'parent' },
-  ],
-  [
-    { type: 'display', name: 'data', parentField: 'parent' },
-  ],
-]
-
 export const businessProcesses = [
   {
     "name":"File Writer",
@@ -22,7 +9,6 @@ export const businessProcesses = [
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/carry-package.eps?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=Lhdlf5zQroWB%2FXA%2B%2BtF0n4nJuqI%3D&Expires=1540463277",
     "mdm_type":"business_process",
-    steps: wizardData,
   },
   {
     "name":"Commissioning",
@@ -34,7 +20,6 @@ export const businessProcesses = [
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/commissioning.png?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=hbW3fS0uSa3TOYkOSIm6wDBnpFE%3D&Expires=1540463277",
     "mdm_type":"business_process",
-    steps: wizardData,
   },
   {
     "name":"Aggregation",
@@ -46,9 +31,27 @@ export const businessProcesses = [
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/aggregation.png?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=2UTIPAgUyORaTw1PIgjw%2FZ2upfU%3D&Expires=1540463277",
     "mdm_type":"business_process",
-    steps: wizardData,
   }
 ]
+
+export const businessProcessWizardData = {
+  name: 'Gibson Aggregation',
+  process_name: 'Aggregation',
+  markup: {
+    steps: [
+      [
+        { label: 'Scan or Enter Identifiers', control: 'scan-multiple', name: 'data', type: 'array' },
+        { label: 'Select Item Level', control: 'select', name: 'pack_level', type: 'string', data: ['Level 1', 'Level 2'] },
+      ],
+      [
+        { label: 'Scan or Enter Parent Identifier', control: 'scan-single', name: 'parent', type: 'string' },
+      ],
+      [
+        { control: 'verify-submit' },
+      ],
+    ]
+  }
+}
 
 export const nonExistingBusinessProcesses = {
   "name":"Nonexisting BP",

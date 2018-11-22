@@ -4,15 +4,14 @@ import { shallow } from 'enzyme'
 import BusinessProcessWizard from './index'
 
 import Wizard from 'components/Wizard'
-import { BusinessProcess } from 'store/modules/businessProcesses'
+import { BusinessProcessWizard as BusinessProcessWizardData } from 'store/modules/businessProcesses'
 import {
-  businessProcesses,
-  nonExistingBusinessProcesses,
+  businessProcessWizardData,
 } from 'test/fixtures/bpm'
 
 
 it('should show business process wizard', () => {
-  const bp = BusinessProcess(businessProcesses[1])
+  const bp = BusinessProcessWizardData(businessProcessWizardData)
 
   const wrapper = shallow(<BusinessProcessWizard
     onSubmit={e => e}

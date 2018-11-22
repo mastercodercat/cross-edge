@@ -5,7 +5,7 @@ const StyleWrapper = styled.div`
   max-width: 800px;
   margin: auto;
 
-  .wizardStep {    
+  .wizardStep {
     border: 1px solid #ebedf0;
     border-radius: 2px;
     padding: 40px 25px;

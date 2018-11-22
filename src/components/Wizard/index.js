@@ -61,7 +61,6 @@ export class Wizard extends React.Component {
 
     const activeStep = steps[page]
     if (activeStep) {
-      
       activeStep.forEach(field => {
         if (field.stepComponent.validate) {
           validationResult = {

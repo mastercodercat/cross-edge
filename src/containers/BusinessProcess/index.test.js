@@ -8,14 +8,14 @@ import {
   REQUEST_SUCCESS,
 } from 'constants.js'
 import {
-  BusinessProcess as BusinessProcessModel,
+  BusinessProcessWizard as BusinessProcessWizardModel,
   BusinessProcessData
 } from 'store/modules/businessProcesses'
-import { businessProcesses } from 'test/fixtures/bpm'
+import { businessProcessWizardData } from 'test/fixtures/bpm'
 
 
 const props = {
-  match: { params: { name: businessProcesses[0].name } },
+  match: { params: { name: businessProcessWizardData.name } },
   businessProcess: BusinessProcessData(),
   submitDataState: REQUEST_INITIAL,
   loadBusinessProcess: jest.fn(),
@@ -32,7 +32,7 @@ it('should show spinner when business process not loaded', () => {
 })
 
 it('should show business process wizard when loaded', () => {
-  const bp = BusinessProcessModel(businessProcesses[1])
+  const bp = BusinessProcessWizardModel(businessProcessWizardData)
   const localProps = Object.assign({}, props)
   localProps.businessProcess = BusinessProcessData({
     data: bp,

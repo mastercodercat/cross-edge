@@ -4,23 +4,25 @@ import Wizard from 'components/Wizard'
 import ScanOrEnterIDs from 'components/BusinessProcessSteps/ScanOrEnterIDs'
 import ScanOrEnterOneID from 'components/BusinessProcessSteps/ScanOrEnterOneID'
 import CheckDataAndSubmit from 'components/BusinessProcessSteps/CheckDataAndSubmit'
+import SelectField from 'components/BusinessProcessSteps/SelectField'
 
 
 const TYPE_TO_COMPONENT_MAP = {
   'scan-single': ScanOrEnterOneID,
   'scan-multiple': ScanOrEnterIDs,
-  'display': CheckDataAndSubmit,
+  'verify-submit': CheckDataAndSubmit,
+  'select': SelectField,
 }
 
 const BusinessProcessWizard = ({ businessProcess, onSubmit, submitting }) => {
-  const steps = businessProcess.steps.map(stepData => {
+  const steps = businessProcess.markup.steps.map(stepData => {
     return stepData.map(fieldData => {
-      if (!TYPE_TO_COMPONENT_MAP[fieldData.type]) {
+      if (!TYPE_TO_COMPONENT_MAP[fieldData.control]) {
         return null
       }
-      const { type, name, label, ...otherFields } = fieldData
+      const { control, name, label, ...otherFields } = fieldData
       return {
-        stepComponent: TYPE_TO_COMPONENT_MAP[type],
+        stepComponent: TYPE_TO_COMPONENT_MAP[control],
         field: name,
         label: label,
         ...otherFields,

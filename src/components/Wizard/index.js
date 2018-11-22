@@ -15,17 +15,22 @@ export class Wizard extends React.Component {
     onSubmit: PropTypes.func.isRequired,
   }
 
-  static Page = ({ values, step }) => (
+  static Page = ({ values, step, steps }) => (
     <div className="wizardStep">
       {
         step.map((fieldData, index) => {
-          const { stepComponent: StepComponent, field, label, ...otherProps } = fieldData
+          const { stepComponent: StepComponent, control, field, label, ...otherProps } = fieldData
           return <div className="wizardStepField" key={field || `field_${index}`}>
-            <p>{label}</p>
+            {
+              control !== 'verify-submit' &&
+              <p>{label}</p>
+            }
 
             <StepComponent
               values={values}
               field={field}
+              steps={steps}
+              label={label}
               {...otherProps}
             />
           </div>
@@ -103,7 +108,7 @@ export class Wizard extends React.Component {
             <form onSubmit={handleSubmit}>
               {
                 activeStep ?
-                <Wizard.Page values={values} step={activeStep} />
+                <Wizard.Page values={values} step={activeStep} steps={steps} />
                 :
                 <p>Page not found.</p>
               }

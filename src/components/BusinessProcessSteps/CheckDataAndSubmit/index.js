@@ -1,30 +1,39 @@
 import React from 'react'
 
 
-export const CheckDataAndSubmit = ({ values, field, parentField }) => {
+const removeActionFromLabel = str => str.replace(/^select/i, '')
+  .replace(/^scan or enter/i, '')
+
+export const CheckDataAndSubmit = ({ values, steps, label }) => {
   return (
     <div>
       <h2>Check Data and Submit</h2>
-      <p>
-        The following identifiers will be commissioned:
-      </p>
-      <p>
-        {
-          (values[field] || []).map(value => (
-            <strong key={value}>{value}<br/></strong>
-          ))
-        }
-      </p>
+
       {
-        parentField &&
-        <div>
-          <p>For this parent identifier:</p>
-          <strong>{values[parentField]}</strong>
-        </div>
+        label &&
+        <p>{label}</p>
       }
-      <p>
-        Check to ensure that the list of identifiers is correct. If not, click the "Previous" button to fix any issues.
-      </p>
+
+      {
+        steps.map(step => step.filter(fieldData => !!values[fieldData.field]).map(fieldData => (
+          <div key={fieldData.field}>
+            <label>{removeActionFromLabel(fieldData.label)}:</label>
+
+            {
+              values[fieldData.field].constructor === Array ?
+              <p>
+                {
+                  (values[fieldData.field] || []).map(value => (
+                    <strong key={value}>{value}<br/></strong>
+                  ))
+                }
+              </p>
+              :
+              <p><strong>{values[fieldData.field]}</strong></p>
+            }
+          </div>
+        )))
+      }
     </div>
   )
 }

@@ -4,7 +4,9 @@ import { shallow } from 'enzyme'
 import BusinessProcessWizard from './index'
 
 import Wizard from 'components/Wizard'
-import { BusinessProcessWizard as BusinessProcessWizardData } from 'store/modules/businessProcesses'
+import {
+  BusinessProcessWizard as BusinessProcessWizardData
+} from 'store/modules/businessProcesses'
 import {
   businessProcessWizardData,
 } from 'test/fixtures/bpm'

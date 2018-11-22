@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Alert, Select } from 'antd'
+import { Alert, Select } from 'antd'
 
 
 const Option = Select.Option

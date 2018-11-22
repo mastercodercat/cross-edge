@@ -20,10 +20,11 @@ const BusinessProcessWizard = ({ businessProcess, onSubmit, submitting }) => {
       if (!TYPE_TO_COMPONENT_MAP[fieldData.control]) {
         return null
       }
-      const { control, name, label, ...otherFields } = fieldData
+      const { control, field, label, ...otherFields } = fieldData
       return {
         stepComponent: TYPE_TO_COMPONENT_MAP[control],
-        field: name,
+        control,
+        field,
         label: label,
         ...otherFields,
       }

@@ -12,7 +12,13 @@ const StyleWrapper = styled.div`
   }
 
   .wizardStepField {
-    margin-bottom: 50px;
+    &:not(:last-child) {
+      margin-bottom: 50px;
+    }
+
+    &:last-child {
+      margin-bottom: 25px;
+    }
   }
 
   .wizardButtons {

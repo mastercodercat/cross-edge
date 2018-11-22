@@ -40,11 +40,11 @@ export const businessProcessWizardData = {
   markup: {
     steps: [
       [
-        { label: 'Scan or Enter Identifiers', control: 'scan-multiple', name: 'data', type: 'array' },
-        { label: 'Select Item Level', control: 'select', name: 'pack_level', type: 'string', data: ['Level 1', 'Level 2'] },
+        { label: 'Scan or Enter Identifiers', control: 'scan-multiple', field: 'data', type: 'array' },
+        { label: 'Select Item Level', control: 'select', field: 'pack_level', type: 'string', data: ['Item Level', 'Hardshell Case'] },
       ],
       [
-        { label: 'Scan or Enter Parent Identifier', control: 'scan-single', name: 'parent', type: 'string' },
+        { label: 'Scan or Enter Parent Identifier', control: 'scan-single', field: 'parent', type: 'string' },
       ],
       [
         { control: 'verify-submit' },

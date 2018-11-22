@@ -8,7 +8,7 @@ export const businessProcesses = [
     "sub_site_location":null,
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/carry-package.eps?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=Lhdlf5zQroWB%2FXA%2B%2BtF0n4nJuqI%3D&Expires=1540463277",
-    "mdm_type":"business_process"
+    "mdm_type":"business_process",
   },
   {
     "name":"Commissioning",
@@ -19,7 +19,7 @@ export const businessProcesses = [
     "sub_site_location":1,
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/commissioning.png?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=hbW3fS0uSa3TOYkOSIm6wDBnpFE%3D&Expires=1540463277",
-    "mdm_type":"business_process"
+    "mdm_type":"business_process",
   },
   {
     "name":"Aggregation",
@@ -30,9 +30,28 @@ export const businessProcesses = [
     "sub_site_location":1,
     "partner":3,
     "image":"https://adept-static-files.s3.amazonaws.com/media/private/bps/aggregation.png?AWSAccessKeyId=AKIAJ6WNAUENWAMT3O2Q&Signature=2UTIPAgUyORaTw1PIgjw%2FZ2upfU%3D&Expires=1540463277",
-    "mdm_type":"business_process"
+    "mdm_type":"business_process",
   }
 ]
+
+export const businessProcessWizardData = {
+  name: 'Gibson Aggregation',
+  process_name: 'Aggregation',
+  markup: {
+    steps: [
+      [
+        { label: 'Scan or Enter Identifiers', control: 'scan-multiple', field: 'data', type: 'array' },
+        { label: 'Select Item Level', control: 'select', field: 'pack_level', type: 'string', data: ['Item Level', 'Hardshell Case'] },
+      ],
+      [
+        { label: 'Scan or Enter Parent Identifier', control: 'scan-single', field: 'parent', type: 'string' },
+      ],
+      [
+        { control: 'verify-submit' },
+      ],
+    ]
+  }
+}
 
 export const nonExistingBusinessProcesses = {
   "name":"Nonexisting BP",

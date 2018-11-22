@@ -21,6 +21,7 @@ import {
 import {
   State,
   BusinessProcess,
+  BusinessProcessWizard,
   BusinessProcessData,
 } from './models'
 
@@ -66,7 +67,7 @@ export const reducer = handleActions({
   ...requestLoopHandlersForGet({
     action: LOAD_BUSINESS_PROCESS,
     dataField: 'currentBusinessProcess',
-    getDataFromPayload: payload => BusinessProcess(payload.results[0]),
+    getDataFromPayload: payload => BusinessProcessWizard(payload),
   }),
 
   /* Submit data */

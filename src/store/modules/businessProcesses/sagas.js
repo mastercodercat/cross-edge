@@ -43,9 +43,34 @@ const doLoadBusinessProcess = function* (action) {
   try {
     const response = yield call(
       axios.get,
-      `${API_BASE_URL}/bpm/filter/?name=${name}`,
+      `${API_BASE_URL}/bpm/wizard/${encodeURIComponent(name)}/`,
     )
-    yield put(loadBusinessProcessSuccess(response.data))
+
+    const _markup = JSON.parse(response.data.markup)
+
+    const bp = {
+      name: response.data.name,
+      process_name: response.data.process_name,
+      markup: {
+        business_process: _markup.business_process,
+        steps: [],
+      },
+    }
+
+    Object.keys(_markup.steps).forEach(key => {
+      const stepData = _markup.steps[key]
+      const step = []
+      Object.keys(stepData).forEach(controlType => {
+        const fieldData = stepData[controlType]
+        step.push({
+          ...fieldData,
+          control: controlType,
+        })
+      })
+      bp.markup.steps.push(step)
+    })
+
+    yield put(loadBusinessProcessSuccess(bp))
   } catch (error) {
     yield put(loadBusinessProcessFail(error.response ? error.response.data : {}))
   }

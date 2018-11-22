@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Input, Alert } from 'antd'
+import { Alert, Select } from 'antd'
 
 
-class ScanOrEnterOneIDComponent extends Component {
+const Option = Select.Option
+
+class SelectComponent extends Component {
 
   static propTypes = {
     input: PropTypes.object.isRequired,
     meta: PropTypes.object.isRequired,
-  }
-
-  handleChangeField = e => {
-    const { input: { onChange } } = this.props
-
-    onChange(e.currentTarget.value)
+    data: PropTypes.array.isRequired,
   }
 
   render() {
-    const { input: { value }, meta } = this.props
+    const { input: { onChange, value }, meta, data } = this.props
 
     const validationError = meta.touched && meta.error
 
@@ -30,15 +27,20 @@ class ScanOrEnterOneIDComponent extends Component {
           </div>
         }
 
-        <Input
+        <Select
           value={value}
-          onChange={this.handleChangeField}
+          onChange={onChange}
           placeholder="Put focus here to scan or enter barcode identifier"
-          autoFocus
-        />
+        >
+          {
+            data.map(option => <Option key={option} value={option}>
+              {option}
+            </Option>)
+          }
+        </Select>
       </div>
     )
   }
 }
 
-export default ScanOrEnterOneIDComponent
+export default SelectComponent

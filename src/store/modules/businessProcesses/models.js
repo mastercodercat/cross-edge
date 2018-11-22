@@ -18,9 +18,16 @@ export const BusinessProcess = Immutable.Record({
   state: '',
   time_zone_offset: 0,
   mdm_type: '',
+  steps: [],
 })
 
-export const BusinessProcessData = createDetailDataType(BusinessProcess())
+export const BusinessProcessWizard = Immutable.Record({
+  name: '',
+  process_name: '',
+  markup: {},
+})
+
+export const BusinessProcessData = createDetailDataType(BusinessProcessWizard())
 
 export const State = Immutable.Record({
   businessProcesses: PaginatedListData(),

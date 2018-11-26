@@ -32,7 +32,7 @@ export class BusinessProcess extends Component {
     const { submitData, businessProcess } = this.props
 
     submitData({
-      process_name: businessProcess.data.name,
+      process_name: businessProcess.data.process_name,
       ...data,
     })
   }

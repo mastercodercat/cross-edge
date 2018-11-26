@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Icon, Spin } from 'antd'
+import { Row, Col, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import { PageTitle } from 'components/common'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import Card from 'components/Card'
 import {
@@ -35,9 +36,9 @@ export class BusinessProcessModule extends Component {
 
     return (
       <div>
-        <h1>
-          <Icon type="profile" /> Business Process Module
-        </h1>
+        <PageTitle>
+        <i className="fal fa-barcode" /> Business Process Module
+        </PageTitle>
 
         <Spin spinning={loading}>
           {

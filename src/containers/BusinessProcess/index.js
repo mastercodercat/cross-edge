@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Spin } from 'antd'
+import { Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import { PageTitle } from 'components/common'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import BusinessProcessWizard from 'components/BusinessProcessWizard'
 import {
@@ -32,7 +33,7 @@ export class BusinessProcess extends Component {
     const { submitData, businessProcess } = this.props
 
     submitData({
-      process_name: businessProcess.data.name,
+      process_name: businessProcess.data.process_name,
       ...data,
     })
   }
@@ -59,9 +60,9 @@ export class BusinessProcess extends Component {
           <SpinnerDummyContent />
           :
           <React.Fragment>
-            <h1>
-              <Icon type="profile" /> {businessProcess.data.name}
-            </h1>
+            <PageTitle>
+              <i className="fal fa-barcode" /> {businessProcess.data.name}
+            </PageTitle>
 
             <BusinessProcessWizard
               businessProcess={businessProcess.data}

@@ -5,8 +5,9 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Icon, Modal, Input } from 'antd'
+import { Modal, Input } from 'antd'
 
+import { PageTitle } from 'components/common'
 import ChannelList from 'components/ChannelList'
 import {
   selectChannels,
@@ -78,9 +79,9 @@ export class Channels extends Component {
 
     return (
       <StyleWrapper>
-        <h1>
-          <Icon type="cluster" /> Channel Manager
-        </h1>
+        <PageTitle>
+        <i className="fal fa-sitemap" /> Channel Manager
+        </PageTitle>
 
         <div className="searchWrapper">
           <Input.Search

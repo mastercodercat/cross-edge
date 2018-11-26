@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -7,6 +6,7 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Spin } from 'antd'
 
+import { PageTitle } from 'components/common'
 import ChannelEntryList from 'components/ChannelEntryList'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
@@ -36,9 +36,9 @@ export class ChannelSearch extends Component {
     const loading = isLoading(searchedChannelEntries.state)
 
     return <div>
-      <h1>
-        <Icon type="search" /> Search
-      </h1>
+      <PageTitle>
+        <i className="fal fa-search" /> Search
+      </PageTitle>
 
       <Spin spinning={loading}>
         {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import { withRouter } from 'react-router'
-import { Layout, Icon } from 'antd'
+import { Layout } from 'antd'
 import WindowResizeListener from 'react-window-size-listener'
 
 import Topbar from 'components/Topbar'
@@ -80,7 +80,7 @@ export class DashboardLayout extends Component {
                   history.length > 1 &&
                   <div className="goBackLinkWrapper">
                     <a href=":;" onClick={this.handleClickGoBack}>
-                      <Icon type="left" /> Go back
+                      <i className="fa fa-chevron-left" /> Go back
                     </a>
                   </div>
                 }

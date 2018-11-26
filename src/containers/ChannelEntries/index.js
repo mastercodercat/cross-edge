@@ -5,8 +5,9 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { Spin, Icon } from 'antd'
+import { Spin } from 'antd'
 
+import { PageTitle } from 'components/common'
 import ChannelEntryList from 'components/ChannelEntryList'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
@@ -72,9 +73,9 @@ export class ChannelEntries extends Component {
 
     return (
       <div>
-        <h1>
-          <Icon type="cluster" /> {currentChannel.data.name} Entries
-        </h1>
+        <PageTitle>
+          <i className="fal fa-list-ul" /> {currentChannel.data.name} Entries
+        </PageTitle>
 
         <ChannelEntryList
           loading={isLoading(currentChannelEntries.state)}

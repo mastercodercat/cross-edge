@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import { Layout, Menu, Icon } from 'antd'
+import { Layout, Menu } from 'antd'
 
 import StyleWrapper from './style'
 
@@ -24,6 +24,10 @@ export class Sidebar extends Component {
   render() {
     const { collapsed, onToggleCollapse, location } = this.props
 
+    const menuLabelStyle = {
+      display: collapsed ? 'none' : 'inline',
+    }
+
     return (
       <Sider
         width={230}
@@ -35,16 +39,16 @@ export class Sidebar extends Component {
         <StyleWrapper>
           <Menu theme="dark" selectedKeys={[location.pathname]} mode="inline" onClick={this.handleClickMenu}>
             <Menu.Item key="/">
-              <Icon type="dashboard" />
-              <span>Dashboard</span>
+              <i className="fal fa-fw fa-tachometer-alt" />
+              <span style={menuLabelStyle}> Dashboard</span>
             </Menu.Item>
             <Menu.Item key="/channels">
-              <Icon type="cluster" />
-              <span>Channel Manager</span>
+              <i className="fal fa-fw fa-sitemap" />
+              <span style={menuLabelStyle}> Channel Manager</span>
             </Menu.Item>
             <Menu.Item key="/business-process-module">
-              <Icon type="profile" />
-              <span>Business Process Module</span>
+              <i className="fal fa-fw fa-barcode" />
+              <span style={menuLabelStyle}> Business Process Module</span>
             </Menu.Item>
           </Menu>
         </StyleWrapper>

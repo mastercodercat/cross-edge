@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -38,7 +37,7 @@ export class ChannelSearch extends Component {
 
     return <div>
       <PageTitle>
-        <Icon type="search" /> Search
+        <i className="fal fa-search" /> Search
       </PageTitle>
 
       <Spin spinning={loading}>

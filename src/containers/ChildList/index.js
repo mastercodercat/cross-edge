@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { compose } from 'redux'
-import { Row, Col, Spin, Icon } from 'antd'
+import { Row, Col, Spin } from 'antd'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { withRouter } from 'react-router'
@@ -11,6 +11,7 @@ import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import Card from 'components/Card'
 import connectByType from 'hoc/connectByType'
 import { isLoading, hasFailed } from 'utils/state-helpers'
+import { ICON_PREFIXES_BY_MDM_TYPES, ICONS_BY_MDM_TYPES } from 'config/base'
 
 
 export class ChildList extends Component {
@@ -45,7 +46,7 @@ export class ChildList extends Component {
     return (
       <div>
         <PageTitle>
-          <Icon type="profile" /> {typeTitle} for {parent.data.name}
+          <i className={`${ICON_PREFIXES_BY_MDM_TYPES[type]} fa-${ICONS_BY_MDM_TYPES[type]}`} /> {typeTitle} for {parent.data.name}
         </PageTitle>
 
         <Spin spinning={spinning}>

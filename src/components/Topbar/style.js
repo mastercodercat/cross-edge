@@ -48,6 +48,10 @@ const StyleWrapper = styled.div`
     }
   }
 
+  .icon-user {
+    font-size: 20px;
+  }
+
   .notification-button-wrapper {
     display: inline-block;
     position: relative;
@@ -63,6 +67,7 @@ const StyleWrapper = styled.div`
       top: 1px;
       background-color: ${palette('success', 0)};
       border-radius: 999px;
+      z-index: 1;
     }
   }
 

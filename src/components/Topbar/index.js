@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Layout, Icon, Dropdown, Menu } from 'antd'
+import { Layout, Dropdown, Menu } from 'antd'
 
 import Logo from 'components/Logo'
 import StyleWrapper from './style'
@@ -63,13 +63,13 @@ class Topbar extends Component {
             <div className="adp-flex-right">
               <span className="notification-button-wrapper has-notifications">
                 <button className="notification-button with-icon with-pointer">
-                  <Icon type="bell" />
+                  <i className="fa fa-bell" />
                 </button>
               </span>
 
               <Dropdown overlay={userMenu}>
                 <a className="user-menu-link" href="" onClick={this.handleTriggerCommand.bind(this, 'user')}>
-                  <Icon className="icon-user" type="user" /><span>{username} <Icon type="down" /></span>
+                  <i className="fa fa-user icon-user" /><span>{username} <i className="fa fa-chevron-down" /></span>
                 </a>
               </Dropdown>
             </div>

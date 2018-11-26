@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Spin } from 'antd'
+import { Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -61,7 +61,7 @@ export class BusinessProcess extends Component {
           :
           <React.Fragment>
             <PageTitle>
-              <Icon type="profile" /> {businessProcess.data.name}
+              <i className="fal fa-barcode" /> {businessProcess.data.name}
             </PageTitle>
 
             <BusinessProcessWizard

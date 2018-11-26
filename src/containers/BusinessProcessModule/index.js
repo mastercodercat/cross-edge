@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Col, Icon, Spin } from 'antd'
+import { Row, Col, Spin } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -37,7 +37,7 @@ export class BusinessProcessModule extends Component {
     return (
       <div>
         <PageTitle>
-          <Icon type="profile" /> Business Process Module
+        <i className="fal fa-barcode" /> Business Process Module
         </PageTitle>
 
         <Spin spinning={loading}>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
 
 import { PageTitle } from 'components/common'
 
@@ -10,7 +9,7 @@ class Dashboard extends Component {
     return (
       <div>
         <PageTitle>
-          <Icon type="dashboard" /> Dashboard
+          <i className="fal fa-tachometer-alt" /> Dashboard
         </PageTitle>
 
         Dashboard content here

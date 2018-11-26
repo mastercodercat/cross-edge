@@ -11,6 +11,7 @@ export const Label = styled.label`
   color: ${palette('adeptLochmara5', 0)};
   font-weight: 600;
   margin-bottom: 14px;
+  font-size: 15px;
 `
 
 export const LabelInline = styled.label`

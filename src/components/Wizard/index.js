@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form } from 'react-final-form'
 import { Button } from 'antd'
 
+import { Label } from 'components/common'
 import StyleWrapper from './style'
 
 
@@ -23,7 +24,7 @@ export class Wizard extends React.Component {
           return <div className="wizardStepField" key={field || `field_${index}`}>
             {
               control !== 'verify-submit' &&
-              <p>{label}</p>
+              <Label>{label}</Label>
             }
 
             <StepComponent

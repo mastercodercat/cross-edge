@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { LabelInline } from 'components/common'
+
 
 const removeActionFromLabel = str => str.replace(/^select/i, '')
   .replace(/^scan or enter/i, '')
@@ -17,7 +19,7 @@ export const CheckDataAndSubmit = ({ values, steps, label }) => {
       {
         steps.map(step => step.filter(fieldData => !!values[fieldData.field]).map(fieldData => (
           <div key={fieldData.field}>
-            <label>{removeActionFromLabel(fieldData.label)}:</label>
+            <LabelInline>{removeActionFromLabel(fieldData.label)}:</LabelInline>
 
             {
               values[fieldData.field].constructor === Array ?

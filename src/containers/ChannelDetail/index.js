@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Spin } from 'antd'
 
+import { PageTitle } from 'components/common'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
   selectCurrentChannel,
@@ -44,7 +45,9 @@ export class ChannelDetail extends Component {
             <SpinnerDummyContent />
             :
             <div>
-              <h1>{currentChannel.data.name}</h1>
+              <PageTitle>
+                {currentChannel.data.name}
+              </PageTitle>
 
               <table className="info-table">
                 <tbody>

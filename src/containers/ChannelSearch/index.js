@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Spin } from 'antd'
 
+import { PageTitle } from 'components/common'
 import ChannelEntryList from 'components/ChannelEntryList'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import {
@@ -36,9 +37,9 @@ export class ChannelSearch extends Component {
     const loading = isLoading(searchedChannelEntries.state)
 
     return <div>
-      <h1>
+      <PageTitle>
         <Icon type="search" /> Search
-      </h1>
+      </PageTitle>
 
       <Spin spinning={loading}>
         {

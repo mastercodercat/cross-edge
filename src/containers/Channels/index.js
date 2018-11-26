@@ -7,6 +7,7 @@ import { createStructuredSelector } from 'reselect'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Icon, Modal, Input } from 'antd'
 
+import { PageTitle } from 'components/common'
 import ChannelList from 'components/ChannelList'
 import {
   selectChannels,
@@ -78,9 +79,9 @@ export class Channels extends Component {
 
     return (
       <StyleWrapper>
-        <h1>
+        <PageTitle>
           <Icon type="cluster" /> Channel Manager
-        </h1>
+        </PageTitle>
 
         <div className="searchWrapper">
           <Input.Search

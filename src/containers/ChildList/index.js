@@ -6,9 +6,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import { withRouter } from 'react-router'
 import { pluralize, titleize } from 'inflection'
 
-import connectByType from 'hoc/connectByType'
+import { PageTitle } from 'components/common'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import Card from 'components/Card'
+import connectByType from 'hoc/connectByType'
 import { isLoading, hasFailed } from 'utils/state-helpers'
 
 
@@ -43,9 +44,9 @@ export class ChildList extends Component {
 
     return (
       <div>
-        <h1>
+        <PageTitle>
           <Icon type="profile" /> {typeTitle} for {parent.data.name}
-        </h1>
+        </PageTitle>
 
         <Spin spinning={spinning}>
           {

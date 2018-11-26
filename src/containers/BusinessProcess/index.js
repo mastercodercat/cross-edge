@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
+import { PageTitle } from 'components/common'
 import SpinnerDummyContent from 'components/SpinnerDummyContent'
 import BusinessProcessWizard from 'components/BusinessProcessWizard'
 import {
@@ -59,9 +60,9 @@ export class BusinessProcess extends Component {
           <SpinnerDummyContent />
           :
           <React.Fragment>
-            <h1>
+            <PageTitle>
               <Icon type="profile" /> {businessProcess.data.name}
-            </h1>
+            </PageTitle>
 
             <BusinessProcessWizard
               businessProcess={businessProcess.data}

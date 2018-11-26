@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import { Icon } from 'antd'
 
+import { PageTitle } from 'components/common'
+
 
 class Dashboard extends Component {
 
   render() {
     return (
       <div>
-        <h1>
+        <PageTitle>
           <Icon type="dashboard" /> Dashboard
-        </h1>
+        </PageTitle>
 
         Dashboard content here
       </div>

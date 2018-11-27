@@ -5,8 +5,8 @@ import { pluralize, dasherize, titleize } from 'inflection'
 import StyleWrapper from './style'
 
 
-export const Card = ({ image, title, description, buttons }) => (
-  <StyleWrapper>
+export const Card = ({ image, title, description, buttons, minHeight, flexMode }) => (
+  <StyleWrapper className={flexMode ? 'flexMode' : ''}>
     {
       image &&
       <div className="imageWrapper">
@@ -16,7 +16,7 @@ export const Card = ({ image, title, description, buttons }) => (
 
     <div className="content">
       <h3 className="title"><strong>{title}</strong></h3>
-      <div className="descriptionWrapper">
+      <div className="descriptionWrapper" style={{...(minHeight ? { minHeight } : {})}}>
         {description}
       </div>
     </div>

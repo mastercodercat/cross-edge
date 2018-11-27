@@ -39,6 +39,7 @@ class Dashboard extends Component {
         <Row gutter={30} type="flex">
           <Col sm={24} md={12} lg={6}>
             <Card
+              icon="fal fa-sitemap"
               title="Channel Manager"
               description="View Distribution Channel details and search identifiers to ensure they are in the correct Channels."
               buttons={[
@@ -51,6 +52,7 @@ class Dashboard extends Component {
 
           <Col sm={24} md={12} lg={6}>
             <Card
+              icon="fal fa-barcode"
               title="Business Processes"
               description="Conduct Aggregation, Shipping, Receiving and other configured Business Processes for your organization."
               buttons={[
@@ -63,6 +65,7 @@ class Dashboard extends Component {
 
           <Col sm={24} md={12} lg={6}>
             <Card
+              icon="fal fa-code"
               title="API Swagger"
               description="View Adept Connect's REST API documentation and learn how you can take advantage of a rich set of endpoints for your own systems and user software."
               buttons={[
@@ -75,6 +78,7 @@ class Dashboard extends Component {
 
           <Col sm={24} md={12} lg={6}>
             <Card
+              icon="fal fa-cogs"
               title="Admin"
               description="Navigate to Adept Connect's Administration Module to view Configuration, Logging, and Auditing Information."
               buttons={[

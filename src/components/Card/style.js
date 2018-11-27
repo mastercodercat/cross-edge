@@ -36,7 +36,7 @@ const StyleWrapper = styled.div`
   }
 
   .descriptionWrapper {
-    height: 42px;
+    min-height: 42px;
     overflow: hidden;
   }
 
@@ -51,6 +51,16 @@ const StyleWrapper = styled.div`
 
     button {
       padding: 0;
+    }
+  }
+
+  &.flexMode {
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+
+    .content {
+      flex: 1 1 auto;
     }
   }
 `

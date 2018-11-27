@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import { Button } from 'antd'
 
 import Card from './index'
@@ -22,7 +22,7 @@ const buttonTexts = [
 ]
 
 it('should have all four buttons if object has them', () => {
-  const wrapper = shallow(<Card data={defaultData} history={mockHistory} />)
+  const wrapper = mount(<Card data={defaultData} history={mockHistory} />)
 
   expect(wrapper.find(Button).length).toEqual(4)
 })
@@ -70,7 +70,7 @@ it('should not have button area when no buttons available', () => {
     has_sub_sites: false,
     has_business_processes: false,
   }
-  const wrapper = shallow(<Card data={data} history={mockHistory} />)
+  const wrapper = mount(<Card data={data} history={mockHistory} />)
 
   expect(wrapper.find('.buttonsWrapper').length).toEqual(0)
 })

@@ -5,7 +5,40 @@ import { pluralize, dasherize, titleize } from 'inflection'
 import StyleWrapper from './style'
 
 
-const Card = ({ data, history }) => {
+export const Card = ({ image, title, description, buttons, minHeight, flexMode }) => (
+  <StyleWrapper className={flexMode ? 'flexMode' : ''}>
+    {
+      image &&
+      <div className="imageWrapper">
+        <div className="image" style={{ backgroundImage: `url(${image})` }} />
+      </div>
+    }
+
+    <div className="content">
+      <h3 className="title"><strong>{title}</strong></h3>
+      <div className="descriptionWrapper" style={{...(minHeight ? { minHeight } : {})}}>
+        {description}
+      </div>
+    </div>
+
+    {
+      buttons.length > 0 &&
+      <div className="buttonsWrapper">
+        <Row gutter={15} type="flex" justify="end">
+          {
+            buttons.map((button, index) => (
+              <Col key={index} xs={24} sm={24} md={24} lg={24} xl={12} className="buttonCol">
+                {button}
+              </Col>
+            ))
+          }
+        </Row>
+      </div>
+    }
+  </StyleWrapper>
+)
+
+const BPMCard = ({ data, history }) => {
   const urlPrefix = pluralize(data.mdm_type)
   const subtypes = ['partners', 'sites', 'subsites', 'business_processes']
   const buttons = []
@@ -36,33 +69,12 @@ const Card = ({ data, history }) => {
     })
   }
 
-  return <StyleWrapper>
-    <div className="imageWrapper">
-      <div className="image" style={{ backgroundImage: `url(${data.image})` }} />
-    </div>
-
-    <div className="content">
-      <h3 className="title"><strong>{data.name}</strong></h3>
-      <div className="descriptionWrapper">
-        {data.description}
-      </div>
-    </div>
-
-    {
-      buttons.length > 0 &&
-      <div className="buttonsWrapper">
-        <Row gutter={15} type="flex" justify="end">
-          {
-            buttons.map((button, index) => (
-              <Col key={index} sm={24} md={24} lg={24} xl={12} className="buttonCol">
-                {button}
-              </Col>
-            ))
-          }
-        </Row>
-      </div>
-    }
-  </StyleWrapper>
+  return <Card
+    image={data.image}
+    title={data.name}
+    description={data.description}
+    buttons={buttons}
+  />
 }
 
-export default Card
+export default BPMCard

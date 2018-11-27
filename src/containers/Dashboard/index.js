@@ -34,7 +34,7 @@ class Dashboard extends Component {
           <i className="fal fa-tachometer-alt" /> Dashboard
         </PageTitle>
 
-        <p className="description">Welcome to Adept Packing Platform!</p>
+        <p className="description">Welcome to Adept Packaging Platform!</p>
 
         <Row gutter={30} type="flex">
           <Col sm={24} md={12} lg={6}>

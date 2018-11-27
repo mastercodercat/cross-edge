@@ -5,7 +5,7 @@ import { pluralize, dasherize, titleize } from 'inflection'
 import StyleWrapper from './style'
 
 
-export const Card = ({ image, title, description, buttons, minHeight, flexMode }) => (
+export const Card = ({ icon, image, title, description, buttons, minHeight, flexMode }) => (
   <StyleWrapper className={flexMode ? 'flexMode' : ''}>
     {
       image &&
@@ -15,7 +15,13 @@ export const Card = ({ image, title, description, buttons, minHeight, flexMode }
     }
 
     <div className="content">
-      <h3 className="title"><strong>{title}</strong></h3>
+      <h3 className="title">
+        {
+          icon &&
+          <i className={`titleIcon ${icon}`} />
+        }
+        <strong>{title}</strong>
+      </h3>
       <div className="descriptionWrapper" style={{...(minHeight ? { minHeight } : {})}}>
         {description}
       </div>

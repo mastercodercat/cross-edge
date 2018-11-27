@@ -31,6 +31,10 @@ const StyleWrapper = styled.div`
     padding: 15px;
   }
 
+  .titleIcon {
+    margin-right: 6px;
+  }
+
   .title {
     margin-bottom: 7px;
   }

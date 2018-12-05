@@ -12,6 +12,7 @@ export class Wizard extends React.Component {
   static propTypes = {
     steps: PropTypes.array.isRequired,
     initialValues: PropTypes.object,
+    lastStepOptions: PropTypes.array,
     submitting: PropTypes.bool,
     onSubmit: PropTypes.func.isRequired,
   }
@@ -92,7 +93,7 @@ export class Wizard extends React.Component {
   }
 
   render() {
-    const { steps, submitting } = this.props
+    const { steps, lastStepOptions, submitting } = this.props
     const { page, values } = this.state
 
     const activeStep = steps[page]
@@ -112,6 +113,15 @@ export class Wizard extends React.Component {
                 <Wizard.Page values={values} step={activeStep} steps={steps} />
                 :
                 <p>Page not found.</p>
+              }
+
+              {
+                (isLastPage && lastStepOptions) && lastStepOptions.map(lastStepOption => {
+                  const { component: LastStepOptionComponent, field, props } = lastStepOption
+                  return <div className="wizardAdditionalOption" key={field}>
+                    <LastStepOptionComponent field={field} {...props} />
+                  </div>
+                })
               }
 
               <div className="wizardButtons">

@@ -66,6 +66,8 @@ export class BusinessProcess extends Component {
 
             <BusinessProcessWizard
               businessProcess={businessProcess.data}
+              afterActionField="go_back_after_submit"
+              afterActionLabel="Go back to previous page after data submitted"
               onSubmit={this.handleSubmit}
               submitting={isPending(submitDataState)}
             />

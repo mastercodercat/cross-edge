@@ -21,6 +21,10 @@ const StyleWrapper = styled.div`
     }
   }
 
+  .wizardAdditionalOption {
+    margin-top: 25px;
+  }
+
   .wizardButtons {
     text-align: right;
     margin-top: 25px;

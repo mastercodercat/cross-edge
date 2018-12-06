@@ -1,5 +1,4 @@
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { push } from 'react-router-redux'
 import axios from 'axios'
 
 import { API_BASE_URL } from 'config/base'
@@ -85,9 +84,19 @@ const doSubmitData = function* (action) {
     )
     yield put(submitDataSuccess(response.data))
 
-    yield put(push('/business-process-module'))
+    const { onSuccess } = action.meta || {}
+    if (onSuccess) {
+      onSuccess(response.data)
+    }
   } catch (error) {
-    yield put(submitDataFail(error.response ? error.response.data : {}))
+    const errorData = error.response ? error.response.data : {}
+
+    yield put(submitDataFail(errorData))
+
+    const { onFail } = action.meta || {}
+    if (onFail) {
+      onFail(errorData)
+    }
   }
 }
 

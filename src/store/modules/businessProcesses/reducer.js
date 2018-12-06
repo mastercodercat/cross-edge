@@ -44,7 +44,7 @@ export const loadBusinessProcess = createAction(LOAD_BUSINESS_PROCESS)
 export const loadBusinessProcessSuccess = createAction(successAction(LOAD_BUSINESS_PROCESS))
 export const loadBusinessProcessFail = createAction(failAction(LOAD_BUSINESS_PROCESS))
 
-export const submitData = createAction(SUBMIT_DATA)
+export const submitData = createAction(SUBMIT_DATA, payload => payload, (payload, meta) => meta)
 export const submitDataSuccess = createAction(successAction(SUBMIT_DATA))
 export const submitDataFail = createAction(failAction(SUBMIT_DATA))
 

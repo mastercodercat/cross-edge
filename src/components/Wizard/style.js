@@ -2,9 +2,6 @@ import styled from 'styled-components'
 
 
 const StyleWrapper = styled.div`
-  max-width: 800px;
-  margin: auto;
-
   .wizardStep {
     border: 1px solid #ebedf0;
     border-radius: 2px;

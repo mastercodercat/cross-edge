@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Spin } from 'antd'
+import { Spin, Alert } from 'antd'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -17,11 +17,13 @@ import {
   selectSubmitDataState,
 } from 'store/modules/businessProcesses'
 import { isLoading, isPending, hasFailed } from 'utils/state-helpers'
+import StyleWrapper from './style'
 
 
 export class BusinessProcess extends Component {
 
   static propTypes = {
+    history: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     businessProcess: ImmutablePropTypes.record.isRequired,
     submitDataState: PropTypes.string.isRequired,
@@ -29,12 +31,38 @@ export class BusinessProcess extends Component {
     submitData: PropTypes.func.isRequired,
   }
 
+  state = {
+    error: false,
+    showForm: true,
+  }
+
   handleSubmit = (data) => {
-    const { submitData, businessProcess } = this.props
+    const { submitData, businessProcess, history } = this.props
+    const { go_back_after_submit, ...dataToSubmit } = data
+
+    this.setState({
+      error: false
+    })
 
     submitData({
       process_name: businessProcess.data.process_name,
-      ...data,
+      ...dataToSubmit,
+    }, {
+      onSuccess: () => {
+        if (go_back_after_submit) {
+          history.goBack();
+        } else {
+          // Reset form
+          this.setState({
+            showForm: false
+          }, () => this.setState({
+            showForm: true
+          }))
+        }
+      },
+      onFail: () => this.setState({
+        error: true
+      })
     })
   }
 
@@ -47,6 +75,7 @@ export class BusinessProcess extends Component {
 
   render() {
     const { businessProcess, submitDataState } = this.props
+    const { error, showForm } = this.state
     const loading = isLoading(businessProcess.state)
 
     if (hasFailed(businessProcess.state)) {
@@ -55,24 +84,38 @@ export class BusinessProcess extends Component {
 
     return (
       <Spin spinning={loading}>
-        {
-          loading ?
-          <SpinnerDummyContent />
-          :
-          <React.Fragment>
-            <PageTitle>
-              <i className="fal fa-barcode" /> {businessProcess.data.name}
-            </PageTitle>
+        <StyleWrapper>
+          {
+            loading ?
+            <SpinnerDummyContent />
+            :
+            <React.Fragment>
+              <PageTitle>
+                <i className="fal fa-barcode" /> {businessProcess.data.name}
+              </PageTitle>
 
-            <BusinessProcessWizard
-              businessProcess={businessProcess.data}
-              afterActionField="go_back_after_submit"
-              afterActionLabel="Go back to previous page after data submitted"
-              onSubmit={this.handleSubmit}
-              submitting={isPending(submitDataState)}
-            />
-          </React.Fragment>
-        }
+              <div className="wizardWrapper">
+                {
+                  error &&
+                  <div className="alertWrapper">
+                    <Alert message="Failed to submit data. Please try again later." type="error" />
+                  </div>
+                }
+
+                {
+                  showForm &&
+                  <BusinessProcessWizard
+                    businessProcess={businessProcess.data}
+                    afterActionField="go_back_after_submit"
+                    afterActionLabel="Go back to previous page after data submitted"
+                    onSubmit={this.handleSubmit}
+                    submitting={isPending(submitDataState)}
+                  />
+                }
+              </div>
+            </React.Fragment>
+          }
+        </StyleWrapper>
       </Spin>
     )
   }

@@ -37,7 +37,7 @@ export class BusinessProcessModule extends Component {
     return (
       <div>
         <PageTitle>
-        <i className="fal fa-barcode" /> Business Process Module
+          <i className="fal fa-barcode" /> Business Process Module
         </PageTitle>
 
         <Spin spinning={loading}>

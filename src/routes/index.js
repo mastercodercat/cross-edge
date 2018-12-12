@@ -22,6 +22,8 @@ import ParentContainer from 'containers/ParentContainer'
 import ChildList from 'containers/ChildList'
 import BusinessProcess from 'containers/BusinessProcess'
 import Messages from 'containers/Messages'
+import NotificationPollTimer from 'containers/NotificationPollTimer'
+
 import setTypeProp from 'hoc/setTypeProp'
 
 
@@ -111,6 +113,7 @@ const Routes = ({ history }) => (
     <ScrollToTop>
       <Route path="/sign(.*)" component={userIsNotAuthenticated(UnauthenticatedRoutes)} />
       <Route path="/" component={userIsAuthenticated(AuthenticatedRoutes)} />
+      <NotificationPollTimer />
     </ScrollToTop>
   </ConnectedRouter>
 )

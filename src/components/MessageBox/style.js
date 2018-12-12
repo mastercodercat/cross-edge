@@ -14,10 +14,21 @@ const StyleWrapper = styled.div`
   .side {
     flex: 0 0 300px;
     border-right: 1px solid ${palette('grayscale', 8)};
+    overflow-y: auto;
   }
 
   .content {
     flex: 1 1 0;
+    position: relative;
+  }
+
+  .unselectedNotice {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    font-size: 24px;
+    opacity: 0.4;
   }
 `
 

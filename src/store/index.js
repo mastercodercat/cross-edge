@@ -15,6 +15,7 @@ import { reducer as sitesReducer, saga as sitesSaga } from 'store/modules/sites'
 import { reducer as businessProcessesReducer, saga as businessProcessesSaga } from 'store/modules/businessProcesses'
 import { reducer as partnersReducer, saga as partnersSaga } from 'store/modules/partners'
 import { reducer as bpmReducer, saga as bpmSaga } from 'store/modules/bpm'
+import { reducer as notificationsReducer, saga as notificationsSaga } from 'store/modules/notifications'
 
 
 // Create a history of your choosing (we're using a browser history in this case)
@@ -54,6 +55,7 @@ export const store = createStore(
     businessProcesses: businessProcessesReducer,
     partners: partnersReducer,
     bpm: bpmReducer,
+    notifications: notificationsReducer,
   }),
   Immutable.Map(),
   composeEnhancers(...enhancers)
@@ -68,5 +70,6 @@ sagaMiddleware.run(function* rootSaga() {
     businessProcessesSaga(),
     partnersSaga(),
     bpmSaga(),
+    notificationsSaga(),
   ])
 })

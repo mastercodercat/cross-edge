@@ -9,6 +9,7 @@ class MessageBox extends Component {
 
   state = {
     height: 0,
+    selectedId: 0,
   }
 
   constructor(props) {
@@ -29,7 +30,7 @@ class MessageBox extends Component {
       { type: 'error', title: 'Dolor', date: new Date(), description: 'Lorem ipsum dolor res' },
       { type: 'info', title: 'Res', date: new Date(), description: 'Lorem ipsum dolor res' },
     ]
-    const { height } = this.state
+    const { height, selectedId } = this.state
 
     return <StyleWrapper
       className={cx({ visible: height > 0 })}
@@ -45,6 +46,11 @@ class MessageBox extends Component {
       </div>
 
       <div className="content">
+        {
+          selectedId ?
+          <div /> :
+          <div className="unselectedNotice">Select a message</div>
+        }
       </div>
     </StyleWrapper>
   }

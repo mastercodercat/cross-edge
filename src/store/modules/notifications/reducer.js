@@ -41,12 +41,13 @@ export const reducer = handleActions({
     action: LOAD_NOTIFICATIONS,
     dataField: 'notifications',
     initialValue: Immutable.List(),
-    getDataFromPayload: payload => convertToListRecord(payload, Notification),
+    getDataFromPayload: payload => convertToListRecord(payload.results, Notification),
     usePagination: true,
+    preservePreviousState: true,
     onSuccess: (record, payload) => {
       const notificationIds = payload.results.map(notification => notification.id)
       notificationIds.sort((a, b) => a - b)
-      record.set('notificationsChangedByLastLoad', isEqual(notificationIds, record.notificationIds))
+      record.set('notificationsChangedByLastLoad', !isEqual(notificationIds, record.notificationIds))
       record.set('notificationIds', notificationIds)
     },
   }),

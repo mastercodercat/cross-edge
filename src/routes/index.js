@@ -105,6 +105,7 @@ const AuthenticatedRoutes = () => (
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
       <Route exact path="/messages" component={Messages} />
     </Switch>
+    <NotificationPollTimer />
   </DashboardLayout>
 )
 
@@ -113,7 +114,6 @@ const Routes = ({ history }) => (
     <ScrollToTop>
       <Route path="/sign(.*)" component={userIsNotAuthenticated(UnauthenticatedRoutes)} />
       <Route path="/" component={userIsAuthenticated(AuthenticatedRoutes)} />
-      <NotificationPollTimer />
     </ScrollToTop>
   </ConnectedRouter>
 )

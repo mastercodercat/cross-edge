@@ -12,19 +12,22 @@ const ICONS = {
   info: 'info-circle'
 }
 
-const MessageListItem = ({ message: { type, title, date, description }, selected }) => (
-  <StyleWrapper className={cx(`type-${type}`, { selected })}>
+const MessageListItem = ({ message: messageObj, selected, onClick }) => {
+  const { level, message, created } = messageObj
+
+  return <StyleWrapper className={cx(`type-${level.toLowerCase()}`, { selected })} onClick={onClick.bind(this, messageObj)}>
     <div className="icon">
-      <i className={`fal fa-${ICONS[type]}`} />
+      <i className={`fal fa-${ICONS[level.toLowerCase()]}`} />
     </div>
     <div className="content">
-    <div className="date">{moment(date).format('MMM D')}</div>
-      <div className="title">
-        <strong>{title}</strong>
+      <div className="date">
+        <strong>{moment(created).format('MMM D')}</strong>
       </div>
-      <div className="description">{description}</div>
+      <div className="message">
+        {message}
+      </div>
     </div>
   </StyleWrapper>
-)
+}
 
 export default MessageListItem

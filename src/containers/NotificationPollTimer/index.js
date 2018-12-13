@@ -38,15 +38,16 @@ export class NotificationPollTimer extends Component {
       loadedTimesWithoutChange,
       intervalLevel,
     } = this.state
+
     if (notificationsChangedByLastLoad) {
       this.setState({
         loadedTimesWithoutChange: 0,
         intervalLevel: 0,
       }, this.setTimer)
     } else {
-      if (loadedTimesWithoutChange >= 3) {
+      if (loadedTimesWithoutChange >= 2) {
         loadedTimesWithoutChange = 0
-        intervalLevel = Math.max(intervalLevel + 1, 2)
+        intervalLevel = Math.min(intervalLevel + 1, 2)
       } else {
         loadedTimesWithoutChange += 1
       }

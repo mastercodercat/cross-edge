@@ -6,9 +6,17 @@ const StyleWrapper = styled.div`
   border: 1px solid ${palette('grayscale', 8)};
   display: flex;
   visibility: hidden;
+  position: relative;
 
   &.visible {
     visibility: visible;
+  }
+
+  .spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
   }
 
   .side {
@@ -20,6 +28,10 @@ const StyleWrapper = styled.div`
   .content {
     flex: 1 1 0;
     position: relative;
+  }
+
+  .contentInner {
+    padding: 20px;
   }
 
   .unselectedNotice {

@@ -5,7 +5,9 @@ import { PaginatedListData } from 'store/common/models'
 
 export const Notification = Immutable.Record({
   id: 0,
-  title: '',
+  level: '',
+  message: '',
+  created: '',
 })
 
 export const State = Immutable.Record({

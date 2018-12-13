@@ -63,6 +63,7 @@ export function requestLoopHandlersForGet(config) {
     action, dataField, initialValue, getDataFromPayload,
     onInitial, onSuccess, onFail,
     usePagination, setPageAction: _setPageAction, setPageSizeAction: _setPageSizeAction,
+    preservePreviousState,
   } = config
 
   if (!action || !dataField || !getDataFromPayload) {
@@ -87,7 +88,9 @@ export function requestLoopHandlersForGet(config) {
 
   return {
     [action]: (state, { payload }) => state.withMutations(record => {
-      record.setIn([dataField, 'data'], initialValue)
+      if (!preservePreviousState) {
+        record.setIn([dataField, 'data'], initialValue)
+      }
       record.setIn([dataField, 'state'], REQUEST_PENDING)
       if (payload && payload.id) {
         record.setIn([dataField, 'id'], payload.id)

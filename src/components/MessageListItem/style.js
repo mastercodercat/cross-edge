@@ -8,10 +8,7 @@ const StyleWrapper = styled.div`
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s;
-
-  & + & {
-    border-top: 1px solid ${palette('grayscale', 8)};
-  }
+  border-bottom: 1px solid ${palette('grayscale', 8)};
 
   &:hover,
   &.selected {
@@ -36,21 +33,24 @@ const StyleWrapper = styled.div`
 
   .icon {
     font-size: 42px;
+    line-height: 1;
     flex: 0 0 57px;
   }
 
   .content {
     flex: 1 1 0;
+    overflow-x: hidden;
+  }
+
+  .message {
+    height: 4.5em;
+    overflow: hidden;
   }
 
   .date {
     float: right;
     font-size: 0.85em;
-  }
-
-  .description {
-    clear: both;
-    margin-top: 4px;
+    margin: 2px 0 0 5px;
   }
 `
 

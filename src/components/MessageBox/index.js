@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Spin } from 'antd'
 import Immutable from 'immutable'
 import cx from 'classnames'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import moment from 'moment'
 
@@ -13,6 +14,8 @@ class MessageBox extends Component {
 
   static propTypes = {
     messages: ImmutablePropTypes.list,
+    header: PropTypes.node,
+    loading: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -35,6 +38,13 @@ class MessageBox extends Component {
     })
   }
 
+  handleClickBack = (e) => {
+    e.preventDefault()
+    this.setState({
+      selectedId: 0
+    })
+  }
+
   componentDidMount() {
     setTimeout(() => this.setState({
       height: window.innerHeight - this.refBox.current.offsetTop - 50
@@ -42,12 +52,12 @@ class MessageBox extends Component {
   }
 
   render() {
-    const { messages, loading } = this.props
+    const { messages, header, loading } = this.props
     const { height, selectedId } = this.state
 
     const selectedMessage = messages.find(message => message.id === selectedId)
     const containerProps = {
-      className: cx({ visible: height > 0 }),
+      className: cx({ visible: height > 0, contentOpen: !!selectedMessage }),
       style: { height },
       innerRef: this.refBox,
     }
@@ -61,28 +71,38 @@ class MessageBox extends Component {
     }
 
     return <StyleWrapper {...containerProps}>
-      <div className="side">
-        {
-          messages.map(message => <MessageListItem
-            key={message.id}
-            message={message}
-            selected={message.id === selectedId}
-            onClick={this.handleClickListItem}
-          />)
-        }
-      </div>
+      {
+        header &&
+        <div className="header">{header}</div>
+      }
 
-      <div className="content">
-        {
-          selectedMessage ?
-          <div className="contentInner">
-            <p><strong>
-              {moment(selectedMessage.created).format('MMM D')}
-            </strong></p>
-            <div>{selectedMessage.message}</div>
-          </div> :
-          <div className="unselectedNotice">Select a message</div>
-        }
+      <div className="contentBox">
+        <div className="sideArea">
+          {
+            messages.map(message => <MessageListItem
+              key={message.id}
+              message={message}
+              selected={message.id === selectedId}
+              onClick={this.handleClickListItem}
+            />)
+          }
+        </div>
+
+        <div className="contentArea">
+          {
+            selectedMessage ?
+            <div className="contentAreaInner">
+              <a className="backLink" href="/" onClick={this.handleClickBack}>
+                <i className="fa fa-chevron-left" /> Back
+              </a>
+              <p><strong>
+                {moment(selectedMessage.created).format('MMM D')}
+              </strong></p>
+              <div>{selectedMessage.message}</div>
+            </div> :
+            <div className="unselectedNotice">Select a message</div>
+          }
+        </div>
       </div>
     </StyleWrapper>
   }

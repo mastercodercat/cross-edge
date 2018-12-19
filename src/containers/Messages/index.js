@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-
+import { Select, Input } from 'antd'
 import { PageTitle } from 'components/common'
 import MessageBox from 'components/MessageBox'
 import { needsLoading } from 'utils/state-helpers'
@@ -13,7 +13,11 @@ import {
   selectNotifications,
   selectNotificationsChanged
 } from 'store/modules/notifications'
+import StyleWrapper from './style'
 
+
+const { Option } = Select
+const { Search } = Input
 
 export class Messages extends Component {
 
@@ -34,16 +38,30 @@ export class Messages extends Component {
   render() {
     const { notifications } = this.props
 
-    return <div>
+    const header = <div className="filterBar">
+      <div className="filter">
+        <label><strong>Filter</strong></label>
+        <Select className="bpFilterSelect">
+          <Option key="*">All</Option>
+          <Option key="2">BP 2</Option>
+        </Select>
+      </div>
+      <div className="search">
+        <Search className="searchInput" placeholder="Search Messages..." />
+      </div>
+    </div>
+
+    return <StyleWrapper>
       <PageTitle>
         <i className="fal fa-envelope" /> Messages
       </PageTitle>
 
       <MessageBox
         messages={notifications.data}
+        header={header}
         loading={needsLoading(notifications.state)}
       />
-    </div>
+    </StyleWrapper>
   }
 }
 

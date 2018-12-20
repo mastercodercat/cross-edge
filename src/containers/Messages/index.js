@@ -27,7 +27,7 @@ export class Messages extends Component {
     notificationsChangedByLastLoad: PropTypes.bool,
   }
 
-  componentDidCatch() {
+  componentDidMount() {
     this.props.loadNotifications()
   }
 

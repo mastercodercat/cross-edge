@@ -57,6 +57,6 @@ it('should invoke handler on click', () => {
     onClick={onClick}
   />)
 
-  wrapper.find(`.type-${message.level}`).at(0).simulate('click')
-  expect(onClick.calls).not.toBe(0)
+  wrapper.simulate('click')
+  expect(onClick.mock.calls).toBeTruthy()
 })

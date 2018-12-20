@@ -5,7 +5,7 @@ import cx from 'classnames'
 import StyleWrapper from './style'
 
 
-const ICONS = {
+export const ICONS = {
   success: 'check-circle',
   warning: 'exclamation-circle',
   error: 'times-circle',

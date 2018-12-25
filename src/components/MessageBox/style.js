@@ -84,7 +84,7 @@ const StyleWrapper = styled.div`
     }
 
     .backLink {
-      display: block;
+      display: inline-block;
       margin-bottom: 10px;
     }
 

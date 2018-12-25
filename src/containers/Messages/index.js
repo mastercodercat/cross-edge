@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect'
 import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Select, Input } from 'antd'
+
 import { PageTitle } from 'components/common'
 import MessageBox from 'components/MessageBox'
 import { needsLoading } from 'utils/state-helpers'
@@ -27,16 +28,34 @@ export class Messages extends Component {
     notificationsChangedByLastLoad: PropTypes.bool,
   }
 
+  state = {
+    searchKeyword: '',
+  }
+
   componentDidMount() {
     this.props.loadNotifications()
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.notificationsChangedByLastLoad
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.notificationsChangedByLastLoad ||
+      this.state.searchKeyword !== nextState.searchKeyword
+    )
+  }
+
+  handleSearch = (searchKeyword) => {
+    this.setState({
+      searchKeyword,
+    })
   }
 
   render() {
     const { notifications } = this.props
+    const { searchKeyword } = this.state
+
+    const filteredNotifications = searchKeyword ?
+      notifications.data.filter(notification => notification.message.toLowerCase().indexOf(searchKeyword.toLowerCase()) >= 0) :
+      notifications.data
 
     const header = <div className="filterBar">
       <div className="filter">
@@ -47,7 +66,11 @@ export class Messages extends Component {
         </Select>
       </div>
       <div className="search">
-        <Search className="searchInput" placeholder="Search Messages..." />
+        <Search
+          className="searchInput"
+          placeholder="Search Messages..."
+          onSearch={this.handleSearch}
+        />
       </div>
     </div>
 
@@ -57,7 +80,7 @@ export class Messages extends Component {
       </PageTitle>
 
       <MessageBox
-        messages={notifications.data}
+        messages={filteredNotifications}
         header={header}
         loading={needsLoading(notifications.state)}
       />

@@ -21,6 +21,9 @@ import BusinessProcessModule from 'containers/BusinessProcessModule'
 import ParentContainer from 'containers/ParentContainer'
 import ChildList from 'containers/ChildList'
 import BusinessProcess from 'containers/BusinessProcess'
+import Messages from 'containers/Messages'
+import NotificationPollTimer from 'containers/NotificationPollTimer'
+
 import setTypeProp from 'hoc/setTypeProp'
 
 
@@ -100,7 +103,9 @@ const AuthenticatedRoutes = () => (
       <Route path="/sites/:parentId" component={setTypeProp('site')(ObjectListRoutes)} />
       <Route path="/subsites/:parentId" component={setTypeProp('subsite')(ObjectListRoutes)} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
+      <Route exact path="/messages" component={Messages} />
     </Switch>
+    <NotificationPollTimer />
   </DashboardLayout>
 )
 

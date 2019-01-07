@@ -34,6 +34,10 @@ export class DashboardLayout extends Component {
     })
   }
 
+  handleClickNotifications = () => {
+    this.props.history.push('/messages')
+  }
+
   handleWindowResize = ({ windowWidth, windowHeight }) => {
     this.setState({
       appWidth: windowWidth,
@@ -65,9 +69,10 @@ export class DashboardLayout extends Component {
         <Layout style={{ height: appHeight, overflowX: 'hidden' }}>
           <Topbar
             username={email}
-            onToggleCollapse={this.handleToggleCollapse}
             isMobile={isMobile}
+            onToggleCollapse={this.handleToggleCollapse}
             onCommand={this.handleCommand}
+            onClickNotifications={this.handleClickNotifications}
           />
           <Layout>
             <Sidebar

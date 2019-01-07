@@ -19,6 +19,9 @@ theme.palette = {
   error: [
     '#f5222d', // 0: Error
   ],
+  info: [
+    adeptColors.adeptLochmara5[0],
+  ],
   grayscale: [
     '#bababa', // 0: GreyShade
     '#c1c1c1', // 1: GreyDark

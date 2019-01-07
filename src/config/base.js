@@ -25,3 +25,5 @@ export const ICON_PREFIXES_BY_MDM_TYPES = {
   subsite: 'fa',
   businessProcess: 'fa',
 }
+
+export const NOTIFICATION_POLL_INTERVAL_LEVELS = [5000, 30000, 60000]

@@ -13,8 +13,9 @@ class Topbar extends Component {
   static propTypes = {
     username: PropTypes.string.isRequired,
     onCommand: PropTypes.func.isRequired,
-    onToggleCollapse: PropTypes.func.isRequired,
     isMobile: PropTypes.bool,
+    onToggleCollapse: PropTypes.func.isRequired,
+    onClickNotifications: PropTypes.func.isRequired,
   }
 
   handleTriggerCommand = (command, e) => {
@@ -27,6 +28,10 @@ class Topbar extends Component {
 
   handleClickUserMenu = ({ item, key }) => {
     this.handleTriggerCommand(key)
+  }
+
+  handleClickNotifications = () => {
+    this.props.onClickNotifications()
   }
 
   render() {
@@ -62,14 +67,17 @@ class Topbar extends Component {
 
             <div className="adp-flex-right">
               <span className="notification-button-wrapper has-notifications">
-                <button className="notification-button with-icon with-pointer">
+                <button
+                  className="notification-button with-icon with-pointer"
+                  onClick={this.handleClickNotifications}
+                >
                   <i className="fa fa-bell" />
                 </button>
               </span>
 
               <Dropdown overlay={userMenu}>
                 <a className="user-menu-link" href="" onClick={this.handleTriggerCommand.bind(this, 'user')}>
-                  <i className="fa fa-user icon-user" /><span>{username} <i className="fa fa-chevron-down" /></span>
+                  <i className="fa fa-user icon-user" /><span className="user-menu-username">{username}</span> <i className="fa fa-chevron-down" />
                 </a>
               </Dropdown>
             </div>

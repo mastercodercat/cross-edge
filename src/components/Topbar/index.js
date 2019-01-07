@@ -77,7 +77,7 @@ class Topbar extends Component {
 
               <Dropdown overlay={userMenu}>
                 <a className="user-menu-link" href="" onClick={this.handleTriggerCommand.bind(this, 'user')}>
-                  <i className="fa fa-user icon-user" /><span>{username} <i className="fa fa-chevron-down" /></span>
+                  <i className="fa fa-user icon-user" /><span className="user-menu-username">{username}</span> <i className="fa fa-chevron-down" />
                 </a>
               </Dropdown>
             </div>

@@ -85,6 +85,12 @@ const StyleWrapper = styled.div`
       position: relative;
       top: -2px;
     }
+
+    @media screen and (max-width: 767px) {
+      .user-menu-username {
+        display: none;
+      }
+    }
   }
 `
 

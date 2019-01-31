@@ -15,7 +15,7 @@ import {
   setChannelsPage,
   setChannelsPageSize,
 } from 'store/modules/channels'
-import { isLoading, needsLoading } from 'utils/state-helpers'
+import { isLoading } from 'utils/state-helpers'
 import StyleWrapper from './style'
 
 

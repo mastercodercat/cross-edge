@@ -103,7 +103,7 @@ const AuthenticatedRoutes = () => (
       <Route path="/sites/:parentId" component={setTypeProp('site')(ObjectListRoutes)} />
       <Route path="/subsites/:parentId" component={setTypeProp('subsite')(ObjectListRoutes)} />
       <Route exact path="/business-processes/:name" component={BusinessProcess} />
-      <Route exact path="/messages" component={Messages} />
+      <Route exact path="/notifications" component={Messages} />
     </Switch>
     <NotificationPollTimer />
   </DashboardLayout>

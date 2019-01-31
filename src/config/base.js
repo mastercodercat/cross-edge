@@ -26,4 +26,11 @@ export const ICON_PREFIXES_BY_MDM_TYPES = {
   businessProcess: 'fa',
 }
 
+export const NOTIFICATION_ICONS = {
+  success: 'check-circle',
+  warning: 'exclamation-circle',
+  error: 'times-circle',
+  info: 'info-circle'
+}
+
 export const NOTIFICATION_POLL_INTERVAL_LEVELS = [5000, 30000, 60000]

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Layout, Dropdown, Menu } from 'antd'
 
 import Logo from 'components/Logo'
+import NotificationMenu from 'components/NotificationMenu'
 import StyleWrapper from './style'
 
 
@@ -45,6 +46,8 @@ class Topbar extends Component {
       </Menu>
     )
 
+    const notificationsMenu = <NotificationMenu />
+
     return (
       <StyleWrapper>
         <Header className="topbar">
@@ -67,12 +70,11 @@ class Topbar extends Component {
 
             <div className="adp-flex-right">
               <span className="notification-button-wrapper has-notifications">
-                <button
-                  className="notification-button with-icon with-pointer"
-                  onClick={this.handleClickNotifications}
-                >
-                  <i className="fa fa-bell" />
-                </button>
+                <Dropdown overlay={notificationsMenu} trigger={['click']}>
+                  <button className="notification-button with-icon with-pointer">
+                    <i className="fa fa-bell" />
+                  </button>
+                </Dropdown>
               </span>
 
               <Dropdown overlay={userMenu}>

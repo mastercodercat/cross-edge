@@ -10,6 +10,7 @@ it('should render without errors', () => {
     username="tester"
     onCommand={e => e}
     onToggleCollapse={e => e}
+    onClickNotifications={e => e}
     isMobile={false}
   />)
 

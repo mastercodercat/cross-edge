@@ -14,7 +14,10 @@ export function isLoading(requestState, strict = false) {
   return requestState === REQUEST_INITIAL || requestState === REQUEST_PENDING
 }
 
-export function needsLoading(requestState) {
+export function needsLoading(requestState, strict = false) {
+  if (strict) {
+    return requestState === REQUEST_INITIAL
+  }
   return requestState === REQUEST_INITIAL || requestState === REQUEST_FAIL
 }
 

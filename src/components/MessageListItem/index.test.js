@@ -1,8 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
+import { NOTIFICATION_ICONS } from 'config/base'
 import { Notification } from 'store/modules/notifications'
-import MessageListItem, { ICONS } from './index'
+import MessageListItem from './index'
 
 
 const message = Notification({
@@ -23,10 +24,10 @@ it('should render without any errors', () => {
 })
 
 it('should render correct icons', () => {
-  const levels = Object.keys(ICONS)
+  const levels = Object.keys(NOTIFICATION_ICONS)
   for (let i = 0; i < levels.length; i += 1) {
     const level = levels[i]
-    const icon = ICONS[level]
+    const icon = NOTIFICATION_ICONS[level]
     const _message = message.set('level', level)
 
     const wrapper = mount(<MessageListItem

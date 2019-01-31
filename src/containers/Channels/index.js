@@ -63,11 +63,9 @@ export class Channels extends Component {
   }
 
   componentDidMount() {
-    const { channels, setChannelsPage, loadChannels } = this.props
-    if (needsLoading(channels.state)) {
-      setChannelsPage(1)
-      loadChannels()
-    }
+    const { setChannelsPage, loadChannels } = this.props
+    setChannelsPage(1)
+    loadChannels()
   }
 
   render() {
